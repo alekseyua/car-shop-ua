@@ -1,0 +1,67 @@
+{
+    "HomePage": {
+        "title": "Привет, мир!"
+    },
+    "Header": {
+        "Info": {
+            "Delivery": {
+                "title": "Доставка"
+            },
+            "Warranty": {
+                "title": "Гарантия"
+            },
+            "Contacts": {
+                "title": "Контакты"
+            }
+        },
+        "Login": {
+            "title": "Вход"
+        },
+        "vinRequest": {
+            "button": {
+                "title": "Подбор по VIN"
+            },
+            "modal": {
+                "title": "Запрос по VIN",
+                "description": "Подберём запчасти профессионально, за вас",
+                "form": {
+                    "vin": {
+                        "label": "VIN код",
+                        "placeholder": "Введите VIN код",
+                        "error": "Введите коректный VIN код (17 символов)"
+                    },
+                    "plate": {
+                        "label": "или Госзнак",
+                        "placeholder": "AE1122BB"
+                    },
+                    "phone": {
+                        "label": "Оставьте Ваши контакты",
+                        "placeholder": "+38 (___) ___-__-__",
+                        "error": "Введите коректный номер телефона"
+                    },
+                    "suggestions": {
+                        "label": "Укажите запчасти",
+                        "placeholder": "Название запасти или е её каталожный номер",
+                        "error": "Обязательное поле"
+                    },
+                    "submitButton": {
+                        "title": "Отправить запрос"
+                    }
+                }
+            }
+        },
+        "search": {
+            "button": {
+                "title": "Поиск",
+                "placeholder": "Название запасти или е её каталожный номер"
+            }
+        },
+        "cart": {
+            "label": "В вашей корзине",
+            "summary": "{count} товаров на сумму {total} грн",
+            "button": {
+                "title": "Оформить заказ"
+            }
+        }
+    }
+}

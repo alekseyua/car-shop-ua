@@ -1,0 +1,66 @@
+{
+    "HomePage": {
+        "title": "Hello world!"
+    },
+    "Header": {
+        "Info": {
+            "Delivery": {
+                "title": "Delivety"
+            },
+            "Warranty": {
+                "title": "Warranty"
+            },
+            "Contacts": {
+                "title": "Contacts"
+            }
+        },
+        "Login": {
+            "title": "Login"
+        },
+        "vinRequest": {
+            "button": {
+                "title": "Search by VIN"
+            },
+            "modal": {
+                "title": "VIN Request",
+                "description": "We will select the parts professionally, for you",
+                "form": {
+                    "vin": {
+                        "label": "VIN code",
+                        "placeholder": "Enter VIN code"
+                    },
+                    "plate": {
+                        "label": "or License Plate",
+                        "placeholder": "AE1122BB"
+                    },
+                    "phone": {
+                        "label": "Phone",
+                        "placeholder": "+38 (___) ___-__-__",
+                        "error": "Please enter a valid phone number"
+                    },
+                    "suggestions": {
+                        "label": "Specify parts",
+                        "placeholder": "Part name or its catalog number",
+                        "error": "Required field"
+                    },
+                    "submitButton": {
+                        "title": "Send request"
+                    }
+                }
+            }
+        },
+        "search": {
+            "button": {
+                "title": "Search",
+                "placeholder": "Part name or its catalog number"
+            }
+        },
+        " ": {
+            "label": "In your cart",
+            "summary": "{count} items for {total} UAH",
+            "button": {
+                "title": "place an order"
+            }
+        }
+    }
+}

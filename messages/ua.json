@@ -1,0 +1,96 @@
+{
+    "HomePage": {
+        "title": "Привіт, світ!",
+        "FiltersVehicle": {
+            "description": "Вкажіть параметри вашого авто, і ми підберемо для вас запчастини",
+            "year": {
+                "title": "Почніть з вибору автомобіля:",
+                "label": "Виберіть рік",
+                "placeholder": "Виберіть рік"
+            },
+            "brand": {
+                "label": "Виберіть марку",
+                "placeholder": "Виберіть марку"
+            },
+            "model": {
+                "label": "Виберіть модель",
+                "placeholder": "Виберіть модель"
+            },
+            "generation": {
+                "label": "Виберіть покоління",
+                "placeholder": "Виберіть покоління"
+            },
+            "typeBody": {
+                "label": "Виберіть тип кузова",
+                "placeholder": "Виберіть тип кузова"
+            },
+            "engineType": {
+                "label": "Виберіть тип двигуна",
+                "placeholder": "Виберіть тип двигуна"
+            }
+        }
+    },
+    "Header": {
+        "Info": {
+            "Delivery": {
+                "title": "Доставка"
+            },
+            "Warranty": {
+                "title": "Гарантія"
+            },
+            "Contacts": {
+                "title": "Контакти"
+            }   
+        },
+        "Login": {
+            "title": "Вхід"
+        },
+        "vinRequest":{
+            "button": {
+                "title": "Підбір по VIN"
+            },
+            "modal": {
+                "title": "Запит по VIN",
+                "description": "Підберемо запчастини професійно, за вас",
+                "form": {
+                    "vin": {
+                        "label": "VIN код",
+                        "placeholder": "Введіть VIN код",
+                        "error": "Введіть коректний VIN код (17 символів)"
+                    },
+                    "plate": {
+                        "label": "або Держзнак",
+                        "placeholder": "AE1122BB"
+                    },
+                    "phone": {
+                        "label": "Залишіть Ваші контакти",
+                        "placeholder": "+38 (___) ___-__-__",
+                        "error": "Введіть коректний номер телефону"
+                    },
+                    "suggestions": {
+                        "label": "Вкажіть запчастини",
+                        "placeholder": "Назва запчастини або її каталожний номер",
+                        "error": "Обов'язкове поле"
+                    },
+                    "submitButton": {
+                        "title": "Надіслати запит"
+                    }
+                }
+            
+            }
+        },
+        "search": {
+            "button": {
+                "title": "Пошук",
+                "placeholder": "Назва запчастини або її каталожний номер"
+            }
+        },
+        "cart": {
+            "label": "У вашому кошику",
+            "summary": "{count} товарів на {total} ₴",
+            "button": {
+                "title": "Оформити замовлення"
+            }
+        }
+    }
+}
