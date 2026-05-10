@@ -1,11 +1,30 @@
-export const getBrands = async () => [
-    { id: '1', name: 'BMW' },
-    { id: '2', name: 'Audi' },
-];
+import { api } from "@/src/app/shared/api/client";
+import { BrandsResponseDto, ModelResponseDto } from "./dto";
+import { PaginationDto } from "@/src/app/shared/api/dto";
+
+export const    getBrands = async () => {
+    try {
+        const res: PaginationDto<BrandsResponseDto> = await api('/car-brands?page=1&limit=9999', {
+            method: 'GET',
+        });
+
+        return res.data.map( (item) => ({id: item.id, name: item.mark}))
+    } catch (error) {
+        console.error(error)
+    }
+}
 
 export const getModels = async (brandId: string) => {
-    if (brandId === '1') return [{ id: '1', name: 'X5', brandId }];
-    return [{ id: '2', name: 'A6', brandId }];
+    try {
+        const res: PaginationDto<ModelResponseDto> = await api(`/car-models?page=1&limit=999&brandId=${brandId}`, {
+            method: 'GET',
+        });
+        return res.data.map( (item) => ({id: item.id, name: item.model}))
+    } catch (error) {
+        console.error(error);
+    }
+    // if (brandId === '1') return [{ id: '1', name: 'X5', brandId }];
+    // return [{ id: '2', name: 'A6', brandId }];
 };
 
 export const getGenerations = async (modelId: string) => {

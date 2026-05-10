@@ -49,9 +49,9 @@ console.log('Current filters state:', filters);
       >
         <span className='text-[17px] font-medium  text-white'>{filters.brand?.name || t('FiltersVehicle.brand.label')}</span>
         
-        <div className="absolute gap-2 left-0 top-full z-10 hidden group-hover:flex bg-white border border-[#ed1c24]">
+       <div className="absolute left-0 top-full z-10 hidden group-hover:grid grid-cols-6 gap-1 bg-white border border-[#ed1c24] overflow-auto w-max">
           {filters.brands.map((brand) => (
-            <div key={brand.id} className="px-4 py-2 text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
+            <div key={brand.id+ '_brand'} className="px-2 h-[30] py-1 text-xs text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
               onClick={() => {
                 setBrand({ id: brand.id, name: brand.name});
                 setLocked(true);
@@ -68,11 +68,11 @@ console.log('Current filters state:', filters);
       }`}
         onMouseLeave={() => setLocked(false)}
       >
-        <span className='text-[17px] font-medium  text-white'>{filters.model || t('FiltersVehicle.model.label')}</span>
+        <span className='text-[17px] font-medium  text-white'>{filters.model?.name || t('FiltersVehicle.model.label')}</span>
         
-        <div className="absolute gap-2 left-0 top-full z-10 hidden group-hover:flex bg-white border border-[#ed1c24]">
+        <div className="absolute left-0 top-full z-10 hidden group-hover:grid grid-cols-4 gap-1 bg-white border border-[#ed1c24] overflow-auto w-[600px]">
           {filters.models.map((model) => (
-            <div key={model.id} className="px-4 py-2 text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
+            <div key={model.id+'_model'} className="px-4 py-2 text-sm text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
               onClick={() => {
                 setModel({ id: model.id, name: model.name });
                 setLocked(true);

@@ -13,8 +13,8 @@ interface VehicleFiltersState {
 
         year: number | null;
         brand: { id: string | null; name: string | null } | null;
-        model: string | null;
-        generation: string | null;
+        model:  { id: string | null; name: string | null } | null;
+        generation:  { id: string | null; name: string | null } | null;
         typeEngine: string | null;
         typeBody: string | null;
     };
@@ -50,8 +50,6 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
     },
     init: async () => {
         const [brands, years] = await Promise.all([getBrands(), getYears()]);
-        console.log('Fetched brands:', brands);
-        console.log('Fetched years:', years);
         set({
             filters: {
                 years,
@@ -93,6 +91,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         return years;
     },
     getModels: async (brandId: string) => {
+        console.log(brandId)
         // Implement API call to fetch models based on brandId
         // Update state with fetched models
         return [];
@@ -131,6 +130,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         set((state) => ({
             filters: {
                 ...state.filters,
+                model,
                 typeBodys: fetchedTypeBodys,
                 generations: [],
                 typeEngines: [],
