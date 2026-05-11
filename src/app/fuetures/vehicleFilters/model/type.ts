@@ -1,28 +1,44 @@
 export type Brand = {
-    id: string;
+    id: number;
     name: string;
 };
 
 export type Model = {
-    id: string;
+    id: number;
     name: string;
-    brandId: string;
+    brandId: number;
 };
 
-export type Generation = {
-    id: string;
+export type Modification = {
+    id: number;
     name: string;
-    modelId: string;
+    range: string;
+    kw: number;
+    hp: number;
+    engineType: string;
+    modelType: string;
+    bodyType: string;
+    modificationAutotechId: number;
+
+    modelId: number;
 };
 
-export type TypeEngine = {
-    id: string;
-    name: string;
+export type Catalog = {
+    id: number;
+    groupId: number;
+    groupCode: string;
+    subGroupCode: string;
+    count: number;
 };
 
-export type TypeBody = {
-    id: string;
-    name: string;
-};
+// export type TypeEngine = {
+//     id: string;
+//     name: string;
+// };
+
+// export type TypeBody = {
+//     id: string;
+//     name: string;
+// };
 
 export type Year = {decade: number; years: number[]};

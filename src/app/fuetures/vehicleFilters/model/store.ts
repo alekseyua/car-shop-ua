@@ -1,36 +1,44 @@
 import { create } from "zustand";
-import { Brand, Generation, Model, TypeBody, TypeEngine, Year } from "./type";
-import { getBrands, getGenerations, getModels, getTypeBodys, getTypeEngines, getYears } from "../api/api";
+import { Brand, Modification, Model, Year, Catalog } from "./type";
+import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalogApi } from "../api/api";
 
 interface VehicleFiltersState {
     filters: {
-      years: Year[];
-      brands: Brand[];
-      models: Model[];
-      generations: Generation[];
-      typeEngines: TypeEngine[];
-      typeBodys: TypeBody[];
+        years: Year[];
+        brands: Brand[];
+        models: Model[];
+        modifications: Modification[];
+        catalogs: Catalog[];
+
+
+        // typeEngines: TypeEngine[];
+        // typeBodys: TypeBody[];
 
         year: number | null;
-        brand: { id: string | null; name: string | null } | null;
-        model:  { id: string | null; name: string | null } | null;
-        generation:  { id: string | null; name: string | null } | null;
-        typeEngine: string | null;
-        typeBody: string | null;
+        brand: { id: number | null; name: string | null } | null;
+        model:  { id: number | null; name: string | null } | null;
+        modification:  { id: number | null; name: string | null } | null;
+        catalog: Catalog | null;
+
+
+        // typeEngine: string | null;
+        // typeBody: string | null;
     };
     init: ()=> Promise<void>;
     getYears: () => Promise<Year[]>;
     getBrands: () => Promise<Brand[]>;
-    getModels: (brandId: string) => Promise<Model[]>;
-    getGenerations: (modelId: string) => Promise<Generation[]>;
-    getTypeEngines: (modelId: string) => Promise<TypeEngine[]>;
-    getTypeBodys: () => Promise<TypeBody[]>;
+    getModels: (brandId: number) => Promise<Model[]>;
+    getModifications: (modelId: number) => Promise<Modification[]>;
+    getCatalog: (modificationId: number) => Promise<Catalog | null>;
+    // getTypeEngines: (modelId: string) => Promise<TypeEngine[]>;
+    // getTypeBodys: () => Promise<TypeBody[]>;
     setFilters: (filters: VehicleFiltersState['filters']) => void;
-    setBrand: (brand: { id: string; name: string }) => void;
-    setModel: (model: { id: string; name: string }) => void;
-    setGeneration: (generation: { id: string; name: string }) => void;
-    setTypeEngine: (typeEngine: { id: string; name: string }) => void;
-    setTypeBody: (typeBody: { id: string; name: string }) => void;
+    setBrand: (brand: { id: number; name: string }) => void;
+    setModel: (model: { id: number; name: string }) => void;
+    setModification: (modification: { id: number; name: string }) => void;
+    setCatalog: () => void;
+    // setTypeEngine: (typeEngine: { id: string; name: string }) => void;
+    // setTypeBody: (typeBody: { id: string; name: string }) => void;
 }
 
 export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
@@ -38,38 +46,42 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         years: [],
         brands: [],
         models: [],
-        generations: [],
-        typeEngines: [],
-        typeBodys: [],
+        modifications: [],
+        catalogs: [],
+        // typeEngines: [],
+        // typeBodys: [],
         year: null,
         brand: {id: null, name: null},
         model: null,
-        generation: null,
-        typeEngine: null,
-        typeBody: null,
+        modification: null,
+        catalog: null,
+        // typeEngine: null,
+        // typeBody: null,
     },
     init: async () => {
-        const [brands, years] = await Promise.all([getBrands(), getYears()]);
+        const [brands, years] = await Promise.all([getBrandsApi(), getYearsApi()]);
         set({
             filters: {
                 years,
                 brands,
                 models: [],
-                generations: [],
-                typeEngines: [],
-                typeBodys: [],
+                modifications: [],
+                catalogs: [],
+                // typeEngines: [],
+                // typeBodys: [],
                 year: null,
                 brand: {id: null, name: null},
                 model: null,
-                generation: null,
-                typeEngine: null,
-                typeBody: null,
+                modification: null,
+                catalog: null,
+                // typeEngine: null,
+                // typeBody: null,
             },
         });
     },
     setFilters: (filters) => set({ filters }),
     getBrands: async () => {
-        const brands = await getBrands();
+        const brands: Brand[] = await getBrandsApi();
         console.log('Fetched brands:', brands);
         set((state) => ({
             filters: {
@@ -80,7 +92,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         return brands;
     },
     getYears: async () => {
-        const years = await getYears();
+        const years = await getYearsApi();
         console.log('Fetched years:', years);
         set((state) => ({
             filters: {
@@ -90,80 +102,92 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         }));
         return years;
     },
-    getModels: async (brandId: string) => {
+    getModels: async (brandId: number) => {
         console.log(brandId)
         // Implement API call to fetch models based on brandId
         // Update state with fetched models
         return [];
     },
-    getGenerations: async (modelId: string) => {
-        // Implement API call to fetch generations based on modelId
-        // Update state with fetched generations
+    getModifications: async (modelId: number) => {
+        // Implement API call to fetch modifications based on modelId
+        // Update state with fetched modifications
         return [];
     },
-    getTypeEngines: async (modelId: string) => {
-        // Implement API call to fetch type engines based on modelId
-        // Update state with fetched type engines
-        return [];
+    getCatalog: async () => {
+        // Implement API call to fetch catalog based on modificationId
+        // Update state with fetched catalog
+        return null;
     },
-    getTypeBodys: async () => {
-        // Implement API call to fetch type bodys
-        // Update state with fetched type bodys
-        return [];
-    },
-    setBrand: async (brand: { id: string; name: string }) => {
-        const fetchedModels = await getModels(brand.id);
+    // getTypeEngines: async (modelId: string) => {
+    //     // Implement API call to fetch type engines based on modelId
+    //     // Update state with fetched type engines
+    //     return [];
+    // },
+    // getTypeBodys: async () => {
+    //     // Implement API call to fetch type bodys
+    //     // Update state with fetched type bodys
+    //     return [];
+    // },
+    setBrand: async (brand: { id: number; name: string }) => {
+        const fetchedModels = await getModelsApi(brand.id);
         set((state) => ({
             filters: {
                 ...state.filters,
                 brand,
                 models: fetchedModels,
                 model: null,
-                generations: [],
+                modifications: [],
                 typeEngines: [],
                 typeBodys: [],
             },
         }));
     },
-    setModel: async (model: { id: string; name: string }) => {
-        const fetchedTypeBodys = await getTypeBodys(model.id);
+    setModel: async (model: { id: number; name: string }) => {
+        const fetchedModifications = await getModificationsApi(model.id);
         set((state) => ({
             filters: {
                 ...state.filters,
                 model,
-                typeBodys: fetchedTypeBodys,
-                generations: [],
-                typeEngines: [],
+                modifications: fetchedModifications,
             },
         }));
     },
-    setGeneration: (generation: { id: string; name: string }) => {
-        // const fetchedTypeEngines = getTypeEngines(generation.id);
+    setModification: async (modification: { id: number; name: string }) => {
+        console.log('Selected modification:', modification);
+        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
+        set((state) => ({
+            filters: {
+                ...state.filters,
+                modification,
+                catalogs: fetchedCatalog,
+            },
+        }));
+    },
+    setCatalog: () => {
         // set((state) => ({
         //     filters: {
         //         ...state.filters,
-        //         generation,
+        //         catalog,
         //     },
         // }));
     },
-    setTypeEngine: (typeEngine: { id: string; name: string }) => {
-        set((state) => ({
-            filters: {
-                ...state.filters,
-            },
-        }));
-    },
-    setTypeBody: (typeBody: { id: string; name: string }) => {
-        const fetchedEngines = getTypeEngines(typeBody.id);
+    // setTypeEngine: (typeEngine: { id: string; name: string }) => {
+    //     set((state) => ({
+    //         filters: {
+    //             ...state.filters,
+    //         },
+    //     }));
+    // },
+    // setTypeBody: (typeBody: { id: string; name: string }) => {
+    //     const fetchedEngines = getTypeEngines(typeBody.id);
 
-        set((state) => ({
-            filters: {
-                ...state.filters,
-                typeEngines: fetchedEngines,
-                typeEngine: null,
-            },
-        }));
-    },
+    //     // set((state) => ({
+    //     //     filters: {
+    //     //         ...state.filters,
+    //     //         typeEngines: fetchedEngines,
+    //     //     },
+    //     // }));
+    // },
 
 
 }))

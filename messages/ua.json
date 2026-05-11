@@ -16,7 +16,7 @@
                 "label": "Виберіть модель",
                 "placeholder": "Виберіть модель"
             },
-            "generation": {
+            "modification": {
                 "label": "Виберіть покоління",
                 "placeholder": "Виберіть покоління"
             },

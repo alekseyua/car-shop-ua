@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useVehicleFiltersStore } from '../model/store'
 import { useTranslations } from 'next-intl';
+import { Modification } from '../model/type';
 
 const VehicleFilters = () => {
   const useFilters = useVehicleFiltersStore();
   const [locked, setLocked] = useState(false);
-  const { filters, setFilters, setBrand, setModel, setTypeBody } = useFilters;
+  const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
   const t = useTranslations("HomePage");
   useEffect(() => {
     useFilters.init();
@@ -70,60 +71,44 @@ console.log('Current filters state:', filters);
       >
         <span className='text-[17px] font-medium  text-white'>{filters.model?.name || t('FiltersVehicle.model.label')}</span>
         
-        <div className="absolute left-0 top-full z-10 hidden group-hover:grid grid-cols-4 gap-1 bg-white border border-[#ed1c24] overflow-auto w-[600px]">
+        <div className="absolute left-0 top-full z-10 hidden group-hover:grid grid-cols-1 gap-1 bg-white border border-[#ed1c24] overflow-auto w-[300px]">
           {filters.models.map((model) => (
-            <div key={model.id+'_model'} className="px-4 py-2 text-sm text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
+            <div key={model.id+'_model'} className="px-4 py-1 text-sm text-black cursor-pointer  hover:text-[#ff0000] transition-colors duration-300" 
               onClick={() => {
                 setModel({ id: model.id, name: model.name });
                 setLocked(true);
               }}
             >
-              <span className="font-semibold text-[#1a66ff]">{model.name}</span>
+              <span className="font-semibold text-[#1a66ff] hover:bg-[#c71515] p-1 hover:text-[#ffffff]">{model.name}</span>
             </div>
           ))}
         </div>
       </div>
-      {/* typeBody Filter */}
-      <div className={`group relative flex p-2 border rounded-md bg-[#ed1c24] ${
-        locked ? 'pointer-events-none' : ''
-      }`}
-        onMouseLeave={() => setLocked(false)}
-      >
-        <span className='text-[17px] font-medium  text-white'>{filters.typeBody || t('FiltersVehicle.typeBody.label')}</span>
-        
-        <div className="absolute gap-2 left-0 top-full z-10 hidden group-hover:flex bg-white border border-[#ed1c24]">
-          {filters.typeBodys.map((typeBody) => (
-            <div key={typeBody.id} className="px-4 py-2 text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300" 
-              onClick={() => {
-                setTypeBody({ id: typeBody.id, name: typeBody.name });
-                setLocked(true);
-              }}
-            >
-              <span className="font-semibold text-[#1a66ff]">{typeBody.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-        {/* Generation Filter */}
-      {/* <div className={`group relative flex p-2 border rounded-md bg-[#ed1c24] ${locked ? 'pointer-events-none' : ''
+        {/* Modification Filter */}
+      <div className={`group relative flex p-2 border rounded-md bg-[#ed1c24] ${locked ? 'pointer-events-none' : ''
         }`}
         onMouseLeave={() => setLocked(false)}
       >
-        <span className='text-[17px] font-medium  text-white'>{filters.generation || t('FiltersVehicle.generation.label')}</span>
+        <span className='text-[17px] font-medium  text-white'>{filters.modification?.name || t('FiltersVehicle.modification.label')}</span>
 
-        <div className="absolute gap-2 left-0 top-full z-10 hidden group-hover:flex bg-white border border-[#ed1c24]">
-          {filters.generations.map((generation) => (
-            <div key={generation.id} className="px-4 py-2 text-black cursor-pointer hover:text-[#ff0000] transition-colors duration-300"
+        <div className="absolute P-2 gap-2 left-0 top-full z-10 hidden group-hover:flex bg-white border border-[#ed1c24]">
+          {filters.modifications.map((modification: Modification) => (
+            <div key={modification.id} className="px-4 py-2 text-black cursor-pointer hover:bg-[#c71515] hover:text-[#ffffff] transition-colors duration-300 w-[500px]"
               onClick={() => {
-                setGeneration(generation.id);
+                setModification({ id: modification.modificationAutotechId, name: modification.name });
                 setLocked(true);
               }}
             >
-              <span className="font-semibold text-[#1a66ff]">{generation.name}</span>
+              <span className="font-semibold mr-3" >{modification.name}</span>
+              <span className="font-semibold mr-3">{modification.range}</span>
+              <span className="font-semibold mr-3">{modification.engineType}</span>
+              <span className="font-semibold mr-3">{modification.kw}</span>
+              <span className="font-semibold mr-3">{modification.hp}</span>
+              <span className="font-semibold mr-3">{modification.bodyType}</span>
             </div>
           ))}
         </div>
-      </div> */}
+      </div>
 
     </div>
   )
