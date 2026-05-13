@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { Brand, Modification, Model, Year, Catalog } from "./type";
 import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalogApi } from "../api/api";
-import { transformCatalog } from "../../Catalog/model/libs";
-import { TransformCatalog } from "../../Catalog/model/type";
+import { transformCatalog } from "../../catalog/model/libs";
+import { TransformCatalog } from "../../catalog/model/type";
 
 interface VehicleFiltersState {
     filters: {

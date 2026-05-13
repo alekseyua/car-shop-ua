@@ -3,7 +3,7 @@
 import VehicleFilters from "../../fuetures/vehicleFilters/ui/VehicleFilters";
 import { useTranslations } from "next-intl";
 import { Container } from "../../shared/ui/layout/Container/Container";
-import Catalog from "../../fuetures/Catalog/ui/Catalog";
+import Catalog from "../../fuetures/catalog/ui/Catalog";
 import { useVehicleFiltersStore } from "../../fuetures/vehicleFilters/model/store";
 
 export default function Home() {
