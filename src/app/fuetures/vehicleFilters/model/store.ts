@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import { Brand, Modification, Model, Year, Catalog } from "./type";
 import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalogApi } from "../api/api";
+import { transformCatalog } from "../../Catalog/model/libs";
+import { TransformCatalog } from "../../Catalog/model/type";
 
 interface VehicleFiltersState {
     filters: {
@@ -8,7 +10,7 @@ interface VehicleFiltersState {
         brands: Brand[];
         models: Model[];
         modifications: Modification[];
-        catalogs: Catalog[];
+        catalogs: TransformCatalog;
 
 
         // typeEngines: TypeEngine[];
@@ -17,7 +19,7 @@ interface VehicleFiltersState {
         year: number | null;
         brand: { id: number | null; name: string | null } | null;
         model:  { id: number | null; name: string | null } | null;
-        modification:  { id: number | null; name: string | null } | null;
+        modification:  Modification | null;
         catalog: Catalog | null;
 
 
@@ -35,7 +37,7 @@ interface VehicleFiltersState {
     setFilters: (filters: VehicleFiltersState['filters']) => void;
     setBrand: (brand: { id: number; name: string }) => void;
     setModel: (model: { id: number; name: string }) => void;
-    setModification: (modification: { id: number; name: string }) => void;
+    setModification: (modification: Modification) => void;
     setCatalog: () => void;
     // setTypeEngine: (typeEngine: { id: string; name: string }) => void;
     // setTypeBody: (typeBody: { id: string; name: string }) => void;
@@ -47,7 +49,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         brands: [],
         models: [],
         modifications: [],
-        catalogs: [],
+        catalogs: {} as TransformCatalog,
         // typeEngines: [],
         // typeBodys: [],
         year: null,
@@ -66,7 +68,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
                 brands,
                 models: [],
                 modifications: [],
-                catalogs: [],
+                catalogs: {} as TransformCatalog,
                 // typeEngines: [],
                 // typeBodys: [],
                 year: null,
@@ -152,14 +154,14 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
             },
         }));
     },
-    setModification: async (modification: { id: number; name: string }) => {
+    setModification: async (modification: Modification) => {
         console.log('Selected modification:', modification);
-        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
+        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.modificationAutotechId);
         set((state) => ({
             filters: {
                 ...state.filters,
                 modification,
-                catalogs: fetchedCatalog,
+                catalogs: transformCatalog(fetchedCatalog),
             },
         }));
     },

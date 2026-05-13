@@ -48,7 +48,7 @@ export interface ModificationResponseDto {
 }
 
 export interface CatalogResponseDto {
-    id: number;
+    typeId?: number;
     groupId: number;
     groupCode: string;
     subGroupCode: string;

@@ -44,6 +44,7 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
             engineType: item.engineType.name,
             modelType: item.model.model,
             bodyType: item.bodyType.name,
+            image: item.image,
             modelId
         }));
         return modifications;
@@ -60,6 +61,7 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
             modelType: '',
             bodyType: '',
             modelId: 0,
+            image: ''
         }];
     }
 };
@@ -70,7 +72,7 @@ export const getCatalogApi = async (modificationId: number): Promise<Catalog[]> 
             method: 'GET',
         });
         const catalog: Catalog[] = res.data.map((item) => ({ 
-            id: item.id, 
+            typeId: item?.typeId ?? item?.typeAutotechId, 
             groupId: item.groupId,
             groupCode: item.groupCode,
             subGroupCode: item.subGroupCode,
@@ -79,7 +81,7 @@ export const getCatalogApi = async (modificationId: number): Promise<Catalog[]> 
         return catalog;
     } catch (error) {
         console.error(error);
-        return [{ id: 0, groupId: 0, groupCode: '0', subGroupCode: '0', count: 0 }];
+        return [{ typeId: 0, groupId: 0, groupCode: '0', subGroupCode: '0', count: 0 }];
     }
 };
 

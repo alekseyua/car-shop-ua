@@ -27,6 +27,15 @@
             "engineType": {
                 "label": "Виберіть тип двигуна",
                 "placeholder": "Виберіть тип двигуна"
+            },
+            "infoModification": {
+                "range": "Покоління",
+                "engineType": "Тип двигуна",
+                "kw": "Мощность",
+                "hp": "Лошадиные силы",
+                "cylinders": "Цилиндры",
+                "fuelType": "Тип топлива",
+                "bodyType": "Тип кузова"
             }
         }
     },

@@ -19,12 +19,13 @@ export type Modification = {
     modelType: string;
     bodyType: string;
     modificationAutotechId: number;
+    image: string;
 
     modelId: number;
 };
 
 export type Catalog = {
-    id: number;
+    typeId: number;
     groupId: number;
     groupCode: string;
     subGroupCode: string;
