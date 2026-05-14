@@ -31,7 +31,7 @@ const Header = () => {
                 <SearchButton />
                 <CartHeader />    
             </div>
-            <NavMenu />
+            {/* <NavMenu /> */}
         </Container>
     
     </div>

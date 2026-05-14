@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
-import { useVehicleFiltersStore } from '../../vehicleFilters/model/store';
+import { useVehicleFiltersStore } from '../../../fuetures/vehicleFilters/model/store';
+import { useCatalogStore } from '../../../entities/catalog/model/store';
 
-const Catalog = () => {
+const CatalogSidebar = () => {
       const {filters} = useVehicleFiltersStore();
+    const { getListItems } = useCatalogStore();
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
     const toggleGroup = (groupCode: string) => {
@@ -13,7 +15,6 @@ const Catalog = () => {
     };
 
   return (
-      <div className="grid grid-cols-[300px_1fr] bg-white w-full h-full py-[17px] px-[20px]">
           <div className="flex flex-col gap-1">
               <span className="text-2xl font-bold text-black">Catalog</span>
 
@@ -43,7 +44,10 @@ const Catalog = () => {
                                   {catalogItem.map((item) => (
                                       <div
                                           key={item.subGroupCode}
-                                          className="px-2 py-1 text-sm text-black grid grid-cols-[150px_1fr] items-start"
+                                          className="px-2 py-1 
+                                          text-sm text-black hover:cursor-pointer hover:text-[#1a66ff] transition-colors duration-300
+                                          grid grid-cols-[150px_1fr] items-start "
+                                          onClick={() => getListItems(item.typeId, item.groupId)}
                                       >
                                           <span>{item.subGroupCode}</span>
 
@@ -52,9 +56,9 @@ const Catalog = () => {
                                                   {item.count} parts
                                               </span>
 
-                                              <button className="px-2 py-1 text-xs text-white bg-[#ed1c24] rounded-md hover:bg-[#c71515] transition-colors duration-300">
+                                              {/* <button className="px-2 py-1 text-xs text-white bg-[#ed1c24] rounded-md hover:bg-[#c71515] transition-colors duration-300">
                                                   View
-                                              </button>
+                                              </button> */}
                                           </div>
                                       </div>
                                   ))}
@@ -64,12 +68,7 @@ const Catalog = () => {
                   );
               })}
           </div>
-
-          <div className="flex flex-col gap-1">
-              <span className="text-2xl font-bold text-black">Details</span>
-          </div>
-      </div>
   )
 }
 
-export default Catalog
+export default CatalogSidebar;

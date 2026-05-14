@@ -3,8 +3,9 @@
 import VehicleFilters from "../../fuetures/vehicleFilters/ui/VehicleFilters";
 import { useTranslations } from "next-intl";
 import { Container } from "../../shared/ui/layout/Container/Container";
-import Catalog from "../../fuetures/catalog/ui/Catalog";
+import Catalog from "../../widgets/catalog/ui/CatalogSidebar";
 import { useVehicleFiltersStore } from "../../fuetures/vehicleFilters/model/store";
+import CatalogLayout from "../../widgets/catalog/ui/CatalogLayout";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -19,9 +20,7 @@ export default function Home() {
         <VehicleFilters />
       </div>
         {Object.keys(filters.catalogs).length > 0 && 
-          <div className="flex flex-col w-full ">
-            <Catalog />
-          </div>
+          <CatalogLayout />
         }
     </Container>
   );

@@ -1,5 +1,5 @@
-import { Catalog } from "../../vehicleFilters/model/type";
-import { TransformCatalog } from "./type";
+import { Catalog } from "../../../fuetures/vehicleFilters/model/type";
+import { TransformCatalog } from "./types";
 
 export const transformCatalog = (catalog: Catalog[]): TransformCatalog => {
     const transformedCatalog = catalog.reduce((acc: TransformCatalog, item: Catalog ) => {

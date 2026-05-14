@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'leoparts.com.ua',
       },
+      {
+        protocol: 'https',
+        hostname: 'img2.ad.ua',
+      },
     ],
   },
 };
