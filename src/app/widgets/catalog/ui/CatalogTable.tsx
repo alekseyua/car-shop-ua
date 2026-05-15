@@ -1,29 +1,38 @@
 import { ResponseCatalogItem } from '@/src/app/entities/catalog/api/dto';
 import { useCatalogStore } from '@/src/app/entities/catalog/model/store';
-import Image from 'next/image';
-import gearIcom from '../../../shared/assets/icons/gear.svg';
-import React from 'react'
+import { useTranslations } from 'next-intl';
+import CardPreview from '@/src/app/shared/ui/Card/CardPreview';
 
 const CatalogTable = () => {
     const { listItems }: { listItems: ResponseCatalogItem[] } = useCatalogStore();
-  return (
-    <div>
-        {listItems.length > 0 ? (
-            <div className="min-w-full bg-white gap-3 flex flex-col">
-                      {listItems.map((item: ResponseCatalogItem) => (
-                        <div key={item.itemNo} className="grid grid-cols-[150px_1fr_1fr_1fr] border rounded-md">
-                              <Image src={item?.firstPic ? 'https://img2.ad.ua/imgs/' + item?.firstPic : gearIcom} alt={item.itemNo} width={150} height={150} className="object-cover rounded-l-md" />
-                            <div className="py-2 px-4">{item.itemNo}</div>
-                            <div className="py-2 px-4">{item.brand}</div>
-                            <div className="py-2 px-4">{item.price}</div>
-                        </div>
+    const t = useTranslations();
+
+    return (
+        <div>
+            {listItems.length > 0 ? (
+                <div className="
+                        w-full 
+                        bg-white 
+                        grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
+                        justify-items-center
+                        ">
+                    {listItems.map((item: ResponseCatalogItem) => (
+                        <CardPreview
+                            key={item.itemNo}
+                            imageSrc={'https://img2.ad.ua/imgs/' + item.firstPic}
+                            title={item.itemNo}
+                            description={item.description}
+                            rating={4} // Placeholder rating
+                            price={item.price}
+                            oldPrice={item.retail !== item.price ? item.retail : undefined}
+                        />
                     ))}
-            </div>
-        ) : (
-            <p>No items found.</p>
-        )}
-    </div>
-  )
+                </div>
+            ) : (
+                <p>{t("card.notProduct")}</p>
+            )}
+        </div>
+    )
 }
 
-export default CatalogTable
+export default CatalogTable;

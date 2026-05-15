@@ -19,7 +19,7 @@ export default function Home() {
         </span>
         <VehicleFilters />
       </div>
-        {Object.keys(filters.catalogs).length > 0 && 
+        {!!Object.keys(filters.catalogs).length && 
           <CatalogLayout />
         }
     </Container>

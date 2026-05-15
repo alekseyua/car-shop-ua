@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { useVehicleFiltersStore } from '../../../fuetures/vehicleFilters/model/store';
 import { useCatalogStore } from '../../../entities/catalog/model/store';
+import { useTranslations } from 'next-intl';
 
 const CatalogSidebar = () => {
       const {filters} = useVehicleFiltersStore();
+      const t = useTranslations();
     const { getListItems } = useCatalogStore();
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
@@ -16,7 +18,7 @@ const CatalogSidebar = () => {
 
   return (
           <div className="flex flex-col gap-1">
-              <span className="text-2xl font-bold text-black">Catalog</span>
+              <span className="text-2xl font-bold text-black">{t("catalog.title")}</span>
 
               {Object.entries(filters.catalogs).map(([groupCode, catalogItem]) => {
                   const isOpen = openGroups[groupCode];

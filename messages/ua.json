@@ -38,6 +38,7 @@
                 "bodyType": "Тип кузова"
             }
         }
+
     },
     "Header": {
         "Info": {
@@ -99,6 +100,36 @@
             "summary": "{count} товарів на {total} ₴",
             "button": {
                 "title": "Оформити замовлення"
+            }
+        }
+    },
+    "raiting": {
+        "views": "{count} відгуків"
+    },
+    "card": {
+        "description": "Опис товару",
+        "price": "Ціна",
+        "oldPrice": "Стара ціна",
+        "notProduct": "Немає товарів для відображення"
+    },
+    "catalog": {
+        "title": "Каталог запчастин",
+        "filters": {
+            "title": "Фільтри",
+            "brand": {
+                "label": "Марка"
+            },
+            "model": {
+                "label": "Модель"
+            },
+            "modification": {
+                "label": "Покоління"
+            },
+            "typeBody": {
+                "label": "Тип кузова"
+            },
+            "engineType": {
+                "label": "Тип двигуна"
             }
         }
     }

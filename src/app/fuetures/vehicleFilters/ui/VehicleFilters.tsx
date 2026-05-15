@@ -11,7 +11,9 @@ const VehicleFilters = () => {
   const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
   const t = useTranslations("HomePage");
   useEffect(() => {
-    useFilters.init();
+    if(filters.brands.length === 0){
+      useFilters.init();
+    }
   }, []);
 console.log('Current filters state:', filters);
   if(filters.brand?.name && filters.model?.name && filters.modification?.name){
