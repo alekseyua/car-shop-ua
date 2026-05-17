@@ -1,3 +1,4 @@
+import { api } from "@/src/app/shared/api/client";
 import { create } from "zustand";
 
 interface ProductDetailState {
@@ -9,8 +10,10 @@ interface ProductDetailState {
 
 export const useProductDetailStore = create<ProductDetailState>((set) => ({
     product: null,
-    getProduct: (id: string) => {
-        console.log(`Fetching product details for ID: ${id}`);
+    getProduct: async (id: string) => {
+        console.log(`Fetching product details for ID: ${id}`);  
+        const response = await api(`/items-catalog/${id}`);
+        console.log('API response:', response);
         // Fetch product details from API and update state
         // Example:
         // fetch(`/api/products/${id}`)
