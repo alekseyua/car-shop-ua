@@ -48,11 +48,11 @@ const ProductInfo = () => {
                 <div className="flex flex-col gap-1">
                   {product.item.stock.map((item, index: number) => (
                     <div key={index}>
-                      <ProductAvailabilityStatus
+                     {item.statusDelivery !== "notAvailable" && <ProductAvailabilityStatus
                         status={item.statusDelivery}
                         count={item.quantity}
-                        onClick={() => console.log("click")}
-                      />
+                        onClick={() => console.log("add to cart ", product.item.itemNo, ' --- ', item.statusDelivery)}
+                      />}
                     </div>
                   ))}
                 </div>
