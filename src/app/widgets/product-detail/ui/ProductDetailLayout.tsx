@@ -13,7 +13,7 @@ const ProductDetailLayout = ({ productId }: { productId: string }) => {
     }, [productId, getProduct]);
 
   return (
-    <div className="grid grid-cols-[1fr_400px] gap-4 bg-white w-full h-full">
+    <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full h-full">
         <ProductDetail />
         <ProductInfo />
     </div>

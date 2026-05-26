@@ -131,6 +131,16 @@
             "engineType": {
                 "label": "Тип двигуна"
             }
-        }
+        },
+        "descriptionNotLook": "Опис відсутній",
+        "notProduct": "Немає товарів для відображення",
+        "characteristics": "Характеристики",
+        "today": "сьогодні",
+        "tomorrow": "завтра",
+        "reserved": "зарезервовано",
+        "available": "Наявність",
+        "pieces": "шт",
+        "price": "Ціна",
+        "order": "Замовити"
     }
 }

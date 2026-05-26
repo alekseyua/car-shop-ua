@@ -1,9 +1,69 @@
+import { useProductDetailStore } from '@/src/app/entities/product-detail/model/store';
+import { CriteriaItem, ProductDetailResponse } from '@/src/app/entities/product-detail/model/types';
+import ProductAvailabilityStatus from '@/src/app/shared/ui/status/ProductAvailabilityStatus';
+import { useTranslations } from 'next-intl';
 import React from 'react'
 
 const ProductInfo = () => {
+    const { product, isLoading }:{ product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
+    const t = useTranslations("catalog");
   return (
-    <div>ProductInfo</div>
-  )
+    <div>
+      {isLoading ? (
+        <div> loading .....</div>
+      ) : (
+        <div className="flex flex-col gap-2 p-4 border-l w-full h-full">
+          <h1 className="text-2xl font-bold mb-4 text-black text-center">
+            {product?.item.description}
+          </h1>
+          {/* description product */}
+          {!!product?.item.criterias.length ? (
+            <div className="flex flex-col">
+              <h2 className="text-xl font-semibold mb-2 text-black">
+                {t("characteristics")}
+              </h2>
+              {product?.item.criterias.map(
+                (desc: CriteriaItem, index: number) => (
+                  <div className="flex gap-4 " key={desc.itemNo + "_" + index}>
+                    <div className="text-zinc-500">{desc.criteria}</div>
+                    <div className="text-black">{desc.value}</div>
+                  </div>
+                ),
+              )}
+            </div>
+          ) : (
+            <div className="text-lg text-center text-black-900">
+              {t("descriptionNotLook")}
+            </div>
+          )}
+          <div className="border rounded-md p-4 mt-4 bg-yellow-50">
+            <p className="text-lg text-gray-700 mb-2">
+              <span> {t('price')}: </span>
+              <span className='font-bold'>{product?.item.price}</span>
+              <span> UAH </span>
+            </p>
+            {product?.item?.stock.length && (
+              <p className="text-lg text-gray-500 mb-2">
+                {t("available")}:
+                <div className="flex flex-col gap-1">
+                  {product.item.stock.map((item, index: number) => (
+                    <div key={index}>
+                      <ProductAvailabilityStatus
+                        status={item.statusDelivery}
+                        count={item.quantity}
+                        onClick={() => console.log("click")}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </p>
+            )}
+          </div>
+           {/* Additional product info can be added here */}
+        </div>
+      )}
+    </div>
+  );
 }
 
 export default ProductInfo
