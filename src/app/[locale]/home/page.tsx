@@ -1,16 +1,17 @@
 'use client';
 
-import VehicleFilters from "../../fuetures/vehicleFilters/ui/VehicleFilters";
+import VehicleFilters from "../../../features/vehicleFilters/ui/VehicleFilters";
 import { useTranslations } from "next-intl";
-import { Container } from "../../shared/ui/layout/Container/Container";
-import Catalog from "../../widgets/catalog/ui/CatalogSidebar";
-import { useVehicleFiltersStore } from "../../fuetures/vehicleFilters/model/store";
-import CatalogLayout from "../../widgets/catalog/ui/CatalogLayout";
+import { Container } from "../../../shared/ui/layout/Container/Container";
+import { useVehicleFiltersStore } from "../../../features/vehicleFilters/model/store";
+import CatalogLayout from "../../../widgets/catalog/ui/CatalogLayout";
+import TopProduct from "@/src/widgets/catalog/ui/TopProduct";
 
 export default function Home() {
   const t = useTranslations("HomePage");
   const {filters} = useVehicleFiltersStore();
   
+
   return (
     <Container>
       <div className="flex flex-col items-start justify-start gap-4 bg-[#f2f4f3] w-full h-full py-[17px] px-[20px]">
@@ -19,8 +20,10 @@ export default function Home() {
         </span>
         <VehicleFilters />
       </div>
-        {!!Object.keys(filters.catalogs).length && 
-          <CatalogLayout />
+      
+        {!!Object.keys(filters.catalogs).length
+          ? <CatalogLayout />
+        : <TopProduct />
         }
     </Container>
   );

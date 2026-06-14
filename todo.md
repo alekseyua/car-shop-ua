@@ -128,6 +128,15 @@ src/
 └── processes/                   # Большие сценарии (редко нужны)
     └── checkout/
 
+app
+  ↓
+widgets
+  ↓
+features
+  ↓
+entities
+  ↓
+shared
 
 https://img2.ad.ua/imgs/tcd/0257_pic/MA-33121_1.JPG?46154166
 https://img2.ad.ua/imgs/tcd-pic/0257_pic/MA-33121_1.JPG?46154166

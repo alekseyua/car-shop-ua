@@ -1,4 +1,4 @@
-import { Container } from "@/src/app/shared/ui/layout/Container/Container";
+import { Container } from "@/src/shared/ui/layout/Container/Container";
 import ProductDetailLayout from "@/src/app/widgets/product-detail/ui/ProductDetailLayout";
 
 interface CatalogDetailPageProps {

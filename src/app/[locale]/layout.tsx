@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "../styles/globals.css";
-import Header from "../widgets/header/ui/Header";
-import Footer from "../widgets/footer/ui/Footer";
-import ModalProvider from "../providers/modal-provider";
+import "../../styles/globals.css";
+import Header from "../../widgets/header/ui/Header";
+import Footer from "../../widgets/footer/ui/Footer";
+import ModalProvider from "../../providers/modal-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
