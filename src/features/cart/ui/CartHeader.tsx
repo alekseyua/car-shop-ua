@@ -4,11 +4,22 @@ import Image from 'next/image'
 import React from 'react'
 import iconCart from '../../../shared/assets/icons/cart.svg';
 import { useTranslations } from 'next-intl';
+import { useCartStore } from '../model/store';
+import { CartItem } from '../model/types';
+
+const getTotalPrice = (cart: CartItem[]) => {
+  const total = cart.reduce((acc: number, cur: CartItem ) => {
+    return acc += cur.price * cur.quantity
+  }, 0)
+  return total;
+}
 
 const CartHeader = () => {
   const t = useTranslations('Header');
-  const count = 2;
-  const total = 6;
+  const { cartItems } = useCartStore();
+  const count = cartItems.length;
+  const total = getTotalPrice(cartItems).toFixed(2);
+  console.log({cartItems})
   return (
     <div className='flex gap-2 self-start'>
       {/* todo:

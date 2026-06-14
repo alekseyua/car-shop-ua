@@ -30,3 +30,30 @@ export interface StockItem {
     Q: string;
     R: number;
 }
+
+export interface ResponseTopProduct {
+    brand: string;
+    criteriaLine: string;
+    criterias: string[];
+
+    description: string;
+    longText: string | null;
+    searchDescription: string;
+
+    firstPic: string;
+
+    groupCode: string;
+    subGroupCode: string;
+
+    itemNo: string;
+
+    inStock: boolean;
+    quantity: number;
+
+    price: number;
+    retail: number;
+
+    salesUoM: string;
+
+    stock: StockItem[];
+}

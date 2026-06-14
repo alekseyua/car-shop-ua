@@ -25,6 +25,7 @@ const CatalogTable = () => {
                             rating={4} // Placeholder rating
                             price={item.price}
                             oldPrice={item.retail !== item.price ? item.retail : undefined}
+                            item={item}
                         />
                     ))}
                 </div>

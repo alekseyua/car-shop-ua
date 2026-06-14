@@ -1,5 +1,5 @@
 import { Container } from "@/src/shared/ui/layout/Container/Container";
-import ProductDetailLayout from "@/src/app/widgets/product-detail/ui/ProductDetailLayout";
+import ProductDetailLayout from "@/src/widgets/product-detail/ui/ProductDetailLayout";
 
 interface CatalogDetailPageProps {
   params: Promise<{

@@ -8,7 +8,7 @@ import Logo from '@/src/shared/ui/logo/Logo';
 import Contacts from '@/src/shared/ui/contacts/Contacts';
 import VinRequestButton from '@/src/features/vin-request/ui/VinRequestButton';
 import SearchButton from '@/src/features/search/ui/SearchButton';
-import CartHeader from '@/src/features/cartHeader/ui/CartHeader';
+import CartHeader from '@/src/features/cart/ui/CartHeader';
 import NavMenu from './NavMenu';
 
 const Header = () => {

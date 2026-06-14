@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { Container } from "../../../shared/ui/layout/Container/Container";
 import { useVehicleFiltersStore } from "../../../features/vehicleFilters/model/store";
 import CatalogLayout from "../../../widgets/catalog/ui/CatalogLayout";
-import TopProduct from "@/src/widgets/catalog/ui/TopProduct";
+import TopProductLayout from "@/src/widgets/catalog/ui/TopProductLayout";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -23,7 +23,7 @@ export default function Home() {
       
         {!!Object.keys(filters.catalogs).length
           ? <CatalogLayout />
-        : <TopProduct />
+        : <TopProductLayout />
         }
     </Container>
   );

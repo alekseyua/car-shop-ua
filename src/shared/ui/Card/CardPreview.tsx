@@ -4,6 +4,9 @@ import RaitingItemCard from '../Raiting/RaitingItemCard'
 import gearIcon from '../../../shared/assets/icons/gear.svg'
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
+import iconCart from '../../../shared/assets/icons/cart.svg';
+import { useCartStore } from '@/src/features/cart/model/store';
+import { CartItem, ProductDto } from '@/src/features/cart/model/types';
 
 interface CardPreviewProps {
     imageSrc: string;
@@ -12,17 +15,28 @@ interface CardPreviewProps {
     rating: number;
     price: number;
     oldPrice?: number;
+    item: any
 }
 
-const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description, rating, price, oldPrice }) => {
+const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description, rating, price, oldPrice, item }) => {
     const t = useTranslations();
+    const {addToCart} = useCartStore();
+    const handleAddToCart = (item: ProductDto) => {
+        // Implement add to cart functionality here
+        addToCart(item)
+    };
+
     return (
-        <Link className="
+        <div
+            className="
                             flex flex-col gap-1 
                             border rounded-md 
                             min-w-full align-items-center p-2
                             hover:shadow-md transition-shadow duration-300 hover:cursor-pointer
+                            overflow-hidden
                         "
+        >
+        <Link 
             href={`/catalog/detail/${title}`}
         >
             <Image
@@ -38,11 +52,34 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
                             "
             >{description}</div>
             <div className="text-[#737373] text-sm flex items-center gap-1"> {<RaitingItemCard count={4} />}- {t('raiting.views', { count: 0 })}</div>
+            </Link>
+            <div 
+                className={'flex justify-between items-center gap-2 mt-1 '}
+                >
             <div className="flex items-center gap-1">
-                <div className={`text-[#171717] text-lg font-extrabold ${oldPrice ? 'line-through text-gray-500 text-sm' : ''}`}>{price} ₴</div>
+                <div className={`text-[#171717] text-lg font-extrabold ${oldPrice ? 'line-through text-gray-500 text-sm' : ''}`}>{price.toFixed(2)} ₴</div>
                 {oldPrice && <span className="text-red-500 text-lg font-bold">{oldPrice} ₴</span>}
             </div>
-        </Link>
+            <div
+                className="flex items-center justify-center w-8 h-8 rounded bg-[#f5222d] hover:bg-[#ed1c24] transition-colors duration-200"
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleAddToCart(item)
+                }}
+            >
+                <Image
+                    src={iconCart}
+                    alt="Add to cart"
+                    width={15}
+                    height={15}
+                    style={{
+                        width: '15px',
+                        height: '15px',
+                    }}
+                />
+            </div>
+            </div>
+        </div>
     )
 }
 

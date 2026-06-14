@@ -1,13 +1,9 @@
 import { create } from "zustand";
 import { fetchCatalogItems, fetchTopProducts } from "../api/catalog.api";
-import { ResponseCatalogItem } from "../api/dto";
+import { ResponseCatalogItem, ResponseTopProduct } from "../api/dto";
+import { CatalogState } from "./types";
 
-interface CatalogState {
-    getListItems: (typeId: number, groupId: number) => void;
-    getListTopProducts: () => void;
-    listItems: ResponseCatalogItem[];
-    listTopProducts: ResponseCatalogItem[];
-}
+
 
 export const useCatalogStore = create<CatalogState>((set) => (
     {
@@ -17,10 +13,11 @@ export const useCatalogStore = create<CatalogState>((set) => (
             const res: ResponseCatalogItem[] = await fetchCatalogItems(typeId, groupId);
             set({ listItems: res ? res.map((item) => ({ ...item, firstPic: item?.firstPic.replace('tcd/', 'tcd-pic/') })) : [] });
         },
-        getListTopProducts: async () => {
+        getListTopProducts: async (): Promise<ResponseTopProduct> => {
             console.log('start request getListTopProducts');
-            const res: ResponseCatalogItem[] = await fetchTopProducts();
+            const res: ResponseTopProduct[] = await fetchTopProducts();
             set({ listTopProducts: res ? res.map((item) => ({ ...item, firstPic: item?.firstPic.replace('tcd/', 'tcd-pic/') })) : [] });
+            return res[0] as ResponseTopProduct;
         },
     }
 ));
