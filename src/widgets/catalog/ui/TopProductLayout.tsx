@@ -1,18 +1,11 @@
-'use client';
-
-import { ResponseCatalogItem, ResponseTopProduct } from '@/src/entities/catalog/api/dto';
-import { useCatalogStore } from '@/src/entities/catalog/model/store';
-import React, { useEffect } from 'react'
+import { ResponseTopProduct } from '@/src/entities/catalog/api/dto';
 import TopProductTable from './TopProductTable';
+import { getTopProducts } from '@/src/entities/catalog/api/catalog.service';
 
-const TopProductLayout = () => {
-    const { listTopProducts, getListTopProducts }: { listTopProducts: ResponseTopProduct[]; getListTopProducts: () => Promise<ResponseTopProduct> } = useCatalogStore();
-    useEffect(() => {
-        getListTopProducts();
-    }, []);
-    console.log(listTopProducts, 'listTopProducts');
+const TopProductLayout = async () => {
+  const topProducts: ResponseTopProduct[] = await getTopProducts();
   return (
-    <TopProductTable listTopProducts={listTopProducts} />
+    <TopProductTable listTopProducts={topProducts} />
   )
 }
 

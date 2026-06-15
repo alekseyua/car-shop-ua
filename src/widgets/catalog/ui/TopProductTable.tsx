@@ -2,7 +2,7 @@ import { ResponseTopProduct } from '@/src/entities/catalog/api/dto'
 import CardPreview from '@/src/shared/ui/Card/CardPreview'
 import React from 'react'
 
-const TopProductTable = ({ listTopProducts }: { listTopProducts: ResponseTopProduct[] }) => {
+const   TopProductTable = ({ listTopProducts }: { listTopProducts: ResponseTopProduct[] }) => {
   return (
       <div className="grid gap-4 grid-cols-4 bg-white w-full h-full py-[17px] px-[20px]">
 

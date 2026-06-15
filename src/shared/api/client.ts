@@ -1,94 +1,78 @@
 // ./src/shared / api /
 // ├── client.ts
-
+// src/shared/api/client.ts
 import { HOST } from "@/src/config";
 import { useAuthStore } from "@/src/features/auth-by-email/model/store";
+import { getRefreshToken } from "../auth/refrashManager";
 
 type FetchOptions = RequestInit & {
-    next?: NextFetchRequestConfig;
     skipAuth?: boolean;
 };
 
-let isRefreshing = false;
-let queue: Array<(token: string | null) => void> = [];
+type ApiResult<T> =
+    | { ok: true; data: T }
+    | { ok: false; error: "unauthorized" | "error"; status?: number };
 
 export async function api<T>(
     endpoint: string,
-    options: FetchOptions = {}
-) :Promise<T> {
-    try {
-        const token =
-            typeof window !== "undefined"
-                ? useAuthStore.getState().accessToken
-                : null;
-        const response = await fetch(HOST + endpoint,{
-            ...options,
-            credentials: "include",
-            cache: 'no-store',
-            headers: {
-                'Content-Type': 'application/json',
-                ...(options.skipAuth ? {} : token ? {
+    options: FetchOptions = {},
+    _retry = false
+): Promise<ApiResult<T>> {
+    const token =
+        typeof window !== "undefined"
+            ? useAuthStore.getState().accessToken
+            : null;
+
+    const response = await fetch(HOST + endpoint, {
+        ...options,
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            ...(options.skipAuth ? {} : token ? {
                 Authorization: `Bearer ${token}`,
-                } : {}),
-                ...(options.headers || {}),
-            },
-        })
-        if (response.status === 401 && !options.skipAuth) {
-            if(isRefreshing){
-                return new Promise((resolve, reject) => {
-                    queue.push((token) => {
-                        if (!token) return reject(new Error("Unauthorized"));
+            } : {}),
+            ...(options.headers || {}),
+        },
+    });
 
-                        const newOptions = {
-                            ...options,
-                            headers: {
-                                ...options.headers,
-                                Authorization: `Bearer ${token}`,
-                            },
-                        };
-
-                        api<T>(endpoint, newOptions).then(resolve).catch(reject);
-                    });
-                });
-            }
-            isRefreshing = true;
-            const token = await refreshToken();
-            isRefreshing = false;
-            queue.forEach(cb => cb(token));
-            queue = [];
-            if(token){
-                return api<T>(endpoint, options);
-            }
-            useAuthStore.getState().logout();
-            throw new Error("Unauthorized");
+    // =========================
+    // 401 HANDLING
+    // =========================
+    if (response.status === 401 && !options.skipAuth) {
+        if (_retry) {
+            return {
+                ok: false,
+                error: "unauthorized",
+                status: 401,
+            };
         }
 
-        if(!response.ok){
-            throw await response.json().then((error) => {
-                throw error;
-            });
+        const newToken = await getRefreshToken();
+
+        if (!newToken) {
+            return {
+                ok: false,
+                error: "unauthorized",
+                status: 401,
+            };
         }
-        return await response.json()
-    } catch (error) {
-        throw error;
+
+        // retry ONCE
+        return api<T>(endpoint, options, true);
     }
-}
 
-async function refreshToken(): Promise<string | null> {
-    try {
-        const res = await fetch(HOST + "/auth/refresh", {
-            method: "POST",
-            credentials: "include", // 👈 важно (cookie refresh token)
-        });
-
-        if (!res.ok) return null;
-
-        const data = await res.json();
-
-        useAuthStore.getState().setToken(data.accessToken);
-
-        return data.accessToken;
-    } catch {
-        return null;
+    // =========================
+    // ERROR HANDLING
+    // =========================
+    if (!response.ok) {
+        return {
+            ok: false,
+            error: "error",
+            status: response.status,
+        };
     }
+
+    const data = await response.json();
+
+    return { ok: true, data };
 }

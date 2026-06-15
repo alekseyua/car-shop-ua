@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import React from 'react'
 import RaitingItemCard from '../Raiting/RaitingItemCard'
@@ -5,8 +6,7 @@ import gearIcon from '../../../shared/assets/icons/gear.svg'
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
 import iconCart from '../../../shared/assets/icons/cart.svg';
-import { useCartStore } from '@/src/features/cart/model/store';
-import { CartItem, ProductDto } from '@/src/features/cart/model/types';
+import { handleAddToCart } from '@/src/features/cart/model/actions';
 
 interface CardPreviewProps {
     imageSrc: string;
@@ -20,11 +20,6 @@ interface CardPreviewProps {
 
 const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description, rating, price, oldPrice, item }) => {
     const t = useTranslations();
-    const {addToCart} = useCartStore();
-    const handleAddToCart = (item: ProductDto) => {
-        // Implement add to cart functionality here
-        addToCart(item)
-    };
 
     return (
         <div
@@ -62,10 +57,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
             </div>
             <div
                 className="flex items-center justify-center w-8 h-8 rounded bg-[#f5222d] hover:bg-[#ed1c24] transition-colors duration-200"
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleAddToCart(item)
-                }}
+                    onClick={(e) => handleAddToCart(item)}
             >
                 <Image
                     src={iconCart}

@@ -23,7 +23,11 @@ const ProductDetail = () => {
            alt={imagePath.split("/").pop() ?? "Product Image"}
            width={500}
            height={500}
-           className="object-cover"
+           style={{
+            width: '500px',
+            height: '500px'
+           }}
+          //  className="object-cover"
            />
           )}
           </>

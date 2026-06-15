@@ -3,7 +3,7 @@ import React from 'react'
 
 const Footer = () => {
   return (
-    <div className='bg-[#3c3f44] py-2'>
+      <div className='bg-[#3c3f44] py-2 h-full mb-4'>
       <Container className='flex flex-row gap-3 px-[15px] pt-[5px] pb-[10px] justify-between flex-wrap'>
           <div className="flex flex-col gap-2">
               <div className="flex text-[#ffffffcc] text-xs">© 2024 CarShopUa. All rights reserved.</div>

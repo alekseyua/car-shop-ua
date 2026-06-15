@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import { useVehicleFiltersStore } from '../model/store'
 import { useTranslations } from 'next-intl';
@@ -10,14 +12,14 @@ const VehicleFilters = () => {
   const [locked, setLocked] = useState(false);
   const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
   const t = useTranslations("HomePage");
+
   useEffect(() => {
     if(filters.brands.length === 0){
       useFilters.init();
     }
   }, []);
-console.log('Current filters state:', filters);
+
   if(filters.brand?.name && filters.model?.name && filters.modification?.name){
-    console.log('Fetching modifications for brand:', filters.brand.name, 'and model:', filters.model.name);
     return(
       <div className="flex gap-4">
         <div className='flex p-2 border rounded-md bg-[#e7e7e7]'>
@@ -34,6 +36,7 @@ console.log('Current filters state:', filters);
       </div>
     )
   }
+  
   return (
     <div className="flex gap-4" >
       {/* Year Filter */}

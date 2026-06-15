@@ -14,7 +14,7 @@ const sizes = {
 export const Container: React.FC<ContainerProps> = ({ children, className="", size = "xl" }: ContainerProps) => {
     return (
         <div
-            className={'max-w-4xl mx-auto p-4' + className}
+            className={'max-w-4xl mx-auto p-4 ' + className}
             style={{
                 maxWidth: sizes[size],
                 margin: "0 auto",

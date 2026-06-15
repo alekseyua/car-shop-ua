@@ -1,4 +1,4 @@
-'use client';
+// 'use client';
 
 import VehicleFilters from "../../../features/vehicleFilters/ui/VehicleFilters";
 import { useTranslations } from "next-intl";
@@ -9,7 +9,7 @@ import TopProductLayout from "@/src/widgets/catalog/ui/TopProductLayout";
 
 export default function Home() {
   const t = useTranslations("HomePage");
-  const {filters} = useVehicleFiltersStore();
+  // const {filters} = useVehicleFiltersStore();
   
 
   return (
@@ -21,7 +21,9 @@ export default function Home() {
         <VehicleFilters />
       </div>
       
-        {!!Object.keys(filters.catalogs).length
+        {
+        // !!Object.keys(filters.catalogs).length
+        false
           ? <CatalogLayout />
         : <TopProductLayout />
         }

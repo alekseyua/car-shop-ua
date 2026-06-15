@@ -1,4 +1,3 @@
-
 'use client';
 
 import { getMe } from "@/src/features/auth-by-email/api/api";
@@ -13,7 +12,6 @@ const TopNav = () => {
     useEffect(() => {
         getMe();
     }, []);
-    console.log("TopNav user:", useAuthStore());
     return (
         <div className='justify-end flex items-center gap-3'>
             <Link href="/info/delivery">{t('Info.Delivery.title')}</Link>

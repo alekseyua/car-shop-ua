@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import React from 'react'
-import IconLogo from "@/src/shared/assets/images/logo.jpg"
+import IconLogo from "@/src/shared/assets/images/logo-bg.png"
 import Image from 'next/image';
 
 const Logo = () => {
@@ -16,10 +16,10 @@ const Logo = () => {
         width={130}
         height={70}
         alt='logo'
-        objectFit='cover'
         style={{
           width: '130px',
           height: '70px',
+          objectFit: 'contain'
         }}
       />
     </div>

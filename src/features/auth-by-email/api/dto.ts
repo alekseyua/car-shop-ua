@@ -1,7 +1,16 @@
 export interface AuthResponse {
-    user: UserDTO;
-    refreshToken: string;
-    accessToken: string;
+    data: {
+        user: UserDTO;
+        refreshToken: string;
+        accessToken: string;
+    },
+    ok: boolean;
+}
+
+export interface AuthErrorResponse {
+    ok: boolean;
+    error: "unauthorized" | "error";
+    status?: number | undefined;
 }
 
 export type UserDTO = {

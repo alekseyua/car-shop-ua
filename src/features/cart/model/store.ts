@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { CartItem, CartStore, ProductDto } from "./types";
 
 export const useCartStore = create<CartStore>((set, get) => ({
+    
     cartItems: [],
     addToCart: (item: ProductDto) => {
         const existingItem = get().cartItems.find((cartItem: CartItem) => cartItem.itemNo === item.itemNo);

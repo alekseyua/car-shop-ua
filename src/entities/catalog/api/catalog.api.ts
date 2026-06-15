@@ -22,3 +22,4 @@ export const fetchTopProducts = async (): Promise<ResponseTopProduct[]> => {
         return [];
     }
 }
+

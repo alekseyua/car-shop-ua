@@ -1,11 +1,13 @@
+'use client'
+
 import React, { useState } from 'react'
 import { useVehicleFiltersStore } from '../../../features/vehicleFilters/model/store';
 import { useCatalogStore } from '../../../entities/catalog/model/store';
 import { useTranslations } from 'next-intl';
 
 const CatalogSidebar = () => {
-      const {filters} = useVehicleFiltersStore();
-      const t = useTranslations();
+    const {filters} = useVehicleFiltersStore();
+    const t = useTranslations();
     const { getListItems } = useCatalogStore();
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 

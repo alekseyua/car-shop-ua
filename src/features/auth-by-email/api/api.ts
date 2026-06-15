@@ -3,11 +3,11 @@
 // │   ├── api.ts
 import { api } from "@/src/shared/api/client";
 import { useAuthStore } from "../model/store";
-import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
+import { AuthErrorResponse, AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
 
 export const registerUserByEmail = async (dto: RegisterDTO) => {
     try {
-        const data = await api<AuthResponse>("/auth/register", {
+        const {data, ok} = await api<AuthResponse | AuthErrorResponse>("/auth/register", {
             method: "POST",
             body: JSON.stringify(dto),
             skipAuth: true,
@@ -60,6 +60,6 @@ export const getMe = async () => {
     const res = await api<UserDTO>("/users/me", {
         method: "GET",
     });
-    useAuthStore.getState().setUser(res);
+    // useAuthStore.getState().setUser(res);
     return res;
 };
