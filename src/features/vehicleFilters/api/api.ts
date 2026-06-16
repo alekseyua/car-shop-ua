@@ -5,10 +5,15 @@ import { Brand, Modification, Model, Catalog } from "../model/type";
 
 export const getBrandsApi = async (): Promise<Brand[]> => {
     try {
-        const res: PaginationDto<BrandsResponseDto> = await api('/car-brands?page=1&limit=9999', {
+        const result = await api<PaginationDto<BrandsResponseDto>>('/car-brands?page=1&limit=9999', {
             method: 'GET',
         });
-        const brands: Brand[] = res.data.map((item) => ({ id: item.id, name: item.mark }));
+        if (!result.ok) {
+            throw new Error(result.error);
+        }
+
+        const { data } = result;
+        const brands: Brand[] = data.data.map((item) => ({ id: item.id, name: item.mark }));
         return brands;
     } catch (error) {
         console.error(error)
@@ -18,10 +23,15 @@ export const getBrandsApi = async (): Promise<Brand[]> => {
 
 export const getModelsApi = async (brandId: number): Promise<Model[]> => {
     try {
-        const res: PaginationDto<ModelResponseDto> = await api(`/car-models?page=1&limit=999&brandId=${brandId}`, {
+        const result = await api<PaginationDto<ModelResponseDto>>(`/car-models?page=1&limit=999&brandId=${brandId}`, {
             method: 'GET',
         });
-        const models: Model[] = res.data.map((item) => ({ id: item.id, name: item.model, brandId }));
+        if (!result.ok) {
+            throw new Error(result.error);
+        }
+
+        const { data } = result;
+        const models: Model[] = data.data.map((item) => ({ id: item.id, name: item.model, brandId }));
         return models;
     } catch (error) {
         console.error(error);
@@ -31,10 +41,15 @@ export const getModelsApi = async (brandId: number): Promise<Model[]> => {
 
 export const getModificationsApi = async (modelId: number): Promise<Modification[]> => {
     try{
-        const res: PaginationDto<ModificationResponseDto> = await api(`/car-modification?page=1&limit=999&modelId=${modelId}`, {
+        const result = await api<PaginationDto<ModificationResponseDto>>(`/car-modification?page=1&limit=999&modelId=${modelId}`, {
             method: 'GET',
         });
-        const modifications: Modification[] = res.data.map((item) => ({ 
+        if (!result.ok) {
+            throw new Error(result.error);
+        }
+
+        const { data } = result;
+        const modifications: Modification[] = data.data.map((item) => ({ 
             id: item.id, 
             name: item.model.model + ' ' + item.typeName,
             modificationAutotechId: item.modificationAutotechId,
@@ -68,10 +83,15 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
 
 export const getCatalogApi = async (modificationId: number): Promise<Catalog[]> => {
     try {
-        const res: PaginationDto<CatalogResponseDto> = await api(`/catalog?page=1&limit=999&typeAutotechId=${modificationId}`, {
+        const result = await api<PaginationDto<CatalogResponseDto>>(`/category?page=1&limit=999&typeAutotechId=${modificationId}`, {
             method: 'GET',
         });
-        const catalog: Catalog[] = res.data.map((item) => ({ 
+        if (!result.ok) {
+            throw new Error(result.error);
+        }
+
+        const { data } = result;
+        const catalog: Catalog[] = data.data.map((item) => ({ 
             typeId: item?.typeId ?? item?.typeAutotechId, 
             groupId: item.groupId,
             groupCode: item.groupCode,

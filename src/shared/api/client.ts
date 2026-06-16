@@ -9,7 +9,7 @@ type FetchOptions = RequestInit & {
     skipAuth?: boolean;
 };
 
-type ApiResult<T> =
+export type ApiResult<T> =
     | { ok: true; data: T }
     | { ok: false; error: "unauthorized" | "error"; status?: number };
 

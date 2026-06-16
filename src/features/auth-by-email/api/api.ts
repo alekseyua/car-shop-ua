@@ -1,23 +1,30 @@
 // ./src/features / auth - by - email /
 // ├── api
 // │   ├── api.ts
-import { api } from "@/src/shared/api/client";
+import { api, ApiResult } from "@/src/shared/api/client";
 import { useAuthStore } from "../model/store";
-import { AuthErrorResponse, AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
+import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
+import { synchronServerCart } from "../../cart/model/actions";
 
 export const registerUserByEmail = async (dto: RegisterDTO) => {
     try {
-        const {data, ok} = await api<AuthResponse | AuthErrorResponse>("/auth/register", {
+        const result= await api<AuthResponse>("/auth/register", {
             method: "POST",
             body: JSON.stringify(dto),
             skipAuth: true,
         });
+        if (!result.ok) {
+            // result.error доступен здесь
+            throw new Error(result.error);
+        }
 
+        const { data } = result;
         useAuthStore.getState().setAuth(
             data.user,
             data.accessToken
         );
-
+        
+        synchronServerCart();
         return data;
     } catch (error) {
         throw error;
@@ -27,15 +34,23 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
 
 export const loginUserbyEmail = async (dto: LoginDTO) => {
     try {
-        const data = await api<AuthResponse>("/auth/login", {
+        const result = await api<AuthResponse>("/auth/login", {
             method: "POST",
             body: JSON.stringify(dto),
             skipAuth: true,
         });
 
-        console.log("loginUserbyEmail data:", data);
+        if (!result.ok) {
+            // result.error доступен здесь
+            throw new Error(result.error);
+        }
 
+        const { data } = result;
+        
+        // console.log("loginUserbyEmail data:", data);
+        
         useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken);
+        synchronServerCart();
     }
     catch (error) {
         console.log("Error in loginUserbyEmail:", error);

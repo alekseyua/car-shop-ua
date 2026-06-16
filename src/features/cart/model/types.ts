@@ -6,6 +6,9 @@ export interface CartStore {
     addToCart: (item: ProductDto) => void;
     removeFromCart: (itemNo: string) => void;
     clearCart: () => void;
+    increaseQuantity: (itemNo: string) => void;
+    decreaseQuantity: (itemNo: string) => void;
+    syncWithServer: (items: CartItem[]) => void;
 }
 
 export interface CartItem {
