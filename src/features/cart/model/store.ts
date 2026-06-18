@@ -8,7 +8,7 @@ export const useCartStore = create<CartStore>()(
         (set, get) => ({
 
             cartItems: [],
-            addToCart: (item: ProductDto) => {
+            addToCart: async (item: ProductDto) => {
                 const existingItem = get().cartItems.find((cartItem: CartItem) => cartItem.itemNo === item.itemNo);
                 if (existingItem) {
                     // If the item already exists in the cart, increase its quantity
@@ -23,6 +23,10 @@ export const useCartStore = create<CartStore>()(
                     // If the item doesn't exist in the cart, add it with quantity 1
                     set({ cartItems: [...get().cartItems, { ...item, quantity: 1 }] });
                 }
+                await addCartItem({
+                    productId: item.itemNo,
+                    quantity: 1,
+                });
             },
             removeFromCart: (itemNo: string) => {
                 set({ cartItems: get().cartItems.filter((item: CartItem) => item.itemNo !== itemNo) });
@@ -66,14 +70,14 @@ export const useCartStore = create<CartStore>()(
                         // если товар уже есть
                         // можно увеличить количество
                         await addCartItem({
-                            itemNo: localItem.itemNo,
+                            productId: localItem.itemNo,
                             quantity: localItem.quantity,
                         });
 
                     } else {
                         // если товара нет
                         await addCartItem({
-                            itemNo: localItem.itemNo,
+                            productId: localItem.itemNo,
                             quantity: localItem.quantity,
                         });
                     }

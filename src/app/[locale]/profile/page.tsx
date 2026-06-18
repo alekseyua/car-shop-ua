@@ -6,6 +6,7 @@ export default async function Profile (){
 
     return <div>
         Profile
+        <br />
         <button 
             onClick={handleLoguot}
             >exit</button>

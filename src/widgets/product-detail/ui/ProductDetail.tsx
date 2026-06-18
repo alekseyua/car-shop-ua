@@ -7,7 +7,7 @@ import React from 'react'
 //https://img2.ad.ua/imgs/tcd-pic/4686_pic/pr23010185.JPG
 const ProductDetail = () => {
   const { product, isLoading }:{ product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
-  const imagePath: string | null = product?.item.firstPic? normolizeImagePath(
+  const imagePath: string | null = product?.item?.firstPic? normolizeImagePath(
     product?.item.firstPic,
   ) : null;
 
@@ -25,7 +25,8 @@ const ProductDetail = () => {
            height={500}
            style={{
             width: '500px',
-            height: '500px'
+            height: '500px',
+            objectFit: 'contain'
            }}
           //  className="object-cover"
            />

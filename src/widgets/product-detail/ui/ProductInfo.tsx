@@ -18,11 +18,11 @@ const ProductInfo = () => {
             {product?.item.description}
           </h1>
           {/* description product */}
-          {!!product?.item.criterias.length ? (
-            <div className="flex flex-col">
-              <h2 className="text-xl font-semibold mb-2 text-black">
+            {!!product?.item.criterias.length || !!product?.item?.searchDescription ? (
+            <div className="flex flex-col text-black">
+                {!!product?.item.criterias.length  && <h2 className="text-xl font-semibold mb-2 text-black">
                 {t("characteristics")}
-              </h2>
+              </h2>}
               {product?.item.criterias.map(
                 (desc: CriteriaItem, index: number) => (
                   <div className="flex gap-4 " key={desc.itemNo + "_" + index}>
@@ -31,9 +31,17 @@ const ProductInfo = () => {
                   </div>
                 ),
               )}
+                {!!product?.item?.searchDescription  && (
+                  <>
+                    <h2 className="text-xl font-semibold mb-2 text-black"> 
+                      {t("add-characteristics")}
+                    </h2>
+                  <p>{product.item.searchDescription}</p>
+                  </>
+                )}
             </div>
           ) : (
-            <div className="text-lg text-center text-black-900">
+            <div className="text-lg text-start text-black">
               {t("descriptionNotLook")}
             </div>
           )}

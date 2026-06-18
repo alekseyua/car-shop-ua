@@ -6,6 +6,7 @@ import iconCart from '../../../shared/assets/icons/cart.svg';
 import { useTranslations } from 'next-intl';
 import { useCartStore } from '../model/store';
 import { CartItem } from '../model/types';
+import { useRouter } from 'next/navigation';
 
 const getTotalPrice = (cart: CartItem[]) => {
   const total = cart.reduce((acc: number, cur: CartItem ) => {
@@ -15,6 +16,7 @@ const getTotalPrice = (cart: CartItem[]) => {
 }
 
 const CartHeader = () => {
+  const router = useRouter();
   const t = useTranslations('Header');
   const { cartItems } = useCartStore();
   const count = cartItems.length;
@@ -45,7 +47,7 @@ const CartHeader = () => {
         <p className='text-white text-sm font-bold'>{t('cart.summary', {count, total})}</p>
         {!!count && <button 
           className='text-xs text-white active:scale-95 hover:bg-red-600 transition-colors duration-200 rounded bg-[#ed1c24] mt-1 py-[2px] px-2'
-          onClick={()=>console.log('click btn cart')}
+          onClick={()=>router.push('/order')}
         >
           {t('cart.button.title')} 
         </button>}

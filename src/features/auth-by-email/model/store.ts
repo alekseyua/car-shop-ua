@@ -20,8 +20,11 @@ export const useAuthStore = create<AuthState>()(
             setToken: (accessToken) =>
                 set({ accessToken }),
 
-            logout: () =>
-                set({ user: null, accessToken: null }),
+            logout: () => {
+                set({ user: null, accessToken: null });
+
+                localStorage.removeItem("auth-storage");
+            },
         }),
         {
             name: "auth-storage", // ключ в localStorage

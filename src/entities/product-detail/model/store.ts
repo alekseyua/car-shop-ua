@@ -15,9 +15,13 @@ export const useProductDetailStore = create<ProductDetailState>((set) => ({
     console.log(`Fetching product details for ID: ${id}`);
     set({ isLoading: true });
     try{
-        const response: ProductDetailResponse = await api(`/product/${id}`);
-        console.log("API response:", response);
-        set({ product: response, isLoading: false });
+        const response = await api(`/product/${id}`);
+        if(!response.ok){
+          throw response.error;
+        }
+        const {data} = response;
+        console.log("API response:", data);
+      set({ product: data as ProductDetailResponse, isLoading: false });
     } catch (error) {
         console.error("Error fetching product details:", error);
         set({ isLoading: false });
