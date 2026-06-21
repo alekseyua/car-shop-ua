@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { CartItem, CartStore, ProductDto } from "./types";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { addCartItem } from "../api/cart.api";
+import { addCartItem, updateQuantityItemCart } from "../api/cart.api";
 
 export const useCartStore = create<CartStore>()(
     persist(
@@ -15,46 +15,43 @@ export const useCartStore = create<CartStore>()(
                     set({
                         cartItems: get().cartItems.map((cartItem: CartItem) =>
                             cartItem.itemNo === item.itemNo
-                                ? { ...cartItem, quantity: cartItem.quantity + 1 }
+                                ? { ...cartItem, 
+                                    title: item.description,
+                                    imageUrl: item.firstPic,
+                                    quantity: cartItem.quantity + 1 }
                                 : cartItem
                         ),
                     });
                 } else {
                     // If the item doesn't exist in the cart, add it with quantity 1
-                    set({ cartItems: [...get().cartItems, { ...item, quantity: 1 }] });
+                    set({ cartItems: [...get().cartItems, { ...item, 
+                        title: item.description,
+                        imageUrl: item.firstPic,
+                        quantity: 1 }] });
                 }
                 await addCartItem({
-                    productId: item.itemNo,
+                    itemNo: item.itemNo,
                     quantity: 1,
                 });
             },
             removeFromCart: (itemNo: string) => {
                 set({ cartItems: get().cartItems.filter((item: CartItem) => item.itemNo !== itemNo) });
+                
             },
             clearCart: () => {
                 set({ cartItems: [] });
             },
-            increaseQuantity: (itemNo: string) => {
+            changeQuantity: (itemNo: string, count: number) => {
                 set({
-                    cartItems: get().cartItems.map((item) =>
-                        item.itemNo === itemNo
-                            ? { ...item, quantity: item.quantity + 1 }
+                    cartItems: get().cartItems.map((item: CartItem) => 
+                        item.itemNo === itemNo  
+                            ?{...item, quantity: count}
                             : item
-                    ),
+                    )
                 });
+                updateQuantityItemCart(itemNo, count); 
             },
-
-            decreaseQuantity: (itemNo: string) => {
-                set({
-                    cartItems: get().cartItems
-                        .map((item) =>
-                            item.itemNo === itemNo
-                                ? { ...item, quantity: item.quantity - 1 }
-                                : item
-                        )
-                        .filter((item) => item.quantity > 0),
-                });
-            },
+           
             syncWithServer: async (serverItems: CartItem[]) => {
                 const localItems = get().cartItems;
 
@@ -70,14 +67,14 @@ export const useCartStore = create<CartStore>()(
                         // если товар уже есть
                         // можно увеличить количество
                         await addCartItem({
-                            productId: localItem.itemNo,
+                            itemNo: localItem.itemNo,
                             quantity: localItem.quantity,
                         });
 
                     } else {
                         // если товара нет
                         await addCartItem({
-                            productId: localItem.itemNo,
+                            itemNo: localItem.itemNo,
                             quantity: localItem.quantity,
                         });
                     }

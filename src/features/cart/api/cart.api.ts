@@ -19,3 +19,30 @@ export const addCartItem = (item: AddToCartDto) => {
         body: JSON.stringify(item),
     });
 };
+
+export const deleteItemFromCart = async ( itemNo: string) => {
+    try {
+        const url = `/cart/items/${itemNo}`;
+        const res = await api(url,{
+            method: 'DELETE',
+
+        });
+        console.log('response delete item from cart: ', res)
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const updateQuantityItemCart = async (itemNo: string, count: number) => {
+    try {
+        const url = `/cart/update-quantity/${itemNo}`;
+        const res = await api(url, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                quantity: count
+            })
+        })
+    } catch (error) {
+        throw error;
+    }
+}

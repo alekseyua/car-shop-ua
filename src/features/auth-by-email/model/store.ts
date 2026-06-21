@@ -4,15 +4,17 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { AuthState } from "./types";
+import { useCartStore } from "../../cart/model/store";
 
 export const useAuthStore = create<AuthState>()(
     persist(
         (set) => ({
             user: null,
             accessToken: null,
+            refreshToken: null,
 
-            setAuth: (user, accessToken) =>
-                set({ user, accessToken }),
+            setAuth: (user, accessToken, refreshToken) =>
+                set({ user, accessToken, refreshToken }),
 
             setUser: (user) =>
                 set({ user }),
@@ -20,10 +22,15 @@ export const useAuthStore = create<AuthState>()(
             setToken: (accessToken) =>
                 set({ accessToken }),
 
-            logout: () => {
-                set({ user: null, accessToken: null });
+            setRefreshToken: (refreshToken) =>
+                    set({refreshToken}),
 
-                localStorage.removeItem("auth-storage");
+            logout: () => {
+                set({ user: null, accessToken: null, refreshToken: null });
+                // useCartStore.setState({
+                //     cartItems: []
+                // })
+                // localStorage.removeItem("auth-storage");
             },
         }),
         {
@@ -33,6 +40,7 @@ export const useAuthStore = create<AuthState>()(
 
             partialize: (state) => ({
                 accessToken: state.accessToken,
+                refreshToken: state.refreshToken,
                 user: state.user,
             }),
         }

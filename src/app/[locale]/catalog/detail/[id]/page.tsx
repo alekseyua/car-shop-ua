@@ -15,7 +15,7 @@ export default async function CatalogDetailPage({
   
   return (
     <Container className="bg-white w-full">
-      <ProductDetailLayout productId={id} />
+      <ProductDetailLayout itemNo={id} />
     </Container>
   );
 }

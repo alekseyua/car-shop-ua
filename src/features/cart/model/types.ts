@@ -6,17 +6,16 @@ export interface CartStore {
     addToCart: (item: ProductDto) => void;
     removeFromCart: (itemNo: string) => void;
     clearCart: () => void;
-    increaseQuantity: (itemNo: string) => void;
-    decreaseQuantity: (itemNo: string) => void;
+    changeQuantity: (itemNo: string, count: number) => void;
     syncWithServer: (items: CartItem[]) => void;
 }
 
 export interface CartItem {
     itemNo: string;
     brand: string;
-    description: string;
+    title: string;
     searchDescription: string;
-    firstPic: string;
+    imageUrl: string;
     groupCode: string;
     subGroupCode: string;
     price: number;

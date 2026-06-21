@@ -21,7 +21,8 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
         const { data } = result;
         useAuthStore.getState().setAuth(
             data.user,
-            data.accessToken
+            data.accessToken,
+            data.refreshToken
         );
         
         synchronServerCart();
@@ -49,7 +50,7 @@ export const loginUserbyEmail = async (dto: LoginDTO) => {
         
         // console.log("loginUserbyEmail data:", data);
         
-        useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken);
+        useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken, data.refreshToken);
         synchronServerCart();
     }
     catch (error) {

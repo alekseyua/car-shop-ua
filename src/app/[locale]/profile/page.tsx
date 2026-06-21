@@ -1,6 +1,7 @@
 'use client'
 
-import { handleLoguot } from "@/src/features/auth-by-email/model/actions";
+import { handleLogout } from "@/src/processes/logout/model/logout"
+
 
 export default async function Profile (){
 
@@ -8,7 +9,7 @@ export default async function Profile (){
         Profile
         <br />
         <button 
-            onClick={handleLoguot}
+            onClick={handleLogout}
             >exit</button>
     </div>
 }

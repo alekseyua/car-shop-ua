@@ -5,12 +5,12 @@ import ProductDetail from './ProductDetail'
 import ProductInfo from './ProductInfo'
 import { useProductDetailStore } from '@/src/entities/product-detail/model/store'
 
-const ProductDetailLayout = ({ productId }: { productId: string }) => {
+const ProductDetailLayout = ({ itemNo }: { itemNo: string }) => {
     const { getProduct } = useProductDetailStore();
 
     useEffect(() => {
-      getProduct(productId);
-    }, [productId, getProduct]);
+      getProduct(itemNo);
+    }, [itemNo, getProduct]);
 
   return (
     <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full h-full">
