@@ -1,5 +1,6 @@
 import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
 import { CriteriaItem, ProductDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
+import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
 import { handleAddToCart } from '@/src/features/cart/model/actions';
 import ProductAvailabilityStatus from '@/src/shared/ui/status/ProductAvailabilityStatus';
 import { useTranslations } from 'next-intl';
@@ -54,17 +55,21 @@ const ProductInfo = () => {
             {product?.item?.stock.length && (
               <p className="text-lg text-gray-500 mb-2">
                 {t("available")}:
-                <div className="flex flex-col gap-1">
+                {/* <div className="flex flex-col gap-1">
                   {product.item.stock.map((item, index: number) => (
                     <div key={index}>
                      {item.statusDelivery !== "notAvailable" && <ProductAvailabilityStatus
                         status={item.statusDelivery}
                         count={item.quantity}
-                        onClick={() => handleAddToCart(product?.item as ProductDetail)}
+                        onClick={() => handleAddToCart(product?.item as ProductDetail, item.statusDelivery)}
                       />}
                     </div>
                   ))}
-                </div>
+                </div> */}
+                  <ProductAvailabilityList
+                    onClick={(statusDelivery: string) => handleAddToCart(product?.item as ProductDetail, statusDelivery)}
+                    stock={product.item.stock}
+                  />
               </p>
             )}
           </div>

@@ -13,7 +13,7 @@ export default function Home() {
   
 
   return (
-    <Container>
+    <Container className="flex flex-col h-full p-[0]">
       <div className="flex flex-col items-start justify-start gap-4 bg-[#f2f4f3] w-full h-full py-[17px] px-[20px]">
         <span className="text-3xl font-bold text-black">
           {t('FiltersVehicle.year.title')}

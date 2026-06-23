@@ -20,6 +20,7 @@ export const Container: React.FC<ContainerProps> = ({ children, className="", si
                 margin: "0 auto",
                 width: "100%",
             }}
+            data-atr="container"
         >
             {children}
         </div>

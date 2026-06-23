@@ -6,24 +6,32 @@ import { CartItem } from '../../cart/model/types';
 import Image from 'next/image';
 import QuantitySelector from '@/src/shared/ui/QuantitySelector/QuantitySelector';
 import { RemoveCartItemButton } from '../../cart/ui/RemoveCartItem';
+import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
+import { handleAddToCart } from '../../cart/model/actions';
+import ProductAvailabilityStatus from '@/src/shared/ui/status/ProductAvailabilityStatus';
 
 const OrderTable = () => {
   const { cartItems, changeQuantity, removeFromCart } = useCartStore();
   return (
     <div className='flex gap-4 flex-col'>
       {cartItems.map((item: CartItem)=>(
-        <div key={item.itemNo} className='grid grid-cols-[100px_1fr_70px_120px] items-center gap-2'>
+        <div key={item.itemNo} className='grid grid-cols-[100px_1fr_150px_110px] items-center gap-3 p-2 border-b-1'>
           <div className='rounded-md border border-gray'>
-          <Image 
-            src={'https://img2.ad.ua/imgs/' + item.imageUrl} 
-            alt={'preview_'+item?.imageUrl?.split('/').pop()} 
-            width={80}
-            height={80}
-            style={{width: '80px', height: '80px', objectFit: 'contain'}}/>
-            </div>
+            <Image 
+              src={'https://img2.ad.ua/imgs/' + item.imageUrl} 
+              alt={'preview_'+item?.imageUrl?.split('/').pop()} 
+              width={80}
+              height={80}
+              style={{width: '80px', height: '80px', objectFit: 'contain'}}/>
+          </div>
           <div  className='text-black'>{item?.title}</div>
-          <div  className='text-black'>{Number(item?.price).toFixed(2)}</div>
-          <div  className='text-black'>
+          <div>
+            <div className='text-black text-[20px] font-bold text-nowrap'>{Number(item?.price).toFixed(2)} ₴</div>
+            <ProductAvailabilityStatus
+              status={item.statusDelivery}
+            />
+          </div>
+          <div  className='text-black flex flex-col gap-2'>
             <QuantitySelector 
               initialValue={item.quantity}
               onChange={(count: number) => changeQuantity(item.itemNo, count)}

@@ -11,13 +11,7 @@ export const useCatalogStore = create<CatalogState>((set) => (
         listTopProducts: [],
         getListItems: async (typeId: number, groupId: number) => {
             const res: ResponseCatalogItem[] = await fetchCatalogItems(typeId, groupId);
-            set({ listItems: res ? res.map((item) => ({ ...item, firstPic: item?.firstPic.replace('tcd/', 'tcd-pic/') })) : [] });
+            set({ listItems: res ?? [] });
         },
-        // getListTopProducts: async (): Promise<ResponseTopProduct> => {
-        //     console.log('start request getListTopProducts');
-        //     const res: ResponseTopProduct[] = await fetchTopProducts();
-        //     set({ listTopProducts: res ? res.map((item) => ({ ...item, firstPic: item?.firstPic.replace('tcd/', 'tcd-pic/') })) : [] });
-        //     return res[0] as ResponseTopProduct;
-        // },
     }
 ));

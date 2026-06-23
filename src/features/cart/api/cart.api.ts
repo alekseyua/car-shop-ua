@@ -25,7 +25,6 @@ export const deleteItemFromCart = async ( itemNo: string) => {
         const url = `/cart/items/${itemNo}`;
         const res = await api(url,{
             method: 'DELETE',
-
         });
         console.log('response delete item from cart: ', res)
     } catch (error) {

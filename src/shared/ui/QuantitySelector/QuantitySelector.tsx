@@ -28,23 +28,23 @@ export default function QuantitySelector({
     };
 
     return (
-        <div className="flex items-center border rounded-md w-fit">
+        <div className="flex items-center border rounded-md w-full">
             <button
                 type="button"
                 onClick={decrease}
-                className="px-3 py-2 border-r"
+                className="px-3 py-1 border-r"
             >
                 -
             </button>
 
-            <span className="px-4 py-2 min-w-[40px] text-center">
+            <span className="px-3 py-1 min-w-[40px] text-center">
                 {count}
             </span>
 
             <button
                 type="button"
                 onClick={increase}
-                className="px-3 py-2 border-l"
+                className="px-3 py-1 border-l"
             >
                 +
             </button>

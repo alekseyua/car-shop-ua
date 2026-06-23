@@ -3,7 +3,7 @@ import { DeliveryStatus } from "@/src/entities/product-detail/model/types";
 
 export interface CartStore {
     cartItems: CartItem[];
-    addToCart: (item: ProductDto) => void;
+    addToCart: (item: ProductDto, statusDelivery: string) => void;
     removeFromCart: (itemNo: string) => void;
     clearCart: () => void;
     changeQuantity: (itemNo: string, count: number) => void;
@@ -24,6 +24,7 @@ export interface CartItem {
     stock: ProductStock[];
 
     quantity: number; // Quantity of the item in the cart
+    statusDelivery: string;
 }
 export interface ProductDto {
     itemNo: string;

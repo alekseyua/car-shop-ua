@@ -26,7 +26,7 @@ export const useAuthStore = create<AuthState>()(
                     set({refreshToken}),
 
             logout: () => {
-                set({ user: null, accessToken: null, refreshToken: null });
+                set({ user: null, accessToken: null });
                 // useCartStore.setState({
                 //     cartItems: []
                 // })

@@ -3,9 +3,9 @@ import { useCartStore } from "./store";
 import { ProductDto } from "./types";
 import { getCart } from "../api/cart.api";
 
-export const handleAddToCart = (item: ProductDto | ProductDetail) => {
+export const handleAddToCart = (item: ProductDto | ProductDetail, statusDelivery: string) => {
     // addToCart(item)
-    useCartStore.getState().addToCart(item);
+    useCartStore.getState().addToCart(item, statusDelivery);
 };
 
 export const synchronServerCart = async () => {
