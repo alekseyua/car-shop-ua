@@ -5,72 +5,43 @@ import {
 
 
 interface Props {
-
     name: string;
-
     label: string;
-
     type?: string;
-
+require?: boolean
 }
 
-
-
 export default function FormField({
-
     name,
-
     label,
-
-    type = "text"
-
+    type = "text",
+    require
 }: Props) {
-
-
     const {
         register
     } = useFormContext();
 
-
-
     return (
+      <div>
+        <label
+          className=" text-gray-900 text-sm block mb-1 font-semibold"
+        >
+          {label} {require && <span className="text-red-500">*</span>}
+        </label>
 
-        <div>
-
-
-            <label
-                className="
-block
-mb-1
-font-semibold
-"
-            >
-
-                {label}
-
-            </label>
-
-
-            <input
-
-                type={type}
-
-                {...register(name)}
-
-                className="
-w-full
-border
-rounded-lg
-px-3
-py-2
-text-gray-900
-"
-
-            />
-
-
-        </div>
-
-    )
+        <input
+          type={type}
+          {...register(name)}
+          className="
+                      w-full
+                      border
+                      rounded-lg
+                      px-3
+                      py-2
+                      text-gray-900
+                      "
+        />
+      </div>
+    );
 
 }

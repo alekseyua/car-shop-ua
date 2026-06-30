@@ -9,54 +9,37 @@ import {
 } from "react-imask";
 
 
-
-export default function PhoneField() {
-
+interface IProps {
+    require?: boolean
+}
+export default function PhoneField({require}: IProps) {
 
     const {
         control
     } = useFormContext();
 
-
-
     return (
-
-        <div>
-
-
-            <label className="
+      <div>
+        <label
+          className="
                 block
                 text-sm
                 font-semibold
                 mb-1
                 text-gray-900
-            ">
-                Мобільний телефон
-            </label>
-
-
-
-            <Controller
-
-                name="phone"
-
-                control={control}
-
-
-                render={({ field }) => (
-
-
-                    <IMaskInput
-
-                        mask="+38 (000) 000-00-00"
-
-                        value={field.value}
-
-                        onAccept={
-                            value => field.onChange(value)
-                        }
-
-                        className="
+            "
+        >
+          Мобільний телефон {require && <span className="text-red-500">*</span>}
+        </label>
+        <Controller
+          name="phone"
+          control={control}
+          render={({ field }) => (
+            <IMaskInput
+              mask="+38 (000) 000-00-00"
+              value={field.value}
+              onAccept={(value) => field.onChange(value)}
+              className="
                             w-full
                             border
                             rounded-lg
@@ -64,18 +47,9 @@ export default function PhoneField() {
                             py-2
                             text-gray-900
                         "
-
-                    />
-
-
-                )}
-
-
             />
-
-
-        </div>
-
+          )}
+        />
+      </div>
     );
-
 }
