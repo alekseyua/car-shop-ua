@@ -49,7 +49,7 @@ const ProductInfo = () => {
           <div className="border rounded-md p-4 mt-4 bg-yellow-50">
             <p className="text-lg text-gray-700 mb-2">
               <span> {t('price')}: </span>
-              <span className='font-bold'>{product?.item.price}</span>
+              <span className='font-bold'>{(Number(product?.item.price)).toFixed(2)}</span>
               <span> UAH </span>
             </p>
             {product?.item?.stock.length && (

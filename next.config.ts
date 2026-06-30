@@ -13,6 +13,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'img2.ad.ua',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.novaposhta.ua',
+      },
     ],
   },
 };
