@@ -23,7 +23,6 @@ export default function CheckoutForm() {
 
     const methods =
         useForm<CheckoutFormValues>({
-
             defaultValues: {
                 phone: "",
                 email: "",
@@ -46,64 +45,41 @@ export default function CheckoutForm() {
 
 
     return (
-
         <FormProvider {...methods}>
-
-
             <form
-
                 onSubmit={
                     methods.handleSubmit(submit)
                 }
-
                 className="
-max-w-4xl
-mx-auto
-bg-white
-p-6
-rounded-xl
-"
+                    max-w-4xl
+                    mx-auto
+                    bg-white
+                    p-6
+                    rounded-xl
+                    "
             >
                 <ContactFields />
                 <div className="border-t my-8" />
                 <CitySelect />
                 <div className="border-t my-8" />
                 <DeliveryMethod />
-
-
                 <CommentBox />
-
-
                 <VinCheck />
-
-
-
                 <button
                     type="submit"
-
                     className="
-w-full
-h-14
-mt-8
-bg-red-600
-text-white
-rounded-lg
-font-semibold
-"
+                                w-full
+                                h-14
+                                mt-8
+                                bg-red-600
+                                text-white
+                                rounded-lg
+                                font-semibold
+                                "
                 >
-
                     Замовлення підтверджую
-
                 </button>
-
-
-
             </form>
-
-
         </FormProvider>
-
-
     )
-
 }

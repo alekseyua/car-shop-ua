@@ -53,6 +53,7 @@ export const useCheckoutStore = create<CheckoutState>((set) => ({
                   calledMethod: "getCities",
                   methodProperties: {
                     Limit: "20",
+                    Page: "1",
                     FindByString: city,
                   },
                 }),
