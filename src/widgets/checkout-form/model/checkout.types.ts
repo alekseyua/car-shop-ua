@@ -5,8 +5,16 @@ export interface CheckoutFormValues {
   firstname: string;
   middlename: string;
   city: string;
+  cityRef: string;
   comment: string;
   vin: string;
+  deliveryPoint: string;
+}
+
+export interface WherehouseType {
+  Description: string;
+  DescriptionRu: string;
+  Ref: string;
 }
 
 export interface NovaPoshtaCity {

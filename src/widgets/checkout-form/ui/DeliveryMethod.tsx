@@ -1,6 +1,9 @@
+import { useForm, useFormContext } from "react-hook-form";
 import {
     useCheckoutStore
 } from "../model/checkout.store";
+import { WherehouseType } from "../model/checkout.types";
+import { useEffect } from "react";
 
 
 
@@ -15,23 +18,27 @@ const methods = [
     }
 ];
 
-
-
 export default function DeliveryMethod() {
-
-
     const {
         deliveryMethod,
-        setDeliveryMethod
+        warehouseTypes,
+        setDeliveryMethod,
+        getWherehouse,
+        getListWherehouseType,
     } = useCheckoutStore();
+    const { register, resetField } = useFormContext();
+    console.log({ register: register('cityRef')})
 
-
-
+    const placeholder =
+        deliveryMethod === "warehouse"
+            ? "Введіть номер відділення"
+            : "Введіть адресу або номер поштомату";
+    useEffect(() => {
+        void getListWherehouseType();
+    }, []);
+    console.log({ warehouseTypes })
     return (
-
         <section>
-
-
             <h2 className="
                 text-3xl
                 font-bold
@@ -40,20 +47,11 @@ export default function DeliveryMethod() {
             ">
                 Доставка
             </h2>
-
-
-
-            <div className="space-y-3">
-
-
+            {warehouseTypes  && <div className="space-y-3">
                 {
-                    methods.map(item => (
-
-
+                    warehouseTypes.map(item => (
                         <label
-
-                            key={item.id}
-
+                            key={item.Ref}
                             className={`
                                 flex
                                 items-center
@@ -63,58 +61,67 @@ export default function DeliveryMethod() {
                                 border
                                 cursor-pointer
                                 transition
-
-                                ${deliveryMethod === item.id
+                                ${deliveryMethod === item.Ref
                                     ?
                                     "border-red-500 bg-red-50"
                                     :
                                     "border-gray-200"
                                 }
-
                             `}
-
                         >
-
-
                             <input
-
                                 type="radio"
-
                                 checked={
-                                    deliveryMethod === item.id
+                                    deliveryMethod === item.Ref
                                 }
-
-                                onChange={() => (
-                                    setDeliveryMethod(item.id)
-                                )}
-
+                                onChange={() => {
+                                    setDeliveryMethod(item.Ref);
+                                    resetField("deliveryPoint");
+                                }
+                                }
                                 className="
                                     w-5
                                     h-5
                                 "
-
                             />
-
-
                             <span className="
                                 font-semibold
                                 text-gray-900
                             ">
-                                {item.title}
+                                {item.Description}
                             </span>
-
-
                         </label>
-
-
                     ))
                 }
+            </div>}
+            {deliveryMethod && (
+                <div className="mt-5">
+                    <label className="block mb-2 font-semibold text-gray-900">
+                        {deliveryMethod === "warehouse"
+                            ? "Відділення"
+                            : "Поштомат"}
+                    </label>
 
-
-            </div>
-
-
+                    <input
+                        type="text"
+                        {...register("deliveryPoint")}
+                        placeholder={placeholder}
+                        className="
+                w-full
+                h-12
+                border
+                rounded-lg
+                px-4
+                text-gray-900
+            "
+                        onChange={(e) => {
+                            const target = e.target;
+                            console.log({target})
+                            getWherehouse(target.value)
+                        }}
+                    />
+                </div>
+            )}
         </section>
-
     );
 }

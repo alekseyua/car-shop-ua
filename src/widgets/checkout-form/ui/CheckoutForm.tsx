@@ -31,7 +31,8 @@ export default function CheckoutForm() {
                 middlename: "",
                 city: "",
                 comment: "",
-                vin: ""
+                vin: "",
+                deliveryPoint: ''
             }
         });
 

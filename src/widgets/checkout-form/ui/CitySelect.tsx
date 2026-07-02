@@ -4,19 +4,25 @@ import { useCheckoutStore } from "../model/checkout.store";
 import { NovaPoshtaCity } from "../model/checkout.types";
 
 export default function CitySelect() {
-  const { register, setValue } = useFormContext();
+  const { register, setValue, resetField } = useFormContext();
 
-  const { getListCities } = useCheckoutStore();
+  const { getListCities, setDeliveryCity, setDeliveryCityRef, resetDeliveryCity } = useCheckoutStore();
 
   const [cities, setCities] = useState<NovaPoshtaCity[]>([]);
   const [query, setQuery] = useState("");
+
+  const resetForms = () => {
+    resetDeliveryCity()
+    resetField('deliveryPoint')
+    resetField('city')
+  };
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     setQuery(value);
     setValue("city", value);
-
+    resetForms();
     if (value.length < 2) {
       setCities([]);
       return;
@@ -30,6 +36,8 @@ export default function CitySelect() {
   const handleSelect = (city: NovaPoshtaCity) => {
     setQuery(city.Description);
     setValue("city", city.Description);
+    setDeliveryCity(city.Description);
+    setDeliveryCityRef(city.Ref);
     setCities([]);
   };
 
