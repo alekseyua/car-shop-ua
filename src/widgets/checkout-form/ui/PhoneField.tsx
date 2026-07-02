@@ -7,19 +7,21 @@ import {
 import {
     IMaskInput
 } from "react-imask";
+import { CheckoutFormValues } from "../model/checkout.types";
 
 
 interface IProps {
-    require?: boolean
+    require?: object;
 }
-export default function PhoneField({require}: IProps) {
+export default function PhoneField({require = {}}: IProps) {
 
     const {
-        control
-    } = useFormContext();
+      control,
+      formState: { errors },
+    } = useFormContext<CheckoutFormValues>();
 
     return (
-      <div>
+      <div className="relative">
         <label
           className="
                 block
@@ -29,11 +31,17 @@ export default function PhoneField({require}: IProps) {
                 text-gray-900
             "
         >
-          Мобільний телефон {require && <span className="text-red-500">*</span>}
+          Мобільний телефон{" "}
+          {Object.keys(require).length > 0 && (
+            <span className="text-red-500">*</span>
+          )}
         </label>
         <Controller
           name="phone"
           control={control}
+          rules={{
+            required: "Вкажіть номер телефону",
+          }}
           render={({ field }) => (
             <IMaskInput
               mask="+38 (000) 000-00-00"
@@ -50,6 +58,11 @@ export default function PhoneField({require}: IProps) {
             />
           )}
         />
+        {errors.phone && (
+          <p className="text-red-500 text-sm absolute top-full left-0">
+            {errors.phone.message}
+          </p>
+        )}
       </div>
     );
 }

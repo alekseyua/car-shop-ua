@@ -21,20 +21,20 @@ import {
 
 export default function CheckoutForm() {
 
-    const methods =
-        useForm<CheckoutFormValues>({
-            defaultValues: {
-                phone: "",
-                email: "",
-                lastname: "",
-                firstname: "",
-                middlename: "",
-                city: "",
-                comment: "",
-                vin: "",
-                deliveryPoint: ''
-            }
-        });
+    const methods = useForm<CheckoutFormValues>({
+      defaultValues: {
+        phone: "",
+        email: "",
+        lastname: "",
+        firstname: "",
+        middlename: "",
+        city: "",
+        comment: "",
+        vin: "",
+        deliveryPoint: "",
+        deliveryPointRef: "",
+      },
+    });
 
     const submit =
         (data: CheckoutFormValues) => {

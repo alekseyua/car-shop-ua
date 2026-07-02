@@ -2,36 +2,49 @@ import {
     useFormContext
 }
     from "react-hook-form";
+import { CheckoutFormValues } from "../model/checkout.types";
 
 
 interface Props {
-    name: string;
-    label: string;
-    type?: string;
-require?: boolean
+  name:
+    | "phone"
+    | "email"
+    | "lastname"
+    | "firstname"
+    | "middlename"
+    | "city"
+    | "cityRef"
+    | "comment"
+    | "vin"
+    | "deliveryPoint";
+  label: string;
+  type?: string;
+  require?: object;
 }
 
 export default function FormField({
     name,
     label,
     type = "text",
-    require
+    require = {}
 }: Props) {
     const {
-        register
-    } = useFormContext();
+        register,
+        formState:{errors}
+    } = useFormContext<CheckoutFormValues>();
 
     return (
-      <div>
-        <label
-          className=" text-gray-900 text-sm block mb-1 font-semibold"
-        >
-          {label} {require && <span className="text-red-500">*</span>}
+      <div className="relative">
+        <label className=" text-gray-900 text-sm block mb-1 font-semibold">
+          {label}{" "}
+          {Object.keys(require).length > 0 && (
+            <span className="text-red-500">*</span>
+          )}
         </label>
 
         <input
           type={type}
-          {...register(name)}
+          {...register(name, require)}
           className="
                       w-full
                       border
@@ -41,6 +54,11 @@ export default function FormField({
                       text-gray-900
                       "
         />
+        {errors[name] && (
+          <p className="text-red-500 text-sm absolute top-full left-0">
+            {errors[name].message}
+          </p>
+        )}
       </div>
     );
 
