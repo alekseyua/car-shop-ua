@@ -7,16 +7,15 @@ import { CheckoutFormValues } from "../model/checkout.types";
 
 interface Props {
   name:
-    | "phone"
-    | "email"
-    | "lastname"
-    | "firstname"
-    | "middlename"
-    | "city"
-    | "cityRef"
-    | "comment"
-    | "vin"
-    | "deliveryPoint";
+  | "deliveryPhone"
+  | "deliveryEmail"
+  | "deliveryLastname"
+  | "deliveryFirstname"
+  | "deliveryMiddlename"
+  | "deliveryCity"
+  | "deliveryComment"
+  | "deliveryVin"
+  | "deliveryPoint";
   label: string;
   type?: string;
   require?: object;

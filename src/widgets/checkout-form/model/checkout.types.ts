@@ -1,15 +1,17 @@
 export interface CheckoutFormValues {
-  phone: string;
-  email: string;
-  lastname: string;
-  firstname: string;
-  middlename: string;
-  city: string;
-  cityRef: string;
-  comment: string;
-  vin: string;
-  deliveryPoint: string;
-  deliveryPointRef: string;
+  deliveryCity: string;
+  deliveryPhone: string;
+  deliveryEmail?: string;
+  deliveryLastname: string;
+  deliveryFirstname?: string;
+  deliveryMiddlename?: string;
+  deliveryComment?: string;
+  deliveryVin?: string;
+  deliveryPoint?: string;
+  deliveryPointRef?: string;
+  deliveryStreet?: string;
+  deliveryHouse: string;
+  deliveryApartment?: string;
 }
 
 export interface WherehouseType {

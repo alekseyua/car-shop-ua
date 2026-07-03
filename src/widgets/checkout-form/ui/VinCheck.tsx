@@ -90,7 +90,7 @@ export default function VinCheck() {
 
                 <input
 
-                    {...register("vin")}
+                    {...register("deliveryVin")}
 
                     placeholder="
                         Введіть VIN-код

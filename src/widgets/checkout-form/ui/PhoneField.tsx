@@ -37,7 +37,7 @@ export default function PhoneField({require = {}}: IProps) {
           )}
         </label>
         <Controller
-          name="phone"
+          name="deliveryPhone"
           control={control}
           rules={{
             required: "Вкажіть номер телефону",
@@ -58,9 +58,9 @@ export default function PhoneField({require = {}}: IProps) {
             />
           )}
         />
-        {errors.phone && (
+        {errors.deliveryPhone && (
           <p className="text-red-500 text-sm absolute top-full left-0">
-            {errors.phone.message}
+            {errors.deliveryPhone.message}
           </p>
         )}
       </div>

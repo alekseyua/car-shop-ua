@@ -1,6 +1,6 @@
 import { ProductDetail } from "@/src/entities/product-detail/model/types";
-import { useCartStore } from "./store";
-import { ProductDto } from "./types";
+import { useCartStore } from "./cart.store";
+import { ProductDto } from "./cart.types";
 import { getCart } from "../api/cart.api";
 
 export const handleAddToCart = (item: ProductDto | ProductDetail, statusDelivery: string) => {

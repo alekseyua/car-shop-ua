@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react'
-import { useCartStore } from '../../cart/model/store';
-import { CartItem } from '../../cart/model/types';
+import { useCartStore } from '../../cart/model/cart.store';
+import { CartItem } from '../../cart/model/cart.types';
 import Image from 'next/image';
 import QuantitySelector from '@/src/shared/ui/QuantitySelector/QuantitySelector';
 import { RemoveCartItemButton } from '../../cart/ui/RemoveCartItem';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
-import { handleAddToCart } from '../../cart/model/actions';
+import { handleAddToCart } from '../../cart/model/cart.actions';
 import ProductAvailabilityStatus from '@/src/shared/ui/status/ProductAvailabilityStatus';
 
 const OrderTable = () => {

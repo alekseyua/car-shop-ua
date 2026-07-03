@@ -6,7 +6,7 @@ import gearIcon from '../../../shared/assets/icons/gear.svg'
 import { useTranslations } from 'next-intl';
 import { Link } from '@/src/i18n/navigation';
 import iconCart from '../../../shared/assets/icons/cart.svg';
-import { handleAddToCart } from '@/src/features/cart/model/actions';
+import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList'
 
 interface CardPreviewProps {

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CartItem, CartStore, ProductDto } from "./types";
+import { CartItem, CartStore, ProductDto } from "./cart.types";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { addCartItem, updateQuantityItemCart, deleteItemFromCart } from "../api/cart.api";
 

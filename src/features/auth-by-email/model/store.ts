@@ -4,7 +4,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { AuthState } from "./types";
-import { useCartStore } from "../../cart/model/store";
+import { useCartStore } from "../../cart/model/cart.store";
 
 export const useAuthStore = create<AuthState>()(
     persist(

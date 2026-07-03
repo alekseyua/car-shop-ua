@@ -18,30 +18,45 @@ import {
     CheckoutFormValues
 }
     from "../model/checkout.types";
+import { useCreateOrder } from "@/src/features/order/model/useCreateOrder";
+import { useCheckoutStore } from "../model/checkout.store";
 
 export default function CheckoutForm() {
-
+    const { submit } = useCreateOrder();
+    const {
+        deliveryMethod,
+        deliveryCityRef,
+    } = useCheckoutStore();
     const methods = useForm<CheckoutFormValues>({
       defaultValues: {
-        phone: "",
-        email: "",
-        lastname: "",
-        firstname: "",
-        middlename: "",
-        city: "",
-        comment: "",
-        vin: "",
+        deliveryCity: "",
+        deliveryPhone: "",
+        deliveryEmail: "",
+        deliveryLastname: "",
+        deliveryFirstname: "",
+        deliveryMiddlename: "",
+        deliveryComment: "",
+        deliveryVin: "",
         deliveryPoint: "",
         deliveryPointRef: "",
+        deliveryStreet: "",
+        deliveryHouse: "",
+        deliveryApartment: "",
       },
     });
 
-    const submit =
-        (data: CheckoutFormValues) => {
 
-            console.log(data);
-
-        };
+    const onSubmit = async (data: CheckoutFormValues) => {
+        try {
+            await submit({
+                ...data,
+                deliveryMethod,
+                deliveryCityRef,
+            });
+        } catch (e) {
+            throw e;
+        }
+    };
 
 
 
@@ -49,7 +64,7 @@ export default function CheckoutForm() {
         <FormProvider {...methods}>
             <form
                 onSubmit={
-                    methods.handleSubmit(submit)
+                    methods.handleSubmit(onSubmit)
                 }
                 className="
                     max-w-4xl

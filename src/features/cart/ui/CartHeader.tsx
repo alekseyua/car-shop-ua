@@ -4,8 +4,8 @@ import Image from 'next/image'
 import React from 'react'
 import iconCart from '../../../shared/assets/icons/cart.svg';
 import { useTranslations } from 'next-intl';
-import { useCartStore } from '../model/store';
-import { CartItem } from '../model/types';
+import { useCartStore } from '../model/cart.store';
+import { CartItem } from '../model/cart.types';
 import { useRouter } from 'next/navigation';
 
 const getTotalPrice = (cart: CartItem[]) => {

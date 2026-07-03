@@ -87,7 +87,7 @@ export default function CommentBox() {
 
                 <textarea
 
-                    {...register("comment")}
+                    {...register("deliveryComment")}
 
                     placeholder="
                         Ваш коментар...

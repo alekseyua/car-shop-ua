@@ -27,18 +27,18 @@ export default function ContactFields() {
           <PhoneField
             require={{ required: "Поле обов'язкове для заповнення" }}
           />
-          <FormField name="email" label="Електронна пошта" type="email" />
+          <FormField name="deliveryEmail" label="Електронна пошта" type="email" />
           <FormField
-            name="lastname"
+            name="deliveryLastname"
             label="Прізвище"
             require={{ required: "Поле обов'язкове для заповнення" }}
           />
           <FormField
-            name="firstname"
+            name="deliveryFirstname"
             label="Ім'я"
             require={{ required: "Поле обов'язкове для заповнення" }}
           />
-          <FormField name="middlename" label="По батькові" />
+          <FormField name="deliveryMiddlename" label="По батькові" />
         </div>
       </section>
     );

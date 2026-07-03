@@ -4,7 +4,7 @@
 import { api, ApiResult } from "@/src/shared/api/client";
 import { useAuthStore } from "../model/store";
 import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
-import { synchronServerCart } from "../../cart/model/actions";
+import { synchronServerCart } from "../../cart/model/cart.actions";
 
 export const registerUserByEmail = async (dto: RegisterDTO) => {
     try {

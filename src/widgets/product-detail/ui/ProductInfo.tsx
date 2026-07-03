@@ -1,7 +1,7 @@
 import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
 import { CriteriaItem, ProductDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
-import { handleAddToCart } from '@/src/features/cart/model/actions';
+import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
 import ProductAvailabilityStatus from '@/src/shared/ui/status/ProductAvailabilityStatus';
 import { useTranslations } from 'next-intl';
 import React from 'react'
