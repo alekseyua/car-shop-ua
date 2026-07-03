@@ -1,15 +1,5 @@
-'use client'
+import ProfileLayout from "@/src/widgets/profile/ui/ProfileLayout";
 
-import { handleLogout } from "@/src/processes/logout/model/logout"
-
-
-export default async function Profile (){
-
-    return <div>
-        Profile
-        <br />
-        <button 
-            onClick={handleLogout}
-            >exit</button>
-    </div>
+export default async function Profile() {
+  return <ProfileLayout />;
 }

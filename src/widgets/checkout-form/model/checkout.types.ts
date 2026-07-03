@@ -12,6 +12,9 @@ export interface CheckoutFormValues {
   deliveryStreet?: string;
   deliveryHouse: string;
   deliveryApartment?: string;
+
+  deliveryMethod: string;
+  deliveryCityRef: string;
 }
 
 export interface WherehouseType {

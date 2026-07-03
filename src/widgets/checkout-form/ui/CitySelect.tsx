@@ -1,10 +1,15 @@
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useCheckoutStore } from "../model/checkout.store";
-import { NovaPoshtaCity } from "../model/checkout.types";
+import { CheckoutFormValues, NovaPoshtaCity } from "../model/checkout.types";
 
 export default function CitySelect() {
-  const { register, setValue, resetField } = useFormContext();
+  const {
+    register,
+    setValue,
+    resetField,
+    formState: { errors },
+  } = useFormContext<CheckoutFormValues>();
 
   const { getListCities, setDeliveryCity, setDeliveryCityRef, resetDeliveryCity } = useCheckoutStore();
 
@@ -14,14 +19,14 @@ export default function CitySelect() {
   const resetForms = () => {
     resetDeliveryCity()
     resetField('deliveryPoint')
-    resetField('city')
+    resetField("deliveryCity");
   };
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     setQuery(value);
-    setValue("city", value);
+    setValue("deliveryCity", value);
     resetForms();
     if (value.length < 2) {
       setCities([]);
@@ -35,7 +40,7 @@ export default function CitySelect() {
 
   const handleSelect = (city: NovaPoshtaCity) => {
     setQuery(city.Description);
-    setValue("city", city.Description);
+    setValue("deliveryCity", city.Description);
     setDeliveryCity(city.Description);
     setDeliveryCityRef(city.Ref);
     setCities([]);
@@ -49,13 +54,17 @@ export default function CitySelect() {
 
       <div className="relative">
         <input
-          {...register("city")}
+          {...register("deliveryCity", { required: "Поле обов'язкове для заповнення" })}
           value={query}
           onChange={handleSearch}
           placeholder="Почніть вводити місто..."
           className="w-full h-12 border rounded-lg px-4 text-gray-900 placeholder:text-black"
         />
-
+        {errors.deliveryCity && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.deliveryCity.message}
+          </p>
+        )}
         {cities.length > 0 && (
           <ul className="absolute left-0 right-0 mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto z-50">
             {cities.map((city) => (
