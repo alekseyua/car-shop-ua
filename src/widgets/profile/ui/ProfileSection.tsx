@@ -1,4 +1,7 @@
+'use client';
+
 import { useProfileStore } from '@/src/features/profile/model/profile.store'
+import OrderSection from '@/src/features/profile/ui/OrderSection';
 import React from 'react'
 
 const ProfileSection = () => {

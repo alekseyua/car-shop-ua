@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react'
 import { useProfileStore } from '../model/profile.store'
 
@@ -8,6 +10,10 @@ const listNav = [
   },
   {
     id: 1,
+    title: 'History order',
+  },
+  {
+    id: 2,
     title: 'Edit profile'
   },
   {
@@ -20,7 +26,7 @@ const NavItems = () => {
   const { setCurrentSection } = useProfileStore();
 
   return (
-    <div className="border-r border-black">
+    <div className="border-r border-gray-500">
       <ul>
         {listNav.map( (ln) => (
           <li key={ln.id}

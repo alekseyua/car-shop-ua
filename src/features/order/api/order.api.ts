@@ -20,7 +20,7 @@ export const createOrder = (dto: CheckoutFormValues): Promise<ApiResult<Response
   }
 };
 
-export const getListOrders = (): Promise<ApiResult<ResponseOrder[]>> => {
+export const getListMyOrders = (): Promise<ApiResult<ResponseOrder[]>> => {
     try{
         const url = "/orders";
         const response: Promise<ApiResult<ResponseOrder[]>> = api(url, {
