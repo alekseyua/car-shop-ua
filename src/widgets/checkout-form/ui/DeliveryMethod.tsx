@@ -83,6 +83,7 @@ export default function DeliveryMethod() {
                     checked={deliveryMethod === item.Ref}
                     onChange={() => {
                       setDeliveryMethod(item.Ref);
+                      setAddressWherehouse('');
                       resetField("deliveryPoint");
                     }}
                     className="

@@ -13,7 +13,6 @@ export const createOrder = (dto: CheckoutFormValues): Promise<ApiResult<Response
         "Content-Type": "application/json",
       },
     });
-    console.log({ response });
     return response;
   } catch (e) {
     throw e;

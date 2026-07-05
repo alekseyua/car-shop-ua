@@ -12,11 +12,13 @@ import { useCheckoutStore } from "../model/checkout.store";
 import { ApiResult } from "@/src/shared/api/client";
 import { ResponseOrder } from "@/src/features/order/api/response.dto";
 import { useRouter } from "next/navigation";
+import { useCartStore } from "@/src/features/cart/model/cart.store";
 
 export default function CheckoutForm() {
   const { submit } = useCreateOrder();
   const router = useRouter();
   const { deliveryMethod, deliveryCityRef } = useCheckoutStore();
+  const { clearCart } = useCartStore();
   const methods = useForm<CheckoutFormValues>({
     defaultValues: {
       deliveryCity: "",
@@ -42,11 +44,11 @@ export default function CheckoutForm() {
         deliveryMethod,
         deliveryCityRef,
       });
-      console.log({ response });
       if (response.ok) {
         const { orderNumber } = response.data;
         if (orderNumber) {
           router.push("/");
+          clearCart();
         }
       } else {
         console.error("Error creating order: ", response.status);
