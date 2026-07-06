@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useProfileStore } from "../model/profile.store";
-import { ResponseMyOrder } from "../model/profile.types";
 import Image from "next/image";
 
 const OrderSection = () => {
