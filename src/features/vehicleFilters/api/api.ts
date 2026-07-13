@@ -1,7 +1,7 @@
 import { api } from "@/src/shared/api/client";
 import { BrandsResponseDto, CatalogResponseDto, ModelResponseDto, ModificationResponseDto } from "./dto";
 import { PaginationDto } from "@/src/shared/api/dto";
-import { Brand, Modification, Model, Catalog } from "../model/type";
+import { Brand, Modification, Model, Catalog } from "../model/vehicle.type";
 
 export const getBrandsApi = async (): Promise<Brand[]> => {
     try {

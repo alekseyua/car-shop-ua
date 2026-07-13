@@ -5,7 +5,7 @@ import { ResponseCatalogItem, ResponseTopProduct } from "./dto";
 
 export const fetchCatalogItems = async (typeId: number, groupId: number): Promise<ResponseCatalogItem[]> => {
     try {
-        const result = await api<ResponseCatalogItem[]>(`/items-catalog?page=1&limit=10&typeId=${typeId}&groupId=${groupId}`);
+        const result = await api<ResponseCatalogItem[]>(`/products?page=1&limit=10&typeId=${typeId}&groupId=${groupId}`);
         if (!result.ok) {
             // result.error доступен здесь
             throw new Error(result.error);

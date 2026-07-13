@@ -1,7 +1,7 @@
-import { Modification } from "../../vehicleFilters/model/type";
+import { Modification } from "../../vehicleFilters/model/vehicle.type";
 import { useGarageStore } from "./garage.store";
 
-export const handleAddToGarage = (obj: Modification) => {
-    const {addToGarage} = useGarageStore.getState();
-    addToGarage(obj);
+export const handleAddToGarage = (obj: Modification, garageId?: number) => {
+    const {addCarToGarage} = useGarageStore.getState();
+    addCarToGarage(obj, garageId);
 }

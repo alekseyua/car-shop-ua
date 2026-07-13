@@ -1,4 +1,4 @@
-import { Catalog } from "../../../features/vehicleFilters/model/type";
+import { Catalog } from "../../../features/vehicleFilters/model/vehicle.type";
 import { ResponseCatalogItem, ResponseTopProduct } from "../api/dto";
 
 export interface TransformCatalog {

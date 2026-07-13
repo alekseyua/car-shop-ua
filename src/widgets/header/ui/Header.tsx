@@ -10,6 +10,7 @@ import VinRequestButton from '@/src/features/vin-request/ui/VinRequestButton';
 import SearchButton from '@/src/features/search/ui/SearchButton';
 import CartHeader from '@/src/features/cart/ui/CartHeader';
 import NavMenu from './NavMenu';
+import GarageButton from '@/src/features/garage/ui/GarageButton';
 
 const Header = () => {
   return (
@@ -29,6 +30,7 @@ const Header = () => {
                 <Contacts />
                 <VinRequestButton />
                 <SearchButton />
+                <GarageButton />
                 <CartHeader />    
             </div>
             {/* <NavMenu /> */}

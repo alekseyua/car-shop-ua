@@ -6,6 +6,7 @@ import Footer from "../../widgets/footer/ui/Footer";
 import ModalProvider from "../../providers/modal-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { GarageProvider } from "@/src/providers/garage-provider";
 
 
 const geistSans = Geist({
@@ -41,6 +42,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider locale={locale} timeZone="Europe/Vienna" messages={messages}>
+          <GarageProvider />
           <Header />
           {children}
           <Footer />

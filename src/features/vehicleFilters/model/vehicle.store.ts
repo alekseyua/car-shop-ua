@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import { Brand, Modification, Model, Year, Catalog } from "./type";
+import { Brand, Modification, Model, Year, Catalog } from "./vehicle.type";
 import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalogApi } from "../api/api";
 import { transformCatalog } from "../../../entities/catalog/model/libs";
 import { TransformCatalog } from "../../../entities/catalog/model/types";
+import { ModificationGarage } from "../../garage/model/garage.types";
 
 interface VehicleFiltersState {
     filters: {
@@ -38,6 +39,7 @@ interface VehicleFiltersState {
     setBrand: (brand: { id: number; name: string }) => void;
     setModel: (model: { id: number; name: string }) => void;
     setModification: (modification: Modification) => void;
+    getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     setCatalog: () => void;
     // setTypeEngine: (typeEngine: { id: string; name: string }) => void;
     // setTypeBody: (typeBody: { id: string; name: string }) => void;
@@ -161,6 +163,28 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
             filters: {
                 ...state.filters,
                 modification,
+                catalogs: transformCatalog(fetchedCatalog),
+            },
+        }));
+    },
+    getCatalogByModificationAutotechId: async (modification) => {
+        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
+        set((state) => ({
+            filters: {
+                ...state.filters,
+                modification: {
+                    id: modification.id,
+                    name: modification.typeName,
+                    range: modification.model.range,
+                    kw: modification.kw,
+                    hp: modification.hp,
+                    engineType: modification.engineType.name,
+                    modelType: modification.model.model,
+                    bodyType: modification.bodyType.name,
+                    modificationAutotechId: modification.modificationAutotechId,
+                    image: modification.model?.image ?? '',
+                    modelId: modification.model.id,
+                },
                 catalogs: transformCatalog(fetchedCatalog),
             },
         }));

@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import useModal from '../../hooks/use-modal';
 import VinRequestModal from '../../features/vin-request/ui/VinRequestModal';
 import SearchModal from '../../features/search/ui/SearchModal';
+import GarageModal from '@/src/features/garage/ui/GarageModal';
 
 const ModalRoot = () => {
     const { isOpen, type, closeModal } = useModal();
@@ -55,6 +56,7 @@ const ModalRoot = () => {
                     {type === 'example' && <div>Example Modal Content</div>}
                     {type === 'vinRequest' && <VinRequestModal />}
                     {type === 'search' && <SearchModal />}
+                    {type === 'garage' && <GarageModal />}
                 </motion.div>
             </motion.div>
         </AnimatePresence>

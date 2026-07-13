@@ -8,7 +8,7 @@ import { useCartStore } from "../../cart/model/cart.store";
 
 export const useAuthStore = create<AuthState>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             user: null,
             accessToken: null,
             refreshToken: null,
@@ -16,8 +16,10 @@ export const useAuthStore = create<AuthState>()(
             setAuth: (user, accessToken, refreshToken) =>
                 set({ user, accessToken, refreshToken }),
 
-            setUser: (user) =>
-                set({ user }),
+            setUser: (user) =>{
+                console.log('setUser');
+                set({ user })
+            },
 
             setToken: (accessToken) =>
                 set({ accessToken }),

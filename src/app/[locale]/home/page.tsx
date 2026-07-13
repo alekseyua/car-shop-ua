@@ -3,13 +3,10 @@
 import VehicleFilters from "../../../features/vehicleFilters/ui/VehicleFilters";
 import { useTranslations } from "next-intl";
 import { Container } from "../../../shared/ui/layout/Container/Container";
-import { useVehicleFiltersStore } from "../../../features/vehicleFilters/model/store";
 import CatalogLayout from "../../../widgets/catalog/ui/CatalogLayout";
-import TopProductLayout from "@/src/widgets/catalog/ui/TopProductLayout";
 
 export default function Home() {
   const t = useTranslations("HomePage");
-  // const {filters} = useVehicleFiltersStore();
   
 
   return (
@@ -18,12 +15,7 @@ export default function Home() {
         <VehicleFilters />
       </div>
       
-        {
-        // !!Object.keys(filters.catalogs).length
-        false
-          ? <CatalogLayout />
-        : <TopProductLayout />
-        }
+      <CatalogLayout />
     </Container>
   );
 }

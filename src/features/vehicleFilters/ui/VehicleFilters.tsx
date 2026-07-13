@@ -1,14 +1,17 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useVehicleFiltersStore } from '../model/store'
+import { useVehicleFiltersStore } from '../model/vehicle.store'
 import { useTranslations } from 'next-intl';
-import { Modification } from '../model/type';
+import { Modification } from '../model/vehicle.type';
 import { ArrowUp } from '@/src/shared/ui/arrows/ArrowUp';
 import Image from 'next/image';
 import { handleAddToGarage } from '../../garage/model/garage.actions';
 
-const VehicleFilters = () => {
+interface IProps {
+  garageId?: number;
+}
+const VehicleFilters = ({garageId}: IProps) => {
   const useFilters = useVehicleFiltersStore();
   const [locked, setLocked] = useState(false);
   const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
@@ -34,17 +37,30 @@ const VehicleFilters = () => {
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.kw')} : {filters.modification?.kw}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.hp')} : {filters.modification?.hp}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.bodyType')} : {filters.modification?.bodyType}</span>
+          <div className="font-medium mr-3 text-black">
+            <button
+              onClick={() => filters.modification && handleAddToGarage(filters.modification, garageId)}
+              className="
+                        p-2
+                        w-full                     
+                        self-end 
+                        flex 
+                        items-center 
+                        justify-center 
+                        rounded-md
+                        border
+                        text-gray-900
+                        transition
+                        duration-300
+                        hover:shadow-md
+                        hover:cursor-pointer"
+            >
+              add to garage
+            </button>
           </div>
-
+          </div>
         </div>
-        <div className="font-medium mr-3 text-black"> 
-          <button
-            onClick={() => filters.modification && handleAddToGarage(filters.modification)}
-            className="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 hover:shadow-md transition duration-300 hover:cursor-pointer"
-          >
-            add to garage
-          </button>
-        </div>
+        
       </div>
     )
   }

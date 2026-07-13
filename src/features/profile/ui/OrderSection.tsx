@@ -15,7 +15,6 @@ const OrderSection = () => {
     getListMyOrders();
   }, [getListMyOrders]);
 
-  console.log({ listMyOrders });
   return (
     <div className="space-y-4 text-gray-900">
       {isLoadingMyOrders ? (

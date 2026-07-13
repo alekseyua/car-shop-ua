@@ -21,7 +21,6 @@ interface CardPreviewProps {
 
 const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description, rating, price, oldPrice, item }) => {
     const t = useTranslations();
-console.log({item})
     return (
         <div
             className="

@@ -11,7 +11,7 @@ type FetchOptions = RequestInit & {
 
 export type ApiResult<T> =
     | { ok: true; data: T }
-    | { ok: false; error: "unauthorized" | "error"; status?: number };
+    | { ok: false; error: "unauthorized" | "error" | string; status?: number };
 
 export async function api<T>(
     endpoint: string,
@@ -34,6 +34,7 @@ export async function api<T>(
             ...(options.headers || {}),
         },
     });
+    const data = await response.json();
 
     // =========================
     // 401 HANDLING
@@ -56,23 +57,22 @@ export async function api<T>(
                 status: 401,
             };
         }
-
+        
         // retry ONCE
         return api<T>(endpoint, options, true);
     }
-
+    
     // =========================
     // ERROR HANDLING
     // =========================
     if (!response.ok) {
         return {
             ok: false,
-            error: "error",
+            error: data?.message ?? 'error',
             status: response.status,
         };
     }
 
-    const data = await response.json();
 
     return { ok: true, data };
 }

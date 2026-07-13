@@ -21,7 +21,6 @@ const CartHeader = () => {
   const { cartItems } = useCartStore();
   const count = cartItems.length;
   const total = getTotalPrice(cartItems).toFixed(2);
-  console.log({cartItems})
   return (
     <div className='flex gap-2 self-start'>
       {/* todo:

@@ -1,4 +1,4 @@
-import { Catalog } from "../../../features/vehicleFilters/model/type";
+import { Catalog } from "../../../features/vehicleFilters/model/vehicle.type";
 import { TransformCatalog } from "./types";
 
 export const transformCatalog = (catalog: Catalog[]): TransformCatalog => {

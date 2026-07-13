@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useProfileStore } from '../model/profile.store'
+import { handleLogout } from '@/src/processes/logout/model/logout';
 
 const listNav = [
   {
@@ -35,7 +36,13 @@ const NavItems = () => {
                       cursor-pointer
                       hover:text-gray-500 
             "
-            onClick={()=>setCurrentSection(ln.id)}
+            onClick={()=>{
+              if(ln.id === 10){
+                handleLogout();
+                return;
+              }
+              setCurrentSection(ln.id)
+            }}
           >{ln.title}</li>
         ))}
       </ul>

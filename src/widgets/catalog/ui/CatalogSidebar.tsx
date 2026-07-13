@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { useVehicleFiltersStore } from '../../../features/vehicleFilters/model/store';
+import { useVehicleFiltersStore } from '../../../features/vehicleFilters/model/vehicle.store';
 import { useCatalogStore } from '../../../entities/catalog/model/store';
 import { useTranslations } from 'next-intl';
 
