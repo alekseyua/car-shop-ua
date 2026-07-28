@@ -26,11 +26,13 @@ export interface Model {
     brandId: number;
 }
 
+
 export interface ModificationGarage {
     id: number;
     modificationAutotechId: number;
     typeName: string;
     model: Model;
+    brand: string;
     typeRange: string;
     engineType: EngineType;
     kw: number;

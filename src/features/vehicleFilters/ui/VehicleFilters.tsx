@@ -10,8 +10,9 @@ import { handleAddToGarage } from '../../garage/model/garage.actions';
 
 interface IProps {
   garageId?: number;
+  cameBack?: () => void;
 }
-const VehicleFilters = ({garageId}: IProps) => {
+const VehicleFilters = ({garageId, cameBack}: IProps) => {
   const useFilters = useVehicleFiltersStore();
   const [locked, setLocked] = useState(false);
   const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
@@ -23,7 +24,15 @@ const VehicleFilters = ({garageId}: IProps) => {
     }
   }, []);
 
-  if (filters.brand?.name && filters.model?.name && filters.modification?.name) {
+  const handleClickAddToGarage = async (modification: Modification, garageId?: number) => {
+    const response = await handleAddToGarage(modification, garageId);
+    console.log({response})
+    if(response){
+      cameBack!();
+    }
+  };
+console.log({mod: filters.modification})
+  if (filters.modification?.name) {
     return (
       <div className="flex justify-between w-full">
         <div className="flex gap-4">
@@ -31,15 +40,19 @@ const VehicleFilters = ({garageId}: IProps) => {
             <Image src={filters.modification.image || 'https://leoparts.com.ua/assets/leoparts/attachments/car_small/cd7dfaf9447fa1013c5f78027ccbba6e.jpg'} alt={filters.modification.name} width={200} height={100} className='object-contain' />
           </div>
           <div className="flex flex-col gap-1">
-            <span className='text-[17px] font-medium  text-black'>{filters.brand?.name + ' ' + filters.modification.name}</span>
+            <span className='text-[17px] font-medium  text-black'>{filters?.modification?.brand + ' ' + filters?.modification?.model + ' ' + filters.modification.name}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.range')} : {filters.modification?.range}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.engineType')} : {filters.modification?.engineType}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.kw')} : {filters.modification?.kw}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.hp')} : {filters.modification?.hp}</span>
             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.bodyType')} : {filters.modification?.bodyType}</span>
           <div className="font-medium mr-3 text-black">
-            <button
-              onClick={() => filters.modification && handleAddToGarage(filters.modification, garageId)}
+              {/* todo
+                делаем заглушку что бы не показывало кнопку
+              */}
+              {filters.modification?.modelId &&
+              <button
+                onClick={() => filters.modification && handleClickAddToGarage(filters.modification, garageId)}
               className="
                         p-2
                         w-full                     
@@ -56,7 +69,7 @@ const VehicleFilters = ({garageId}: IProps) => {
                         hover:cursor-pointer"
             >
               add to garage
-            </button>
+            </button>}
           </div>
           </div>
         </div>
@@ -67,7 +80,7 @@ const VehicleFilters = ({garageId}: IProps) => {
 
   return (
     <div>
-      <span className="text-3xl font-bold text-black">
+      <span className="font-bold text-base text-gray-900 dark:text-white">
         {t('FiltersVehicle.year.title')}
       </span>
       <div className="flex gap-4" >

@@ -61,7 +61,7 @@ const FormGarage = ({
                 focus:ring-blue-200'
               placeholder='please input comment'
               name='comment'
-              value={values?.comment ?? ''}
+              value={values?.comment ? values?.comment : ''}
               type='text'
               onChange={handleInput}
           />

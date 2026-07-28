@@ -51,7 +51,7 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
         const { data } = result;
         const modifications: Modification[] = data.data.map((item) => ({ 
             id: item.id, 
-            name: item.model.model + ' ' + item.typeName,
+            name: item.typeName,
             modificationAutotechId: item.modificationAutotechId,
             range: item.typeRange,
             kw: item.kw,
@@ -60,7 +60,9 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
             modelType: item.model.model,
             bodyType: item.bodyType.name,
             image: item.image,
-            modelId
+            modelId,
+            model: item.model.model,
+            brand: item.brand.mark
         }));
         return modifications;
     }catch(error){
@@ -76,7 +78,9 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
             modelType: '',
             bodyType: '',
             modelId: 0,
-            image: ''
+            image: '',
+            model: '',
+            brand: ''
         }];
     }
 };

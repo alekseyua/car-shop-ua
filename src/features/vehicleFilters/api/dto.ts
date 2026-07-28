@@ -39,6 +39,9 @@ export interface ModificationResponseDto {
     model: {
         model: string;
     }
+    brand: {
+        mark: string;
+    }
     "engineType": {
         "name": string;
     },

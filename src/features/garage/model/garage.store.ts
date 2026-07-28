@@ -10,7 +10,7 @@ interface GarageState {
     };
     errorMessageGarage: string,
     countGarage: number,
-    addCarToGarage: (modification: any, garageId?: number,) => void;
+    addCarToGarage: (modification: any, garageId?: number,) => Promise<boolean>;
     createGarage: (name: string, comment?: string) => Promise<boolean>;
     getGarages: () => void;
     removeFromGarage: (garageCarId: number) => void;
@@ -73,7 +73,7 @@ export const useGarageStore = create<GarageState>((set, get) => ({
         }
         return false;
     },
-    addCarToGarage: async (modification: Modification, garageId) => {
+    addCarToGarage: async (modification: Modification, garageId): Promise<boolean> => {
         const url = `/garage-car`;
         let options: CreateGarageCarDto = {
             modificationId: modification.id,
@@ -85,7 +85,11 @@ export const useGarageStore = create<GarageState>((set, get) => ({
         });
         if(response.ok){
             get().getGarages();
+            // clear state create garage
+            // redirect to 
+            return true
         }
+        return false;
     },
     removeFromGarage: async (garageCarId) => {
         const url = `/garage/${garageCarId}`

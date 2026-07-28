@@ -17,7 +17,7 @@ const GarageModal = () => {
     const t = useTranslations("HomePage");
     const router = useRouter();
     const {closeModal} = useModal();
-    const { getCatalogByModificationAutotechId } = useVehicleFiltersStore();
+    const { getCatalogByModificationAutotechId, resetFilters } = useVehicleFiltersStore();
     const { listGarages, createGarage, errorMessageGarage, clearErrorMessageGarage, removeFromGarage, editItemGarage } = useGarageStore();
     const [currentGarage, setCurrentGarage] = useState<ResponseGarage | null>(null);
     const [isAddGarage, setIsAddGarage] = useState<boolean>(false);
@@ -81,10 +81,19 @@ const GarageModal = () => {
         closeModal();
     }
 
+    const handleAddCarToGarage = () => {
+        !isAddCarGarage && resetFilters();
+        setIsAddCarGarage(s => !s)
+    }
+
+    const removeCarFromGarage = 
+
     useEffect(()=>{
         if (listGarages.length)
             setCurrentGarage(listGarages[0]);
     }, [setCurrentGarage, listGarages])
+
+
 
     if(isAddCarGarage) {
         return (
@@ -92,22 +101,22 @@ const GarageModal = () => {
             <div className='flex justify-between mt-4'>
                 <h2 className='text-gray-900'>Гараж: {currentGarage?.name}</h2>
                 <button className='text-gray-900 hover:cursor-pointer'
-                    onClick={() => setIsAddCarGarage(s=>!s)}
+                        onClick={handleAddCarToGarage}
                 >back</button>
             </div>
-            <VehicleFilters garageId={currentGarage?.id}/>
+                <VehicleFilters garageId={currentGarage?.id} cameBack={handleAddCarToGarage}/>
         </div>
     )
     }
 
 
   return (
-    <div className="grid grid-cols-2">
-        <div className="flex w-full p-1.5 flex-col">
+      <div className="grid grid-cols-2 max-h-[600px]">
+          <div className="flex w-full p-1.5 flex-col max-h-[600px]  overflow-y-auto">
               {!!listGarages?.length &&
                   listGarages.map( (g) => (
                     <div key={g.id}
-                        className='flex flex-col border-b hover:cursor-pointer min-w-xl' 
+                          className={`flex flex-col border-b hover:cursor-pointer rounded-md p-3 min-w-xl ${currentGarage?.id === g.id ? "bg-blue-100 border-blue-500" : "hover:bg-gray-50"}`} 
                           onClick={() => hanleSelectActiveGarage(g.id)}
                     >
                         <div className='flex justify-between'>
@@ -189,22 +198,42 @@ const GarageModal = () => {
                 </button>
               </div>}
         </div>
-        <div className="flex flex-col w-full p-1.5 gap-3">
+          <div className="flex flex-col w-full p-1.5 gap-3 max-h-[600px]  overflow-y-auto">
 
             {
-                  !!currentGarage?.cars?.length &&
+                  currentGarage?.cars?.length ? (
                   currentGarage?.cars.map((gc: ResponseGarageCar)=>(
-                          <div key={gc.id} className="flex flex-col gap-1 border rounded-md p-2 hover:cursor-pointer hover:shadow-md"
+                          <div key={gc.id} className="relative flex flex-col gap-1 border rounded-md p-2 hover:cursor-pointer hover:shadow-md z-0"
                             onClick={()=>selectCarFromGarage(gc.modification)}
                           >
-                            <span className='text-[17px] font-medium  text-black'>{gc.modification.model.model}</span>
+                            <span className='text-[17px] font-medium  text-black'>{gc.modification.brand + ' ' + gc.modification.model.model}</span>
                             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.range')} : {gc.modification?.model?.range}</span>
                             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.engineType')} : {gc.modification?.engineType.name}</span>
                             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.kw')} : {gc.modification?.kw}</span>
                             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.hp')} : {gc.modification?.hp}</span>
                             <span className="font-medium mr-3 text-black">{t('FiltersVehicle.infoModification.bodyType')} : {gc.modification?.bodyType.name}</span>
+                          <button
+                              type="button"
+                              className="absolute top-2 right-2 p-2"
+                              onClick={(e) => {
+                                  e.stopPropagation();
+                                  removeCarFromGarage(gc.id);
+                              }}
+                          >
+                              <Image
+                                  src={IconDelete}
+                                  alt="Удалить"
+                                  width={15}
+                                  height={15}
+                              />
+                          </button>
                         </div>
                     ))
+                  ) : (
+                      <div className="py-8 text-center text-gray-500">
+                          В гараже пока нет автомобилей.
+                      </div>
+                  )
             }
 
               <div className='flex flex-col w-full mt-5'>
@@ -220,7 +249,7 @@ const GarageModal = () => {
                         border
                         text-gray-900 
                         hover:cursor-pointer"
-                        onClick={()=>setIsAddCarGarage(s=>!s)}
+                        onClick={handleAddCarToGarage}
                   >
                       + add car
                   </button>

@@ -18,7 +18,7 @@ export default function CheckoutForm() {
   const { submit } = useCreateOrder();
   const router = useRouter();
   const { deliveryMethod, deliveryCityRef } = useCheckoutStore();
-  const { clearCart } = useCartStore();
+  const { clearCart, cartItems } = useCartStore();
   const methods = useForm<CheckoutFormValues>({
     defaultValues: {
       deliveryCity: "",
@@ -77,7 +77,7 @@ export default function CheckoutForm() {
         <DeliveryMethod />
         <CommentBox />
         <VinCheck />
-        <button
+        {!!cartItems.length && <button
           type="submit"
           className="
                                 w-full
@@ -90,7 +90,7 @@ export default function CheckoutForm() {
                                 "
         >
           Замовлення підтверджую
-        </button>
+        </button>}
       </form>
     </FormProvider>
   );

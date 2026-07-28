@@ -20,8 +20,9 @@ export type Modification = {
     bodyType: string;
     modificationAutotechId: number;
     image: string;
-
-    modelId: number;
+    model: string;
+    brand: string;
+    modelId?: number;
 };
 
 export type Catalog = {

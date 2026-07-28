@@ -40,11 +40,13 @@ export default async function RootLayout({
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider locale={locale} timeZone="Europe/Vienna" messages={messages}>
           <GarageProvider />
           <Header />
-          {children}
+          <main className="flex-1">
+            {children}
+          </main>
           <Footer />
           <ModalProvider />
         </NextIntlClientProvider>

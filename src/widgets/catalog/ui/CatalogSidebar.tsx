@@ -50,12 +50,12 @@ const CatalogSidebar = () => {
                                           key={item.subGroupCode}
                                           className="px-2 py-1 
                                           text-sm text-black hover:cursor-pointer hover:text-[#1a66ff] transition-colors duration-300
-                                          grid grid-cols-[150px_1fr] items-start "
+                                          grid grid-cols-[150px_1fr] items-start"
                                           onClick={() => getListItems(item.typeId, item.groupId)}
                                       >
                                           <span>{item.subGroupCode}</span>
 
-                                          <div className="flex items-center gap-2 justify-end">
+                                          <div className="flex items-center gap-2 justify-end  h-full">
                                               <span className="text-xs text-gray-500 whitespace-nowrap">
                                                   {item.count} parts
                                               </span>

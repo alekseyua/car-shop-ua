@@ -13,5 +13,10 @@ export const useCatalogStore = create<CatalogState>((set) => (
             const res: ResponseCatalogItem[] = await fetchCatalogItems(typeId, groupId);
             set({ listItems: res ?? [] });
         },
+        resetListItems: () => {
+            set({
+                listItems: []
+            })
+        }
     }
 ));
