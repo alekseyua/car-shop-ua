@@ -86,7 +86,7 @@ const GarageModal = () => {
         setIsAddCarGarage(s => !s)
     }
 
-    const removeCarFromGarage = 
+    const removeCarFromGarage = (id: number) => {}
 
     useEffect(()=>{
         if (listGarages.length)

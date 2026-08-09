@@ -10,7 +10,7 @@ const VinRequestButton = () => {
   return (
     <div className='flex self-start'>
           <button
-            onClick={() => openModal('vinRequest')}
+            onClick={() => openModal({type: 'vinRequest'})}
             className='flex justify-center items-center active:scale-95 px-[12px] py-[3px] bg-[#ed1c24] text-white rounded-md text-xs max-w-[80px]'>
             {t('vinRequest.button.title')}
         </button>

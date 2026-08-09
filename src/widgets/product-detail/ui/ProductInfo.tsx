@@ -9,6 +9,7 @@ import React from 'react'
 const ProductInfo = () => {
     const { product, isLoading }:{ product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
     const t = useTranslations("catalog");
+    console.log({product})
   return (
     <div>
       {isLoading ? (
@@ -53,7 +54,7 @@ const ProductInfo = () => {
               <span> UAH </span>
             </p>
             {product?.item?.stock.length && (
-              <p className="text-lg text-gray-500 mb-2">
+              <div className="text-lg text-gray-500 mb-2">
                 {t("available")}:
                 {/* <div className="flex flex-col gap-1">
                   {product.item.stock.map((item, index: number) => (
@@ -70,7 +71,7 @@ const ProductInfo = () => {
                     onClick={(statusDelivery: string) => handleAddToCart(product?.item as ProductDetail, statusDelivery)}
                     stock={product.item.stock}
                   />
-              </p>
+              </div>
             )}
           </div>
            {/* Additional product info can be added here */}

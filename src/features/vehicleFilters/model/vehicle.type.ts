@@ -43,4 +43,4 @@ export type Catalog = {
 //     name: string;
 // };
 
-export type Year = {decade: number; years: number[]};
+export type Year =  number;

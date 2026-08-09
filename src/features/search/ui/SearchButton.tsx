@@ -12,7 +12,7 @@ const SearchButton = () => {
     <div className='flex self-start'>
           <button 
             className='flex rounded-md border items-center pl-2 bg-[#f8f8f8] text-[#757575] min-w-[400px] w-[100%] justify-between'
-            onClick={()=> openModal('search')}    
+            onClick={()=> openModal({type: 'search'})}    
         >
             <div>
                 {t('search.button.placeholder')}
