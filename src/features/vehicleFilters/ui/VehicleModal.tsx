@@ -10,8 +10,8 @@ import { useVehicleFiltersStore } from '../model/vehicle.store';
 const VehicleModal = () => {
   const t = useTranslations('vehicle');
   const [activeMenu, setActiveMenu] = useState<'make' | 'vin' | null>(null);
-  const [activeType, setActiveType] =useState<string>('year');
-  const [activeTypeTitle, setActiveTypetitle] = useState<string>(t('make/model.year'));
+  const [activeType, setActiveType] = useState<string>('make');
+  const [activeTypeTitle, setActiveTypetitle] = useState<string>(t('make/model.make'));
     const useFilters = useVehicleFiltersStore();
   const { filters, setFilters, setBrand, setModel, setModification } = useFilters;
 
@@ -36,12 +36,12 @@ const VehicleModal = () => {
 
   ]
   const listModification = [
-    {
-      id: 0,
-      title: 'make/model.year',
-      type: 'year',
-      optional: false,
-    },
+    // {
+    //   id: 0,
+    //   title: 'make/model.year',
+    //   type: 'year',
+    //   optional: false,
+    // },
     {
       id: 1,
       title: 'make/model.make',
@@ -60,13 +60,20 @@ const VehicleModal = () => {
       type: 'sub-model',
       optional: true,
     },
-    {
-      id: 4,
-      title: 'make/model.engine',
-      type: 'engine',
-      optional: true,
-    },
+    // {
+    //   id: 4,
+    //   title: 'make/model.engine',
+    //   type: 'engine',
+    //   optional: true,
+    // },
   ]
+  const nameVehicleMenu = {
+    "year": "make/model.year",
+    "make": "make/model.make",
+    "model": "make/model.model",
+    "sub-model": "",
+    "": "",
+  }
   if(activeMenu === 'make') {
     return (
       <div>
@@ -100,8 +107,8 @@ const VehicleModal = () => {
         ${activeType === item.type ? 'text-black font-bold' : 'text-gray-500 hover:cursor-pointer'}
       `}
               onClick={() => {
-                setActiveType(item.type)
-                setActiveTypetitle(t(item.title))
+                setActiveType(item.type);
+                setActiveTypetitle(t('make/model.' + item.type));
               }}
             >
               {item.optional && (
@@ -144,48 +151,192 @@ const VehicleModal = () => {
               </div>
             </div>
           {/* вибір року */}
+          
+          {activeType === 'year' &&  <div className="max-h-[230px] overflow-y-auto">
+              {filters.years.filter(el => search !== ''? (el+'').includes(search) : el).map((year) => {
+                const isSelected = filters.year === year
 
-          <div className="max-h-[230px] overflow-y-auto">
-            {filters.years.filter(el => search !== ''? (el+'').includes(search) : el).map((year) => {
-              const isSelected = selected === year
-
-              return (
-                <button
-                  key={year}
-                  type="button"
-                  onClick={() => {
-                    setFilters({ ...filters, year: year })
-                    
-                  }}
-                  className="
-                            flex
-                            h-[34px] w-full
-                            items-center
-                            px-6
-                            text-left text-xs
-                            transition-colors
-                            hover:bg-gray-50 hover:cursor-pointer
-                          "
-                >
-                  <span className="w-5">
-                    {filters.year === year && (
-                      <span className="text-orange-500">✓</span>
-                    )}
-                  </span>
-
-                  <span
-                    className={
-                      isSelected
-                        ? 'font-semibold text-gray-700'
-                        : 'text-gray-600'
-                    }
+                return (
+                  <button
+                    key={year}
+                    type="button"
+                    onClick={() => {
+                      setFilters({ ...filters, year: year })
+                      setActiveType('make');
+                      setSearch('');
+                      setActiveTypetitle(t('make/model.make'));
+                    }}
+                    className="
+                              flex
+                              h-[34px] w-full
+                              items-center
+                              px-6
+                              text-left text-xs
+                              transition-colors
+                              hover:bg-gray-50 hover:cursor-pointer
+                            "
                   >
-                    {year}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+                    <span className="w-5">
+                      {isSelected && (
+                        <span className="text-orange-500">✓</span>
+                      )}
+                    </span>
+
+                    <span
+                      className={
+                        isSelected
+                          ? 'font-semibold text-gray-700'
+                          : 'text-gray-600'
+                      }
+                    >
+                      {year}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>}
+
+          {activeType === 'make' &&  
+            <div className="max-h-[230px] overflow-y-auto">
+              {filters.brands.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
+                const isSelected = filters.brand?.id === item.id
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      // setFilters({ ...filters, brand: item })
+                      setBrand(item)
+                      setActiveType('model');
+                      setSearch('');
+                      setActiveTypetitle(t('make/model.model'));
+                    }}
+                    className="
+                              flex
+                              h-[34px] w-full
+                              items-center
+                              px-6
+                              text-left text-xs
+                              transition-colors
+                              hover:bg-gray-50 hover:cursor-pointer
+                            "
+                  >
+                    <span className="w-5">
+                      {isSelected && (
+                        <span className="text-orange-500">✓</span>
+                      )}
+                    </span>
+
+                    <span
+                      className={
+                        isSelected
+                          ? 'font-semibold text-gray-700'
+                          : 'text-gray-600'
+                      }
+                    >
+                      {item.name}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          }
+          {activeType === 'model' &&  
+            <div className="max-h-[230px] overflow-y-auto">
+              {filters.models.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
+                const isSelected = filters.model?.id === item.id
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      setModel(item);
+                      setActiveType('sub-model');
+                      setSearch('');
+                      setActiveTypetitle(t('make/model.sub-model'));
+                    }}
+                    className="
+                              flex
+                              h-[34px] w-full
+                              items-center
+                              px-6
+                              text-left text-xs
+                              transition-colors
+                              hover:bg-gray-50 hover:cursor-pointer
+                            "
+                  >
+                    <span className="w-5">
+                      {isSelected && (
+                        <span className="text-orange-500">✓</span>
+                      )}
+                    </span>
+
+                    <span
+                      className={
+                        isSelected
+                          ? 'font-semibold text-gray-700'
+                          : 'text-gray-600'
+                      }
+                    >
+                      {item.name}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          }
+          {activeType === 'sub-model' &&  
+            <div className="max-h-[230px] overflow-y-auto">
+              {filters.modifications.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
+                const isSelected = filters.modification?.id === item.id
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => {
+                      setModification(item);
+                      // setActiveType('sub-model');
+                      setSearch('');
+                      // setActiveTypetitle(t('make/model.sub-model'));
+                    }}
+                    className="
+                              flex
+                              h-[34px] w-full
+                              items-center
+                              px-6
+                              text-left text-xs
+                              transition-colors
+                              hover:bg-gray-50 hover:cursor-pointer
+                            "
+                  >
+                    <span className="w-5">
+                      {isSelected && (
+                        <span className="text-orange-500">✓</span>
+                      )}
+                    </span>
+
+                    <span
+                      className={
+                        isSelected
+                          ? 'font-semibold text-gray-700'
+                          : 'text-gray-600'
+                      }
+                    >
+                      {item.name}
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          }
+          {activeType === 'engine' &&  
+            <div className="max-h-[230px] overflow-y-auto">
+
+            </div>
+          }
           </div>
         {/* вибір бренду */}
         {/* вибір моделі */}

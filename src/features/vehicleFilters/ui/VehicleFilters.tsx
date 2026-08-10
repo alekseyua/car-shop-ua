@@ -83,12 +83,18 @@ const VehicleFilters = ({garageId, cameBack}: IProps) => {
   }
 
   return (
-    <div className='flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 px-3 py-1
+    <div className='flex flex-1 items-center justify-between truncate rounded-md border-gray-200 pl-2
       hover:bg-gray-900/[0.04] hover:opacity-100 
     '>
-
+      <Image 
+        src={iconVehicle}
+        alt='icon vehicle car'
+        width={15}
+        height={15}
+        className='w-[15px] h-[15px]'
+      />
       <button 
-        className='hover:cursor-pointer'
+        className='hover:cursor-pointer  px-3 py-3'
         onClick={() => openModal({ type: 'vehicle', visible: 'right' })}>{t('addVehicle')}</button>
       {/* <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-md bg-gray-900/[0.04] opacity-0 transition-opacity duration-150 group-hover/row:opacity-100"></span> */}
     </div>
