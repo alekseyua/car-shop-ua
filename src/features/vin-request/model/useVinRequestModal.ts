@@ -4,9 +4,8 @@ import vinCardEn from '../../../shared/assets/images/vinCodeEn.webp';
 
 export const useVinRequestForm = () => {
     const getImageByLangCode = (langCode : string) => {
-        console.log(langCode);
         switch  (langCode) {
-            case 'ua':
+            case 'uk':
                 return vinCardUa;
             case 'en':
                 return vinCardEn;

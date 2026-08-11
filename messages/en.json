@@ -114,7 +114,7 @@
         "replaces": "Alternatives"
     },
     "vehicle": {
-        "addVehicle": "Add vehicle +",
+        "addVehicle": "Add vehicle",
         "addNewVehicle": "Add a New Vehicle",
         "descAddNewVehicle": "Please select an option below",
         "description": "Enter your car details, and we’ll find the right parts for you",
@@ -123,6 +123,29 @@
             "descMark/model": "Search by Year, Make, Model and Engine",
             "VIN": "VIN",
             "descVIN": "Type Your Vehicle Information"
+        },
+        "vin": {
+            "title": "Add VIN",
+            "label": "Type your Vehicle Identification Number",
+            "enter-vin": "Enter VIN ",
+            "info-what-is-it-title": "WHAT IS IT?",
+            "info-what-is-it-desc": "A Vehicle Identification Number (VIN) is a unique 17-digit code assigned to every automobile. It acts as the car’s fingerprint—no two vehicles share the same VIN. This number helps determine the correct parts for your vehicle, ensuring proper fitment. No personal information is linked to a VIN. See the chart below for common VIN locations.",
+            "where-to-find-my-vin-title": "WHERE TO FIND MY VIN",
+            "where-to-find-my-vin-desc-location": "Common Locations:",
+            "where-to-find-my-vin-desc-title": "The VIN Can Also Be Found:",
+            "where-to-find-my-vin-desc": "In the owner’s manual, vehicle title, registration, and auto insurance documents. Some manufacturers also offer VIN etching on windows and windshields to help prevent theft."
+        },
+        "make/model": {
+            "title": "Select {part}",
+            "year": "Year",
+            "make": "Make",
+            "model": "Model",
+            "sub-model": "Generation",
+            "engine": "Modification",
+            "show-on": "Show other options",
+            "show-off": "Hide other options",
+            "notModel": "Model not selected",
+            "notBrand": "Make not selected"
         },
         "year": {
             "title": "Select your car",
@@ -158,5 +181,9 @@
             "fuelType": "Fuel type",
             "bodyType": "Body type"
         }
+    },
+    "menu": {
+        "mini-name":"menu",
+        "mini-close":"close"
     }
 }

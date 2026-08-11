@@ -25,12 +25,14 @@ interface VehicleFiltersState {
     setFilters: (filters: VehicleFiltersState['filters']) => void;
     setBrand: (brand: { id: number; name: string }) => void;
     setModel: (model: { id: number; name: string }) => void;
+    resetModel: ()=> void;
     setModification: (modification: Modification) => void;
+    resetModification: ()=> void;
     getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     resetFilters: () => void;
 }
 
-export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
+export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => ({
     filters: {
         years: [],
         brands: [],
@@ -103,6 +105,8 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         return years;
     },
     setBrand: async (brand: { id: number; name: string }) => {
+        get().resetModel();
+        get().resetModification();
         const fetchedModels = await getModelsApi(brand.id);
         set((state) => ({
             filters: {
@@ -117,8 +121,8 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
         }));
     },
     setModel: async (model: { id: number; name: string }) => {
+        get().resetModification();
         const fetchedModifications = await getModificationsApi(model.id);
-        console.log({fetchedModifications})
         set((state) => ({
             filters: {
                 ...state.filters,
@@ -127,6 +131,12 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
             },
         }));
     },
+    resetModel: () => set((state) => ({
+        filters: {
+            ...state.filters,
+            models: [],
+            model: null
+        }})),
     setModification: async (modification: Modification) => {
         console.log('Selected modification:', modification);
         const fetchedCatalog: Catalog[] = await getCatalogApi(modification.modificationAutotechId);
@@ -139,6 +149,13 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set) => ({
             },
         }));
     },
+    resetModification: () => set((state) => ({
+        filters: {
+            ...state.filters, 
+            modifications: [],
+            modification: null,
+        }})),
+
     getCatalogByModificationAutotechId: async (modification) => {
         const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
         useCatalogStore.getState().resetListItems();

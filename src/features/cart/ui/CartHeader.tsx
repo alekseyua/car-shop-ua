@@ -21,6 +21,7 @@ const CartHeader = () => {
   const { cartItems } = useCartStore();
   const count = cartItems.length;
   const total = getTotalPrice(cartItems).toFixed(2);
+
   return (
     <div className='flex gap-2 self-start'>
       {/* todo:
@@ -43,7 +44,9 @@ const CartHeader = () => {
       </div>
       <div className='flex flex-col'>
         <p className='text-white text-sm'>{t('cart.label')}</p>
-        <p className='text-white text-sm font-bold'>{t('cart.summary', {count, total})}</p>
+        <p className='text-white text-sm font-bold'>
+          {t('cart.summary', {count, total})}
+          </p>
         {!!count && <button 
           className='text-xs text-white active:scale-95 hover:bg-red-600 transition-colors duration-200 rounded bg-[#ed1c24] mt-1 py-[2px] px-2'
           onClick={()=>router.push('/order')}

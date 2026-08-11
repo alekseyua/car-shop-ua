@@ -2,10 +2,10 @@ import {create} from 'zustand';
 
 interface ModalState {
     isOpen: boolean;
-    openModal: ({type, visible}: {type: string, visible?:  'center' | 'right'}) => void;
+    openModal: ({type, visible}: {type: string, visible?:  'center' | 'right' | 'left'}) => void;
     closeModal: () => void;
     type: string | null;
-    visible: 'center' | 'right';
+    visible: 'center' | 'right' | 'left';
     setType: (type: string) => void;
 }
 
