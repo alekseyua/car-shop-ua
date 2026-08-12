@@ -25,14 +25,15 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
     return (
         <div className="relative">
             {!isAvailable && (
-                <div className="absolute inset-0 bg-black/10 z-1 rounded-md pointer-events-none border rounded-md" />
+                <div className="absolute inset-0 bg-black/10 z-1 rounded-md pointer-events-none border-gray-400 rounded-md" />
             )}
 
             <div
                 data-name="CardPreview"
                 className={`
                 flex flex-col gap-1 
-                min-w-full align-items-center p-2
+                shadow-md
+                min-w-full items-center p-2
                 hover:shadow-md transition-shadow duration-300 hover:cursor-pointer
                 overflow-hidden
                 `}
@@ -63,7 +64,8 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
                         <div className={`text-[#171717] text-lg font-extrabold ${oldPrice ? 'line-through text-gray-500 text-sm' : ''}`}>{price.toFixed(2)} ₴</div>
                         {oldPrice && <span className="text-red-500 text-lg font-bold -top-2 relative">{oldPrice} ₴</span>}
                     </div>
-                    <div className='flex w-full'>
+                    <div className='flex w-full min-h-[30px]'>
+                        
                         <ProductAvailabilityList
                             onClick={(statusDelivery: string) => handleAddToCart(item, statusDelivery)}
                             stock={item.stock}

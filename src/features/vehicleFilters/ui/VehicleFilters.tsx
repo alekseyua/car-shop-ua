@@ -15,7 +15,7 @@ interface IProps {
 }
 const VehicleFilters = ({garageId}: IProps) => {
   const useFilters = useVehicleFiltersStore();
-  const { filters } = useFilters;
+  const { filters, activeModification } = useFilters;
   const t = useTranslations("vehicle");
   const {openModal} = useModal();
   const [isOpen, setIsOpen] = useState(false)
@@ -69,11 +69,12 @@ const VehicleFilters = ({garageId}: IProps) => {
           )}
       </button >
       {/* кнопка выбора автомобиля */}
-      <div className='flex flex-1 items-center truncate rounded-md border-gray-200 px-3 py-3 max-h-[50px] min-w-[140px]
-        hover:bg-gray-900/[0.04] hover:opacity-100 
+      <div className='flex flex-1 items-center truncate rounded-md 
+                      border-gray-200 px-3 py-3 max-h-[50px] min-w-[140px]
+                      hover:bg-gray-900/[0.04] hover:opacity-100 
       '>
         <Image
-          src={filters.modification?.name? iconVehicleSelect : iconVehicle}
+          src={activeModification?.name? iconVehicleSelect : iconVehicle}
           alt='icon vehicle car'
           width={15}
           height={15}
@@ -82,9 +83,9 @@ const VehicleFilters = ({garageId}: IProps) => {
         <button
           className='hover:cursor-pointer'
           onClick={() => openModal({ type: 'vehicle', visible: 'right' })}>{
-            filters.modification?.name 
+            activeModification?.name 
               ? <div className='flex  flex-col'>
-                <span className='text-sm min-w-[150px] max-w-[150px] truncate'>{filters.modification?.brand + ' ' + filters.modification?.name}</span>
+                <span className='text-sm min-w-[150px] max-w-[150px] truncate'>{activeModification?.brand + ' ' + activeModification?.name}</span>
               </div>
                
               : t('addVehicle') + ' >'

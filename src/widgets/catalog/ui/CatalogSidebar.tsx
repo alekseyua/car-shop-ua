@@ -26,14 +26,13 @@ const CatalogSidebar = () => {
                   const isOpen = openGroups[groupCode];
 
                   return (
-                      <div key={groupCode} className="border rounded-md bg-white">
-
+                      <div key={groupCode} className=" rounded-md border border-gray-200 bg-white">
                           {/* HEADER (кликабельный) */}
                           <div
                               onClick={() => toggleGroup(groupCode)}
                               className="px-2 py-1 cursor-pointer flex justify-between items-center"
                           >
-                              <span className="text-lg font-semibold text-[#1a66ff]">
+                              <span className="text-lg font-semibold text-gray-900 hover:text-gray-700">
                                   {groupCode}
                               </span>
 
@@ -49,7 +48,7 @@ const CatalogSidebar = () => {
                                       <div
                                           key={item.subGroupCode}
                                           className="px-2 py-1 
-                                          text-sm text-black hover:cursor-pointer hover:text-[#1a66ff] transition-colors duration-300
+                                          text-sm text-black hover:cursor-pointer hover:text-gray-700 transition-colors duration-300
                                           grid grid-cols-[150px_1fr] items-start"
                                           onClick={() => getListItems(item.typeId, item.groupId)}
                                       >

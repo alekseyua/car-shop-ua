@@ -19,6 +19,7 @@ interface VehicleFiltersState {
         modification: Modification | null;
         catalog: Catalog | null;
     };
+    activeModification: Modification | null;
     init: () => Promise<void>;
     getYears: () => Promise<Year[]>;
     getBrands: () => Promise<Brand[]>;
@@ -30,6 +31,8 @@ interface VehicleFiltersState {
     resetModification: ()=> void;
     getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     resetFilters: () => void;
+    setActiveModification: (m: Modification) => void;
+    resetActiveModification: ()=> void;
 }
 
 export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => ({
@@ -47,6 +50,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         // typeEngine: null,
         // typeBody: null,
     },
+    activeModification: null,
     init: async () => {
         const [brands, years] = await Promise.all([getBrandsApi(), getYearsApi()]);
         set({
@@ -61,7 +65,24 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
                 model: null,
                 modification: null,
                 catalog: null,
+
             },
+        });
+    },
+    setActiveModification: async (m) => {
+        const fetchedCatalog: Catalog[] = await getCatalogApi(m.modificationAutotechId);
+        useCatalogStore.getState().resetListItems();
+        set((state) => ({
+            activeModification: m,
+            filters: {
+                ...state.filters,
+                catalogs: transformCatalog(fetchedCatalog),
+            },
+        }));
+    },
+    resetActiveModification: () => {
+        set({
+            activeModification: null,
         });
     },
     setFilters: (filters) => set({ filters }),
@@ -138,14 +159,14 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
             model: null
         }})),
     setModification: async (modification: Modification) => {
-        console.log('Selected modification:', modification);
-        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.modificationAutotechId);
-        useCatalogStore.getState().resetListItems();
+        // console.log('Selected modification:', modification);
+        // const fetchedCatalog: Catalog[] = await getCatalogApi(modification.modificationAutotechId);
+        // useCatalogStore.getState().resetListItems();
         set((state) => ({
             filters: {
                 ...state.filters,
                 modification,
-                catalogs: transformCatalog(fetchedCatalog),
+                // catalogs: transformCatalog(fetchedCatalog),
             },
         }));
     },
@@ -157,27 +178,27 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         }})),
 
     getCatalogByModificationAutotechId: async (modification) => {
-        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
         useCatalogStore.getState().resetListItems();
+        const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
         set((state) => ({
             filters: {
                 ...state.filters,
-                modification: {
-                    id: modification.id,
-                    name: modification.typeName,
-                    range: modification.typeRange,
-                    kw: modification.kw,
-                    hp: modification.hp,
-                    engineType: modification.engineType.name,
-                    modelType: modification.model.model,
-                    bodyType: modification.bodyType.name,
-                    modificationAutotechId: modification.modificationAutotechId,
-                    image: modification.model?.image ?? '',
-                    modelId: modification.model.id,
-                    model: modification.model.model,
-                    brand: modification.brand
-                },
                 catalogs: transformCatalog(fetchedCatalog),
+            },
+            activeModification: {
+                id: modification.id,
+                name: modification.typeName,
+                range: modification.typeRange,
+                kw: modification.kw,
+                hp: modification.hp,
+                engineType: modification.engineType.name,
+                modelType: modification.model.model,
+                bodyType: modification.bodyType.name,
+                modificationAutotechId: modification.modificationAutotechId,
+                image: modification.model?.image ?? '',
+                modelId: modification.model.id,
+                model: modification.model.model,
+                brand: modification.brand
             },
         }));
     },

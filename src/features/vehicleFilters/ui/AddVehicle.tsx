@@ -22,10 +22,10 @@ const AddVehicle = () => {
   const [activeMenu, setActiveMenu] = useState<'make' | 'vin' | null>(null);
   const [activeType, setActiveType] = useState<string>('year');
   const [showAll, setShowAll] = useState<boolean>(false);
-  const [activeTypeTitle, setActiveTypetitle] = useState<string>(t('make/model.year'));
+  const [activeTypeTitle, setActiveTypeTitle] = useState<string>(t('make/model.year'));
   const { closeModal } = useModal();
   const useFilters = useVehicleFiltersStore();
-  const { filters, setFilters, setBrand, setModel, setModification, } = useFilters;
+  const { filters, setFilters, setBrand, setModel, setModification, setActiveModification } = useFilters;
   const getImage = useVinImage();
   const [selected, setSelected] = useState()
   const [search, setSearch] = useState('');
@@ -37,6 +37,7 @@ const AddVehicle = () => {
   };
   const handleClickAddToGarage = async (modification: Modification, garageId?: number) => {
     const response = await handleAddToGarage(modification, garageId);
+    setActiveModification(modification);
     closeModal();
     console.log({ response })
     if (response) {
@@ -98,161 +99,116 @@ const AddVehicle = () => {
 
   if (activeMenu === 'make') {
     return (
-      <div>
-        {/* заголовок розділу  */}
-        <div className='grid grid-cols-[25px_1fr]'>
-          <button>
-            <Image
-              src={iconBack}
-              alt='icon-back'
-              width={25}
-              height={25}
-              className='w-[25px] h-[25px]'
-              onClick={() => setActiveMenu(null)}
-            />
-          </button>
-          {/* назва розділу */}
-          <div className='flex justify-center'>
-            <h3 className='text-lg font-bold'>{t('make/model.title', { part: activeTypeTitle })} </h3>
-          </div>
-        </div>
-        {/* інформаційна стрічка з вибраними конфігураціями */}
-        <div className='flex justify-center min-h-3 bg-[#f2f2f2] p-3'>
-          <Image
-            src={iconVehicle}
-            alt='icon show configuration vehicle'
-            width={20}
-            height={20}
-            className='w-[20px] h-[20px] mr-2'
-          />
-          <span> {(filters?.year ?? '') + ' ' + (filters.brand?.name ?? '') + ' ' + (filters.model?.name ?? '') + ' ' + (filters.modification?.name ?? '')}</span>
-        </div>
-        {/* горізонтальне меню */}
-        <div className="grid grid-cols-5">
-          {listModification.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`
-        relative flex flex-col items-center justify-center
-        px-2 py-2 text-sm
-        
-        ${activeType === item.type ? 'text-black font-bold' : 'text-gray-500 hover:cursor-pointer'}
-      `}
-              onClick={() => {
-                setActiveType(item.type);
-                setActiveTypetitle(t('make/model.' + item.type));
-              }}
-            >
-              {item.optional && (
-                <span className="text-[9px] text-gray-400">
-                  Optional
-                </span>
-              )}
-
-              <span>{t(item.title)}</span>
-
-              {activeType === item.type && (
-                <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-orange-500" />
-              )}
-            </button>
-          ))}
-        </div>
-
-        <div className="w-full bg-white">
-          {/* Search */}
-          <div className="p-2">
-            <div className="flex h-9 items-center gap-3 rounded-sm bg-[#f2f2f2] px-3">
+      <div className='flex flex-col h-full'>
+        <div className='flex flex-col min-h-0 flex-1'>
+          {/* заголовок розділу  */}
+          <div className='grid grid-cols-[25px_1fr]'>
+            <button>
               <Image
-                src={iconSearch}
-                alt='icon search'
-                className="h-4 w-4 text-black"
+                src={iconBack}
+                alt='icon-back'
+                width={25}
+                height={25}
+                className='w-[25px] h-[25px]'
+                onClick={() => setActiveMenu(null)}
               />
-
-              <input
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Type to narrow down your search."
-                className="
-                            w-full
-                            bg-transparent
-                            text-xs
-                            outline-none
-                            placeholder:text-gray-500
-                          "
-              />
+            </button>
+            {/* назва розділу */}
+            <div className='flex justify-center'>
+              <h3 className='text-lg font-bold'>{t('make/model.title', { part: activeTypeTitle })} </h3>
             </div>
           </div>
-          {/* вибір року */}
+          {/* інформаційна стрічка з вибраними конфігураціями */}
+          <div className='flex justify-center min-h-3 bg-[#f2f2f2] p-3'>
+            <Image
+              src={iconVehicle}
+              alt='icon show configuration vehicle'
+              width={20}
+              height={20}
+              className='w-[20px] h-[20px] mr-2'
+            />
+            <span> {(filters?.year ?? '') + ' ' + (filters.brand?.name ?? '') + ' ' + (filters.model?.name ?? '') + ' ' + (filters.modification?.name ?? '')}</span>
+          </div>
+          {/* горізонтальне меню */}
+          <div className="grid grid-cols-5">
+            {listModification.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`
+          relative flex flex-col items-center justify-center
+          px-2 py-2 text-sm
+          
+          ${activeType === item.type ? 'text-black font-bold' : 'text-gray-500 hover:cursor-pointer'}
+        `}
+                onClick={() => {
+                  setActiveType(item.type);
+                  setActiveTypeTitle(t('make/model.' + item.type));
+                }}
+              >
+                {item.optional && (
+                  <span className="text-[9px] text-gray-400">
+                    Optional
+                  </span>
+                )}
 
-          {activeType === 'year' && <div className="max-h-[230px] overflow-y-auto">
-            {filters.years.filter(el => search !== '' ? (el + '').includes(search) : el).map((year) => {
-              const isSelected = filters.year === year
+                <span>{t(item.title)}</span>
 
-              return (
-                <button
-                  key={year}
-                  type="button"
-                  onClick={() => {
-                    setFilters({ ...filters, year: year })
-                    setActiveType('make');
-                    setSearch('');
-                    setActiveTypetitle(t('make/model.make'));
-                  }}
+                {activeType === item.type && (
+                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-orange-500" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          <div className="w-full bg-white">
+            {/* Search */}
+            <div className="p-2">
+              <div className="flex h-9 items-center gap-3 rounded-sm bg-[#f2f2f2] px-3">
+                <Image
+                  src={iconSearch}
+                  alt='icon search'
+                  className="h-4 w-4 text-black"
+                />
+
+                <input
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Type to narrow down your search."
                   className="
-                              flex
-                              h-[34px] w-full
-                              items-center
-                              text-left text-xs
-                              transition-colors
-                              hover:bg-gray-50 hover:cursor-pointer
+                              w-full
+                              bg-transparent
+                              text-xs
+                              outline-none
+                              placeholder:text-gray-500
                             "
-                >
-                  <span className="w-5">
-                    {isSelected && (
-                      <span className="text-orange-500">✓</span>
-                    )}
-                  </span>
+                />
+              </div>
+            </div>
+            {/* вибір року */}
 
-                  <span
-                    className={
-                      isSelected
-                        ? 'font-semibold text-gray-700'
-                        : 'text-gray-600'
-                    }
-                  >
-                    {year}
-                  </span>
-                </button>
-              )
-            })}
-          </div>}
-          {/* вибір бренду */}
-
-          {activeType === 'make' &&
-            <div className="max-h-[230px] overflow-y-auto">
-              {filters.brands.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
-                const isSelected = filters.brand?.id === item.id
+            {activeType === 'year' && <div className="max-h-[230px] overflow-y-auto">
+              {filters.years.filter(el => search !== '' ? (el + '').includes(search) : el).map((year) => {
+                const isSelected = filters.year === year
 
                 return (
                   <button
-                    key={item.id}
+                    key={year}
                     type="button"
                     onClick={() => {
-                      // setFilters({ ...filters, brand: item })
-                      setBrand(item)
-                      setActiveType('model');
+                      setFilters({ ...filters, year: year })
+                      setActiveType('make');
                       setSearch('');
-                      setActiveTypetitle(t('make/model.model'));
+                      setActiveTypeTitle(t('make/model.make'));
                     }}
                     className="
-                              flex
-                              h-[34px] w-full
-                              items-center
-                              text-left text-xs
-                              transition-colors
-                              hover:bg-gray-50 hover:cursor-pointer
-                            "
+                                flex
+                                h-[34px] w-full
+                                items-center
+                                text-left text-xs
+                                transition-colors
+                                hover:bg-gray-50 hover:cursor-pointer
+                              "
                   >
                     <span className="w-5">
                       {isSelected && (
@@ -267,93 +223,38 @@ const AddVehicle = () => {
                           : 'text-gray-600'
                       }
                     >
-                      {item.name}
+                      {year}
                     </span>
                   </button>
                 )
               })}
-            </div>
-          }
-          {/* вибір моделі */}
+            </div>}
+            {/* вибір бренду */}
 
-          {activeType === 'model' &&
-            <div className="max-h-[230px] overflow-y-auto">
-              {!filters.brand?.id && <div>{t('make/model.notBrand')}</div>}
-
-              {filters.models.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
-                const isSelected = filters.model?.id === item.id
-
-                return (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => {
-                      setModel(item);
-                      setActiveType('sub-model');
-                      setSearch('');
-                      setActiveTypetitle(t('make/model.sub-model'));
-                    }}
-                    className="
-                              flex
-                              h-[34px] w-full
-                              items-center
-                              text-left text-xs
-                              transition-colors
-                              hover:bg-gray-50 hover:cursor-pointer
-                            "
-                  >
-                    <span className="w-5">
-                      {isSelected && (
-                        <span className="text-orange-500">✓</span>
-                      )}
-                    </span>
-
-                    <span
-                      className={
-                        isSelected
-                          ? 'font-semibold text-gray-700'
-                          : 'text-gray-600'
-                      }
-                    >
-                      {item.name}
-                    </span>
-                  </button>
-                )
-              })}
-            </div>
-          }
-          {/* вибір покоління */}
-
-          {activeType === 'sub-model' &&
-            <div className="max-h-[230px] overflow-y-auto">
-              {
-                !filters.model && <div>{t('make/model.notModel')}</div>
-              }
-              {(!!filters.modifications.length && filters.year) && <button
-                className='hover:cursor-pointer hover:opacity-80'
-                onClick={() => setShowAll(s => !s)}>{t('make/model.show-' + (showAll ? 'off' : 'on'))}</button>}
-              {filters.modifications
-                .filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el)
-                .filter(el => filters.year && !showAll ? isYearInRange(filters.year, el.range) : el)
-                .map((item) => {
-                  const isSelected = filters.modification?.id === item.id
+            {activeType === 'make' &&
+              <div className="max-h-[230px] overflow-y-auto">
+                {filters.brands.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
+                  const isSelected = filters.brand?.id === item.id
 
                   return (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => {
-                        setModification(item);
+                        // setFilters({ ...filters, brand: item })
+                        setBrand(item)
+                        setActiveType('model');
                         setSearch('');
+                        setActiveTypeTitle(t('make/model.model'));
                       }}
                       className="
-                              flex
-                              h-[34px] w-full
-                              items-center
-                              text-left text-xs
-                              transition-colors
-                              hover:bg-gray-50 hover:cursor-pointer
-                            "
+                                flex
+                                h-[34px] w-full
+                                items-center
+                                text-left text-xs
+                                transition-colors
+                                hover:bg-gray-50 hover:cursor-pointer
+                              "
                     >
                       <span className="w-5">
                         {isSelected && (
@@ -365,36 +266,138 @@ const AddVehicle = () => {
                         className={
                           isSelected
                             ? 'font-semibold text-gray-700'
-                            : 'text-gray-600 mr-3 min-w-[75px] max-w-[75px] truncate'
+                            : 'text-gray-600'
                         }
                       >
                         {item.name}
                       </span>
-                      <span className="font-semibold mr-3 min-w-[100px] max-w-[100px] truncate">{item.range}</span>
-                      <span className="font-semibold mr-3 min-w-[50px] max-w-[50px] truncate">{item.engineType}</span>
-                      <span className="font-semibold mr-3 min-w-[20px] max-w-[20px] truncate">{item.kw}</span>
-                      <span className="font-semibold mr-3 truncate">{item.bodyType}</span>
                     </button>
                   )
                 })}
-            </div>
-          }
-          {/* кнопка добавления в гараж */}
-          {filters.modification && 
-              <div>
-              <span className='text-md '>You can shop for parts that fit your:</span>
-              <span >{`${filters.modification.brand} ${filters.modification.name}`}</span>
-              <button 
-                type='button'
-                className='flex flex-1 items-center truncate rounded-md border-gray-200 
-                            px-3 py-3 max-h-[50px] min-w-[140px]
-                            hover:bg-gray-900/[0.04] hover:opacity-100 
-                          '
-                onClick={() => filters.modification && handleClickAddToGarage(filters.modification)}
-              >{t('addVehicle')}</button>
               </div>
             }
+            {/* вибір моделі */}
+
+            {activeType === 'model' &&
+              <div className="max-h-[230px] overflow-y-auto">
+                {!filters.brand?.id && <div>{t('make/model.notBrand')}</div>}
+
+                {filters.models.filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el).map((item) => {
+                  const isSelected = filters.model?.id === item.id
+
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        setModel(item);
+                        setActiveType('sub-model');
+                        setSearch('');
+                        setActiveTypeTitle(t('make/model.sub-model'));
+                      }}
+                      className="
+                                flex
+                                h-[34px] w-full
+                                items-center
+                                text-left text-xs
+                                transition-colors
+                                hover:bg-gray-50 hover:cursor-pointer
+                              "
+                    >
+                      <span className="w-5">
+                        {isSelected && (
+                          <span className="text-orange-500">✓</span>
+                        )}
+                      </span>
+
+                      <span
+                        className={
+                          isSelected
+                            ? 'font-semibold text-gray-700'
+                            : 'text-gray-600'
+                        }
+                      >
+                        {item.name}
+                      </span>
+                    </button>
+                  )
+                })}
+              </div>
+            }
+            {/* вибір покоління */}
+
+            {activeType === 'sub-model' &&
+              <div className="max-h-[230px] overflow-y-auto">
+                {
+                  !filters.model && <div>{t('make/model.notModel')}</div>
+                }
+                {(!!filters.modifications.length && filters.year) && <button
+                  className='hover:cursor-pointer hover:opacity-80'
+                  onClick={() => setShowAll(s => !s)}>{t('make/model.show-' + (showAll ? 'off' : 'on'))}</button>}
+                {filters.modifications
+                  .filter(el => search !== '' ? ((el.name + '').toUpperCase()).includes(search.toUpperCase()) : el)
+                  .filter(el => filters.year && !showAll ? isYearInRange(filters.year, el.range) : el)
+                  .map((item) => {
+                    const isSelected = filters.modification?.id === item.id
+
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        onClick={() => {
+                          setModification(item);
+                          setSearch('');
+                        }}
+                        className="
+                                flex
+                                h-[34px] w-full
+                                items-center
+                                text-left text-xs
+                                transition-colors
+                                hover:bg-gray-50 hover:cursor-pointer
+                              "
+                      >
+                        <span className="w-5">
+                          {isSelected && (
+                            <span className="text-orange-500">✓</span>
+                          )}
+                        </span>
+
+                        <span
+                          className={
+                            isSelected
+                              ? 'font-semibold text-gray-700 mr-3 min-w-[75px] max-w-[75px] truncate'
+                              : 'text-gray-600 mr-3 min-w-[75px] max-w-[75px] truncate'
+                          }
+                        >
+                          {item.name}
+                        </span>
+                        <span className="font-semibold mr-3 min-w-[100px] max-w-[100px] truncate">{item.range}</span>
+                        <span className="font-semibold mr-3 min-w-[50px] max-w-[50px] truncate">{item.engineType}</span>
+                        <span className="font-semibold mr-3 min-w-[20px] max-w-[20px] truncate">{item.kw}</span>
+                        <span className="font-semibold mr-3 truncate">{item.bodyType}</span>
+                      </button>
+                    )
+                  })}
+              </div>
+            }
+          </div>
         </div>
+          {/* кнопка добавления в гараж */}
+          {filters.modification && 
+              <div className='flex flex-col items-center justify-center shrink-0'>
+                <p className='text-md '>You can shop for parts that fit your:</p>
+                <p >{`${filters.modification.brand} ${filters.modification.name}`}</p>
+                <button 
+                  type='button'
+                  className='flex flex-1 items-center justify-center truncate rounded-md border 
+                              px-3 py-3 w-full bg-[#202124] text-gray-200
+                              hover:opacity-80 hover:cursor-pointer
+                            '
+                  onClick={() => filters.modification && handleClickAddToGarage(filters.modification)}
+                >{t('addVehicle')}</button>
+              </div>
+            }
       </div>
     )
   }
