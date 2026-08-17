@@ -9,7 +9,7 @@ const ProductDetailLayoutSkeleton = () => {
       </div>
 
       {/* Content */}
-      <div className="space-y-3 p-3">
+      <div className="space-y-3 p-4 border-l border-gray-200">
         {/* title */}
         <div className="h-4 w-3/4 animate-pulse rounded bg-neutral-200" />
 
@@ -27,7 +27,7 @@ const ProductDetailLayoutSkeleton = () => {
         <div className="h-3 w-2/3 animate-pulse rounded bg-neutral-200" />
 
         {/* price */}
-        <div className="h-30 w-1/2 animate-pulse rounded bg-neutral-200" />
+        <div className="h-30 w-full animate-pulse rounded bg-neutral-200" />
       </div>
     </div>
   );

@@ -9,7 +9,6 @@ const ProductReplace = () => {
     const { product, isLoading }: { product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
     const t = useTranslations('catalog');
     if (!product) return null;
-    console.log({product})
     return (
         <div>
             { !!product.replaces.length && 

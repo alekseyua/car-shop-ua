@@ -1,12 +1,12 @@
 import ProductAvailabilityStatus from "@/src/shared/ui/status/ProductAvailabilityStatus";
-import { ResponseStockDto, StockItem } from "../../product-detail/model/types";
+import { ResponseStockDto } from "../../product-detail/model/types";
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 
 interface Props {
     stock: ResponseStockDto[];
     showOnlyFirst?: boolean;
-    onClick: (statusDelivery: string)=>any;
+    onClick: (statusDelivery: string)=> void;
     setIsAvailable?: (value: boolean) => void;
 }
 export const ProductAvailabilityList = ({

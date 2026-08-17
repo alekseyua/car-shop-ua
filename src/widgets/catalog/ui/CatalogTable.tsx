@@ -2,6 +2,7 @@ import { ResponseCatalogItem } from '@/src/entities/catalog/api/dto';
 import { useCatalogStore } from '@/src/entities/catalog/model/catalog.store';
 import { useTranslations } from 'next-intl';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
+import CardPreviewSkeleton from '@/src/shared/ui/Card/CardPreviewSkeleton';
 
 const CatalogTable = () => {
     const { listItemsCatalog }: { listItemsCatalog: ResponseCatalogItem[] } = useCatalogStore();
@@ -9,6 +10,9 @@ const CatalogTable = () => {
 
     return (
         <div>
+            {
+                Array.from({length: 10}).map((el,i)=>(<CardPreviewSkeleton key={i}/>))
+            }
             {listItemsCatalog.length > 0 ? (
                 <div className="
                         w-full 

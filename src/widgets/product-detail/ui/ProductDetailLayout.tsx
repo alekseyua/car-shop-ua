@@ -19,7 +19,7 @@ const ProductDetailLayout = ({ itemNo }: { itemNo: string }) => {
   }
   return (
     <div className="min-h-[calc(100vh-151px)] bg-white">
-      {!isLoading ? (
+      {isLoading ? (
         <ProductDetailLayoutSkeleton />
       ) : (
         <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full items-stretch ">

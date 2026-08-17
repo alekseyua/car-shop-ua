@@ -22,6 +22,7 @@ const ProductImageDetail = () => {
           alt={imagePath.split("/").pop() ?? "Product Image"}
           width={500}
           height={500}
+          loading="eager"
           className="object-contain w-[500px] h-[500px]"
         />
       )}

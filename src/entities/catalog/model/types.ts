@@ -6,12 +6,17 @@ export interface TransformCatalog {
 }
 
 export interface CatalogState {
-    getListItemsCatalogCatalog: (typeId: number, groupId: number) => void;
-    resetListItemsCatalog: () => void;
+  getListItemsCatalogCatalog: (typeId: number, groupId: number) => void;
+  resetListItemsCatalog: () => void;
 
-    getTopProduct: ()=> Promise<void>;
-    resetTopProduct: ()=> void;
-    // getListTopProducts: () => Promise<ResponseTopProduct[]>;
-    listItemsCatalog: ResponseCatalogItem[];
-    listTopProducts: ResponseTopProduct[];
+  getTopProduct: () => Promise<void>;
+  resetTopProduct: () => void;
+  // getListTopProducts: () => Promise<ResponseTopProduct[]>;
+  listItemsCatalog: ResponseCatalogItem[];
+  listTopProducts: ResponseTopProduct[];
+  isLoadingItemsCatalog: boolean;
+  isLoadingTopProducts: boolean;
+
+  itemsCatalogError: string | null;
+  topProductsError: string | null;
 };

@@ -1,9 +1,10 @@
-import TopProductTable from './TopProductTable';
+import CardPreviewSkeleton from "@/src/shared/ui/Card/CardPreviewSkeleton";
+import TopProductTable from "./TopProductTable";
 
 const TopProductLayout = () => {
   return (
-    <TopProductTable/>
-  )
-}
+      <TopProductTable />
+  );
+};
 
-export default TopProductLayout
+export default TopProductLayout;
