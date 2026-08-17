@@ -1,9 +1,9 @@
-import { ProductDetail } from "@/src/entities/product-detail/model/types";
+import { ProductImageDetail } from "@/src/entities/product-detail/model/types";
 import { useCartStore } from "./cart.store";
 import { ProductDto } from "./cart.types";
 import { getCart } from "../api/cart.api";
 
-export const handleAddToCart = (item: ProductDto | ProductDetail, statusDelivery: string) => {
+export const handleAddToCart = (item: ProductDto | ProductImageDetail, statusDelivery: string) => {
     // addToCart(item)
     useCartStore.getState().addToCart(item, statusDelivery);
 };

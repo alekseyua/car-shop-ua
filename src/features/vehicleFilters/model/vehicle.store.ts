@@ -4,7 +4,8 @@ import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalo
 import { transformCatalog } from "../../../entities/catalog/model/libs";
 import { TransformCatalog } from "../../../entities/catalog/model/types";
 import { ModificationGarage } from "../../garage/model/garage.types";
-import { useCatalogStore } from "@/src/entities/catalog/model/store";
+import { useCatalogStore } from "@/src/entities/catalog/model/catalog.store";
+import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
 
 interface VehicleFiltersState {
     filters: {
@@ -71,7 +72,8 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
     },
     setActiveModification: async (m) => {
         const fetchedCatalog: Catalog[] = await getCatalogApi(m.modificationAutotechId);
-        useCatalogStore.getState().resetListItems();
+        useCatalogStore.getState().resetListItemsCatalog();
+        useAccessoriesStore.getState().resetCategoryId();
         set((state) => ({
             activeModification: m,
             filters: {
@@ -161,7 +163,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
     setModification: async (modification: Modification) => {
         // console.log('Selected modification:', modification);
         // const fetchedCatalog: Catalog[] = await getCatalogApi(modification.modificationAutotechId);
-        // useCatalogStore.getState().resetListItems();
+        // useCatalogStore.getState().resetListItemsCatalog();
         set((state) => ({
             filters: {
                 ...state.filters,
@@ -178,8 +180,9 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         }})),
 
     getCatalogByModificationAutotechId: async (modification) => {
-        useCatalogStore.getState().resetListItems();
+        useCatalogStore.getState().resetListItemsCatalog();
         const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
+        useAccessoriesStore.getState().resetCategoryId();
         set((state) => ({
             filters: {
                 ...state.filters,

@@ -3,6 +3,7 @@ export interface ResponseGarage {
     name: string;
     comment: string | null;
     cars: ResponseGarageCar[];
+    isDefault: boolean;
 }
 
 
@@ -16,27 +17,16 @@ export interface BodyType {
     name: string;
 }
 
-export interface Model {
-    id: number;
-    model: string;
-    modelAutotechId: number;
-    range: string;
-    active: boolean;
-    image: string | null;
-    brandId: number;
-}
-
-
 export interface ModificationGarage {
     id: number;
     modificationAutotechId: number;
     typeName: string;
-    model: Model;
+    model: string;
     brand: string;
     typeRange: string;
     engineType: EngineType;
-    kw: number;
-    hp: number;
+    kw: string;
+    hp: string;
     bodyType: BodyType;
 }
 
@@ -44,6 +34,7 @@ export interface ResponseGarageCar {
     id: number;
     vin: string | null;
     nickname: string | null;
+    isDefault: boolean;
     modification: ModificationGarage;
 }
 

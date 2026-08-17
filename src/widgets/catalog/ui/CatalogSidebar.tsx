@@ -2,13 +2,13 @@
 
 import React, { useState } from 'react'
 import { useVehicleFiltersStore } from '../../../features/vehicleFilters/model/vehicle.store';
-import { useCatalogStore } from '../../../entities/catalog/model/store';
+import { useCatalogStore } from '../../../entities/catalog/model/catalog.store';
 import { useTranslations } from 'next-intl';
 
 const CatalogSidebar = () => {
     const {filters} = useVehicleFiltersStore();
     const t = useTranslations();
-    const { getListItems } = useCatalogStore();
+    const { getListItemsCatalogCatalog } = useCatalogStore();
     const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
     const toggleGroup = (groupCode: string) => {
@@ -50,7 +50,7 @@ const CatalogSidebar = () => {
                                           className="px-2 py-1 
                                           text-sm text-black hover:cursor-pointer hover:text-gray-700 transition-colors duration-300
                                           grid grid-cols-[150px_1fr] items-start"
-                                          onClick={() => getListItems(item.typeId, item.groupId)}
+                                          onClick={() => getListItemsCatalogCatalog(item.typeId, item.groupId)}
                                       >
                                           <span>{item.subGroupCode}</span>
 

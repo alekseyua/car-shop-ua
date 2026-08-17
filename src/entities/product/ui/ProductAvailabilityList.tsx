@@ -9,7 +9,6 @@ interface Props {
     onClick: (statusDelivery: string)=>any;
     setIsAvailable?: (value: boolean) => void;
 }
-let counter = 0;
 export const ProductAvailabilityList = ({
     stock,
     showOnlyFirst = false,

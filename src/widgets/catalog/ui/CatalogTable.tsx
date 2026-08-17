@@ -1,22 +1,22 @@
 import { ResponseCatalogItem } from '@/src/entities/catalog/api/dto';
-import { useCatalogStore } from '@/src/entities/catalog/model/store';
+import { useCatalogStore } from '@/src/entities/catalog/model/catalog.store';
 import { useTranslations } from 'next-intl';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
 
 const CatalogTable = () => {
-    const { listItems }: { listItems: ResponseCatalogItem[] } = useCatalogStore();
+    const { listItemsCatalog }: { listItemsCatalog: ResponseCatalogItem[] } = useCatalogStore();
     const t = useTranslations();
 
     return (
         <div>
-            {listItems.length > 0 ? (
+            {listItemsCatalog.length > 0 ? (
                 <div className="
                         w-full 
                         bg-white 
-                        grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
+                        grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3
                         justify-items-center
                         ">
-                    {listItems.map((item: ResponseCatalogItem) => (
+                    {listItemsCatalog.map((item: ResponseCatalogItem) => (
                         <CardPreview
                             key={item.itemNo}
                             imageSrc={'https://img2.ad.ua/imgs/' + item.firstPic}

@@ -1,189 +1,202 @@
 {
-    "HomePage": {
-        "title": "Hello, world!"
+  "HomePage": {
+    "title": "Hello, world!"
+  },
+  "Header": {
+    "Info": {
+      "Delivery": {
+        "title": "Delivery"
+      },
+      "Warranty": {
+        "title": "Warranty"
+      },
+      "Contacts": {
+        "title": "Contacts"
+      }
     },
-    "Header": {
-        "Info": {
-            "Delivery": {
-                "title": "Delivery"
-            },
-            "Warranty": {
-                "title": "Warranty"
-            },
-            "Contacts": {
-                "title": "Contacts"
-            }
-        },
-        "Login": {
-            "title": "Login"
-        },
-        "vinRequest": {
-            "button": {
-                "title": "Search by VIN"
-            },
-            "modal": {
-                "title": "VIN Request",
-                "description": "We’ll professionally find the right parts for you",
-                "form": {
-                    "vin": {
-                        "label": "VIN",
-                        "placeholder": "Enter VIN",
-                        "error": "Enter a valid VIN (17 characters)"
-                    },
-                    "plate": {
-                        "label": "or License Plate",
-                        "placeholder": "AE1122BB"
-                    },
-                    "phone": {
-                        "label": "Leave your contact details",
-                        "placeholder": "+38 (___) ___-__-__",
-                        "error": "Enter a valid phone number"
-                    },
-                    "suggestions": {
-                        "label": "Specify the parts",
-                        "placeholder": "Part name or catalog number",
-                        "error": "This field is required"
-                    },
-                    "submitButton": {
-                        "title": "Send Request"
-                    }
-                }
-            },
-            "vinLocation": {
-                "title": "WHERE TO FIND MY VIN",
-                "subTitle": "Common locations:",
-                "titleDesc": "You can also find the VIN:",
-                "desc": "In the owner's manual, vehicle title documents, registration documents, and auto insurance documents. Some manufacturers also offer VIN engraving on windows and windshields to help prevent theft."
-            }
-        },
-        "search": {
-            "button": {
-                "title": "Search",
-                "placeholder": "Part name or catalog number"
-            }
-        },
-        "cart": {
-            "label": "In your cart",
-            "summary": "{count} items for {total} ₴",
-            "button": {
-                "title": "Checkout"
-            }
+    "Login": {
+      "title": "Login"
+    },
+    "vinRequest": {
+      "button": {
+        "title": "Search by VIN"
+      },
+      "modal": {
+        "title": "VIN Request",
+        "description": "We’ll professionally find the right parts for you",
+        "form": {
+          "vin": {
+            "label": "VIN",
+            "placeholder": "Enter VIN",
+            "error": "Enter a valid VIN (17 characters)"
+          },
+          "plate": {
+            "label": "or License Plate",
+            "placeholder": "AE1122BB"
+          },
+          "phone": {
+            "label": "Leave your contact details",
+            "placeholder": "+38 (___) ___-__-__",
+            "error": "Enter a valid phone number"
+          },
+          "suggestions": {
+            "label": "Specify the parts",
+            "placeholder": "Part name or catalog number",
+            "error": "This field is required"
+          },
+          "submitButton": {
+            "title": "Send Request"
+          }
         }
+      },
+      "vinLocation": {
+        "title": "WHERE TO FIND MY VIN",
+        "subTitle": "Common locations:",
+        "titleDesc": "You can also find the VIN:",
+        "desc": "In the owner's manual, vehicle title documents, registration documents, and auto insurance documents. Some manufacturers also offer VIN engraving on windows and windshields to help prevent theft."
+      }
     },
-    "raiting": {
-        "views": "{count} reviews"
+    "search": {
+      "button": {
+        "title": "Search",
+        "placeholder": "Part name or catalog number"
+      }
     },
-    "card": {
-        "description": "Product description",
-        "price": "Price",
-        "oldPrice": "Old price",
-        "notProduct": "No products to display"
-    },
-    "catalog": {
-        "title": "Parts Catalog",
-        "filters": {
-            "title": "Filters",
-            "brand": {
-                "label": "Make"
-            },
-            "model": {
-                "label": "Model"
-            },
-            "modification": {
-                "label": "Generation"
-            },
-            "typeBody": {
-                "label": "Body type"
-            },
-            "engineType": {
-                "label": "Engine type"
-            }
-        },
-        "descriptionNotLook": "Description not available",
-        "notProduct": "No products to display",
-        "characteristics": "Specifications",
-        "add-characteristics": "Additional information",
-        "today": "today",
-        "tomorrow": "tomorrow",
-        "reserved": "reserved",
-        "notAvailable": "out of stock",
-        "available": "Availability",
-        "pieces": "pcs",
-        "price": "Price",
-        "order": "Order",
-        "replaces": "Alternatives"
-    },
-    "vehicle": {
-        "addVehicle": "Add vehicle",
-        "addNewVehicle": "Add a New Vehicle",
-        "descAddNewVehicle": "Please select an option below",
-        "description": "Enter your car details, and we’ll find the right parts for you",
-        "listMenuAddVehicle": {
-            "mark/model": "Mark / Model",
-            "descMark/model": "Search by Year, Make, Model and Engine",
-            "VIN": "VIN",
-            "descVIN": "Type Your Vehicle Information"
-        },
-        "vin": {
-            "title": "Add VIN",
-            "label": "Type your Vehicle Identification Number",
-            "enter-vin": "Enter VIN ",
-            "info-what-is-it-title": "WHAT IS IT?",
-            "info-what-is-it-desc": "A Vehicle Identification Number (VIN) is a unique 17-digit code assigned to every automobile. It acts as the car’s fingerprint—no two vehicles share the same VIN. This number helps determine the correct parts for your vehicle, ensuring proper fitment. No personal information is linked to a VIN. See the chart below for common VIN locations.",
-            "where-to-find-my-vin-title": "WHERE TO FIND MY VIN",
-            "where-to-find-my-vin-desc-location": "Common Locations:",
-            "where-to-find-my-vin-desc-title": "The VIN Can Also Be Found:",
-            "where-to-find-my-vin-desc": "In the owner’s manual, vehicle title, registration, and auto insurance documents. Some manufacturers also offer VIN etching on windows and windshields to help prevent theft."
-        },
-        "make/model": {
-            "title": "Select {part}",
-            "year": "Year",
-            "make": "Make",
-            "model": "Model",
-            "sub-model": "Generation",
-            "engine": "Modification",
-            "show-on": "Show other options",
-            "show-off": "Hide other options",
-            "notModel": "Model not selected",
-            "notBrand": "Make not selected"
-        },
-        "year": {
-            "title": "Select your car",
-            "label": "Select year",
-            "placeholder": "Select year"
-        },
-        "brand": {
-            "label": "Select make",
-            "placeholder": "Select make"
-        },
-        "model": {
-            "label": "Select model",
-            "placeholder": "Select model"
-        },
-        "modification": {
-            "label": "Select generation",
-            "placeholder": "Select generation"
-        },
-        "typeBody": {
-            "label": "Select body type",
-            "placeholder": "Select body type"
-        },
-        "engineType": {
-            "label": "Select engine type",
-            "placeholder": "Select engine type"
-        },
-        "infoModification": {
-            "range": "Generation",
-            "engineType": "Engine type",
-            "kw": "Power",
-            "hp": "Horsepower",
-            "cylinders": "Cylinders",
-            "fuelType": "Fuel type",
-            "bodyType": "Body type"
-        }
-    },
-    "menu": {
-        "mini-name":"menu",
-        "mini-close":"close"
+    "cart": {
+      "label": "In your cart",
+      "summary": "{count} items for {total} ₴",
+      "button": {
+        "title": "Checkout"
+      }
     }
+  },
+  "raiting": {
+    "views": "{count} reviews"
+  },
+  "card": {
+    "description": "Product description",
+    "price": "Price",
+    "oldPrice": "Old price",
+    "notProduct": "No products to display"
+  },
+  "catalog": {
+    "title": "Parts Catalog",
+    "filters": {
+      "title": "Filters",
+      "brand": {
+        "label": "Make"
+      },
+      "model": {
+        "label": "Model"
+      },
+      "modification": {
+        "label": "Generation"
+      },
+      "typeBody": {
+        "label": "Body type"
+      },
+      "engineType": {
+        "label": "Engine type"
+      }
+    },
+    "descriptionNotLook": "Description not available",
+    "notProduct": "No products to display",
+    "characteristics": "Specifications",
+    "add-characteristics": "Additional information",
+    "today": "today",
+    "tomorrow": "tomorrow",
+    "reserved": "reserved",
+    "notAvailable": "out of stock",
+    "available": "Availability",
+    "pieces": "pcs",
+    "price": "Price",
+    "order": "Order",
+    "replaces": "Alternatives",
+    "accessories": {
+      "catalogTitle": "Accessories"
+    }
+  },
+  "vehicle": {
+    "shopForPartsThatFit": "You can shop for parts that fit your:",
+    "choose-new-vehicle": "Choose a new vehicle",
+    "addVehicle": "Add vehicle",
+    "addNewVehicle": "Add a New Vehicle",
+    "descAddNewVehicle": "Please select an option below",
+    "description": "Enter your car details, and we’ll find the right parts for you",
+    "listMenuAddVehicle": {
+      "mark/model": "Mark / Model",
+      "descMark/model": "Search by Year, Make, Model and Engine",
+      "VIN": "VIN",
+      "descVIN": "Type Your Vehicle Information"
+    },
+    "vin": {
+      "title": "Add VIN",
+      "label": "Type your Vehicle Identification Number",
+      "enter-vin": "Enter VIN ",
+      "info-what-is-it-title": "WHAT IS IT?",
+      "info-what-is-it-desc": "A Vehicle Identification Number (VIN) is a unique 17-digit code assigned to every automobile. It acts as the car’s fingerprint—no two vehicles share the same VIN. This number helps determine the correct parts for your vehicle, ensuring proper fitment. No personal information is linked to a VIN. See the chart below for common VIN locations.",
+      "where-to-find-my-vin-title": "WHERE TO FIND MY VIN",
+      "where-to-find-my-vin-desc-location": "Common Locations:",
+      "where-to-find-my-vin-desc-title": "The VIN Can Also Be Found:",
+      "where-to-find-my-vin-desc": "In the owner’s manual, vehicle title, registration, and auto insurance documents. Some manufacturers also offer VIN etching on windows and windshields to help prevent theft."
+    },
+    "make/model": {
+      "title": "Select {part}",
+      "year": "Year",
+      "make": "Make",
+      "model": "Model",
+      "sub-model": "Generation",
+      "engine": "Modification",
+      "show-on": "Show other options",
+      "show-off": "Hide other options",
+      "notModel": "Model not selected",
+      "notBrand": "Make not selected"
+    },
+    "year": {
+      "title": "Select your car",
+      "label": "Select year",
+      "placeholder": "Select year"
+    },
+    "brand": {
+      "label": "Select make",
+      "placeholder": "Select make"
+    },
+    "model": {
+      "label": "Select model",
+      "placeholder": "Select model"
+    },
+    "modification": {
+      "label": "Select generation",
+      "placeholder": "Select generation"
+    },
+    "typeBody": {
+      "label": "Select body type",
+      "placeholder": "Select body type"
+    },
+    "engineType": {
+      "label": "Select engine type",
+      "placeholder": "Select engine type"
+    },
+    "infoModification": {
+      "range": "Generation",
+      "engineType": "Engine type",
+      "kw": "Power",
+      "hp": "Horsepower",
+      "cylinders": "Cylinders",
+      "fuelType": "Fuel type",
+      "bodyType": "Body type"
+    }
+  },
+  "menu": {
+    "mini-name": "menu",
+    "mini-close": "close"
+  },
+  "garage": {
+    "title": "My Garage",
+    "add-vehicle": "Add Vehicle",
+    "add-garage": "Add Garage",
+    "edit-vehicle": "Edit Vehicle",
+    "delete-vehicle": "Delete Vehicle",
+    "shop-without-vehicle": "Shop Without Vehicle"
+  }
 }

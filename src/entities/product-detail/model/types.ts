@@ -1,4 +1,4 @@
-export interface ProductDetail {
+export interface ProductImageDetail {
   comId: number;
   itemNo: string;
   brand: string;
@@ -56,8 +56,8 @@ export interface CriteriaItem {
 
 export interface ProductDetailResponse {
   files: string[];
-  item: ProductDetail;
-  replaces: ProductDetail[];
+  item: ProductImageDetail;
+  replaces: ProductImageDetail[];
   pictures: string[];
 }
 

@@ -1,8 +1,13 @@
-import { ResponseTopProduct } from '@/src/entities/catalog/api/dto'
-import CardPreview from '@/src/shared/ui/Card/CardPreview'
-import React from 'react'
+'use Client';
 
-const   TopProductTable = ({ listTopProducts }: { listTopProducts: ResponseTopProduct[] }) => {
+import { ResponseTopProduct } from '@/src/entities/catalog/api/dto'
+import { useCatalogStore } from '@/src/entities/catalog/model/catalog.store';
+import CardPreview from '@/src/shared/ui/Card/CardPreview'
+import { useEffect } from 'react';
+
+const   TopProductTable = () => {
+  const { listTopProducts, getTopProduct } = useCatalogStore();
+  useEffect(() => {getTopProduct();}, [getTopProduct]);
   return (
       <div className="grid gap-4 grid-cols-4 bg-white w-full h-full py-[17px] px-[20px]">
 

@@ -10,7 +10,7 @@ interface GarageState {
     };
     errorMessageGarage: string,
     countGarage: number,
-    addCarToGarage: (modification: any, garageId?: number,) => Promise<boolean>;
+    addCarToGarage: (modification: Modification, garageId?: number,) => Promise<boolean>;
     createGarage: (name: string, comment?: string) => Promise<boolean>;
     getGarages: () => void;
     removeFromGarage: (garageCarId: number) => void;
@@ -18,6 +18,7 @@ interface GarageState {
     clearGarage: () => void;
     setErrorMessageGarage: (message: string)=>void;
     clearErrorMessageGarage: ()=>void;
+    changeDefaultGarage: (garageId: number) => void;
     init: () => void;
 }
 
@@ -29,6 +30,15 @@ export const useGarageStore = create<GarageState>((set, get) => ({
     init: () => {
         get()
             .getGarages();
+    },
+    changeDefaultGarage: async (garageId) => {
+        const url = `/garage/${garageId}/default`;
+        const res = await api(url, {
+            method: "PUT"
+        })
+        if(res.ok){
+            get().getGarages();
+        }
     },
     getGarages: async () => {
         const url = '/garage'
@@ -75,7 +85,7 @@ export const useGarageStore = create<GarageState>((set, get) => ({
     },
     addCarToGarage: async (modification: Modification, garageId): Promise<boolean> => {
         const url = `/garage-car`;
-        let options: CreateGarageCarDto = {
+        const options: CreateGarageCarDto = {
             modificationId: modification.id,
 
         }

@@ -6,9 +6,12 @@ export interface TransformCatalog {
 }
 
 export interface CatalogState {
-    getListItems: (typeId: number, groupId: number) => void;
-    resetListItems: () => void;
+    getListItemsCatalogCatalog: (typeId: number, groupId: number) => void;
+    resetListItemsCatalog: () => void;
+
+    getTopProduct: ()=> Promise<void>;
+    resetTopProduct: ()=> void;
     // getListTopProducts: () => Promise<ResponseTopProduct[]>;
-    listItems: ResponseCatalogItem[];
+    listItemsCatalog: ResponseCatalogItem[];
     listTopProducts: ResponseTopProduct[];
 };

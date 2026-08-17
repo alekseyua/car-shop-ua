@@ -1,20 +1,15 @@
 import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
-import { CriteriaItem, ProductDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
+import { CriteriaItem, ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
 import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
-import ProductAvailabilityStatus from '@/src/shared/ui/status/ProductAvailabilityStatus';
 import { useTranslations } from 'next-intl';
 import React from 'react'
 
 const ProductInfo = () => {
-    const { product, isLoading }:{ product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
+    const { product }:{ product: ProductDetailResponse | null, isLoading: boolean } = useProductDetailStore();
     const t = useTranslations("catalog");
     console.log({product})
   return (
-    <div>
-      {isLoading ? (
-        <div> loading .....</div>
-      ) : (
         <div className="flex flex-col gap-2 p-4 border-l w-full h-full">
           <h1 className="text-2xl font-bold mb-4 text-black text-center">
             {product?.item.description}
@@ -62,13 +57,13 @@ const ProductInfo = () => {
                      {item.statusDelivery !== "notAvailable" && <ProductAvailabilityStatus
                         status={item.statusDelivery}
                         count={item.quantity}
-                        onClick={() => handleAddToCart(product?.item as ProductDetail, item.statusDelivery)}
+                        onClick={() => handleAddToCart(product?.item as ProductImageDetail, item.statusDelivery)}
                       />}
                     </div>
                   ))}
                 </div> */}
                   <ProductAvailabilityList
-                    onClick={(statusDelivery: string) => handleAddToCart(product?.item as ProductDetail, statusDelivery)}
+                    onClick={(statusDelivery: string) => handleAddToCart(product?.item as ProductImageDetail, statusDelivery)}
                     stock={product.item.stock}
                   />
               </div>
@@ -76,8 +71,6 @@ const ProductInfo = () => {
           </div>
            {/* Additional product info can be added here */}
         </div>
-      )}
-    </div>
   );
 }
 

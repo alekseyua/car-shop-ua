@@ -5,27 +5,49 @@ import { ProductDetailResponse } from "./types";
 interface ProductDetailState {
   product: ProductDetailResponse | null;
   isLoading: boolean;
+  error: string | null; 
   getProduct: (id: string) => void;
 }
 
 export const useProductDetailStore = create<ProductDetailState>((set) => ({
   product: null,
   isLoading: false,
+  error: null,
+
   getProduct: async (id: string): Promise<void> => {
-    console.log(`Fetching product details for ID: ${id}`);
-    set({ isLoading: true });
-    try{
-        const response = await api(`/product/${id}`);
-        if(!response.ok){
-          throw response.error;
-        }
-        const {data} = response;
-        console.log("API response:", data);
-      set({ product: data as ProductDetailResponse, isLoading: false });
+    set({
+      isLoading: true,
+      error: null,
+    });
+
+    try {
+      const response = await api(`/product/${id}`);
+
+      if (!response.ok) {
+        throw new Error(response.error || "Не удалось загрузить товар");
+      }
+
+      if (!response.data) {
+        throw new Error("Товар не найден");
+      }
+
+      set({
+        product: response.data as ProductDetailResponse,
+      });
     } catch (error) {
-        console.error("Error fetching product details:", error);
-        set({ isLoading: false });
+      console.error("Product detail error:", error);
+
+      set({
+        product: null,
+        error:
+          error instanceof Error
+            ? error.message
+            : "Произошла неизвестная ошибка",
+      });
+    } finally {
+      set({
+        isLoading: false,
+      });
     }
   },
-
 }));

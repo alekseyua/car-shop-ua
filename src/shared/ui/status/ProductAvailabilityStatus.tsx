@@ -1,4 +1,6 @@
 import { useTranslations } from "next-intl";
+import Image from "next/image";
+import iconCart from '../../../shared/assets/icons/cart.svg';
 import React from "react";
 interface Props {
   status: string;
@@ -18,8 +20,8 @@ const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
     return styleStatus[status];
   };
   return (
-    <div className="flex">
-      <div className="flex felx-nowrap gap-1 items-center">
+    <div className="flex justify-between w-full">
+      <div className="flex whitespace-nowrap gap-1 items-center">
         <span
           className={getStyleStatus(status) + ' block rounded-full w-[10px] h-[10px]'}
           ></span>
@@ -31,9 +33,17 @@ const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
       {onClick  && <div className="ml-auto">
         <button
           onClick={onClick}
-          className="px-2 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 hover:shadow-md transition duration-300 hover:cursor-pointer"
+          className="px-2.5 py-3 text-sm bg-red-500 text-white rounded hover:bg-red-600 hover:shadow-md transition duration-300 hover:cursor-pointer"
         >
-          {t('order')}
+        <Image
+          src={iconCart}
+          alt="cart"
+          width={20}
+          height={20}
+          className="hover:cursor-pointer hover:scale-110 transition-transform duration-300 bg-red-500 rounded-md p-[2px]"
+          onClick={onClick}
+        />
+          {/* {t('order')} */}
         </button>
       </div>}
     </div>

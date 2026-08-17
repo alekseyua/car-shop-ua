@@ -23,7 +23,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
     const t = useTranslations();
     const [isAvailable, setIsAvailable] = useState(true);
     return (
-        <div className="relative">
+        <div className="relative w-full">
             {!isAvailable && (
                 <div className="absolute inset-0 bg-black/10 z-1 rounded-md pointer-events-none border-gray-400 rounded-md" />
             )}
@@ -33,7 +33,7 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
                 className={`
                 flex flex-col gap-1 
                 shadow-md
-                min-w-full items-center p-2
+                items-left p-2 w-full max-w-[250px] rounded-md
                 hover:shadow-md transition-shadow duration-300 hover:cursor-pointer
                 overflow-hidden
                 `}
@@ -55,10 +55,10 @@ const CardPreview: React.FC<CardPreviewProps> = ({ imageSrc, title, description,
                             hover:text-[#3b79d5]
                             "
                     >{description}</div>
-                    <div className="text-[#737373] text-sm flex items-center gap-1"> {<RaitingItemCard count={4} />}- {t('raiting.views', { count: 0 })}</div>
+                    <div className="text-[#737373] text-sm flex items-center gap-1 whitespace-nowrap min-w-0 truncate"> {<RaitingItemCard count={4} />}- {t('raiting.views', { count: 0 })}</div>
                 </Link>
                 <div
-                    className={'flex flex-col justify-between items-center gap-2 mt-1 '}
+                    className={'flex flex-col justify-between items-center gap-2 mt-1 w-full'}
                 >
                     <div className="flex w-full items-center justify-start gap-1">
                         <div className={`text-[#171717] text-lg font-extrabold ${oldPrice ? 'line-through text-gray-500 text-sm' : ''}`}>{price.toFixed(2)} ₴</div>

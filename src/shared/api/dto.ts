@@ -4,6 +4,6 @@ export interface PaginationDto<T> {
         page: number;
         limit: number;
         total: number;
-        totalPage: number;
+        totalPages: number;
     }
 }

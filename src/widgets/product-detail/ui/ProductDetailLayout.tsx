@@ -1,28 +1,35 @@
-'use client'
+"use client";
 
-import React, { useEffect } from 'react'
-import ProductDetail from './ProductDetail'
-import ProductInfo from './ProductInfo'
-import { useProductDetailStore } from '@/src/entities/product-detail/model/store'
-import ProductReplace from './ProductReplace'
+import React, { useEffect } from "react";
+import ProductImageDetail from "./ProductImageDetail";
+import ProductInfo from "./ProductInfo";
+import { useProductDetailStore } from "@/src/entities/product-detail/model/store";
+import ProductReplace from "./ProductReplace";
+import ProductDetailLayoutSkeleton from "./ProductDetailLayoutSkeleton";
 
 const ProductDetailLayout = ({ itemNo }: { itemNo: string }) => {
-    const { getProduct } = useProductDetailStore();
+  const { getProduct, error, isLoading } = useProductDetailStore();
 
-    useEffect(() => {
-      getProduct(itemNo);
-    }, [itemNo, getProduct]);
+  useEffect(() => {
+    getProduct(itemNo);
+  }, [itemNo, getProduct]);
 
+  if (error) {
+    return <div className="p-4 text-red-500">{error}</div>;
+  }
   return (
-    <div>
-
-    <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full h-full">
-        <ProductDetail />
-        <ProductInfo />
+    <div className="min-h-[calc(100vh-151px)] bg-white">
+      {!isLoading ? (
+        <ProductDetailLayoutSkeleton />
+      ) : (
+        <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full items-stretch ">
+          <ProductImageDetail />
+          <ProductInfo />
+        </div>
+      )}
+      <ProductReplace />
     </div>
-    <ProductReplace />
-    </div>
-  )
-}
+  );
+};
 
-export default ProductDetailLayout
+export default ProductDetailLayout;

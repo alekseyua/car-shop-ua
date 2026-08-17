@@ -1,11 +1,5 @@
-import { fetchTopProducts } from "./catalog.api";
+import { useCatalogStore } from "../model/catalog.store";
 
 export async function getTopProducts() {
-    const res = await fetchTopProducts();
-
-    return res
-    // .map(item => ({
-    //     ...item,
-    //     firstPic: item.firstPic?.replace('tcd/', 'tcd-pic/')
-    // }));
+    useCatalogStore.getState().getTopProduct();
 }

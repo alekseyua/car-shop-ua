@@ -1,7 +1,7 @@
 'use client';
 
 import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
-import { ProductDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
+import { ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
 import { useTranslations } from 'next-intl';
 
@@ -18,10 +18,10 @@ const ProductReplace = () => {
             <div className="
                 w-full 
                 bg-white 
-                grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
+                grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3
                 justify-items-center
             ">
-                {product && product.replaces.map((item: ProductDetail) => {
+                {product && product.replaces.map((item: ProductImageDetail) => {
                     return  <CardPreview
                         key={item.itemNo}
                         imageSrc={'https://img2.ad.ua/imgs/' + item.firstPic}

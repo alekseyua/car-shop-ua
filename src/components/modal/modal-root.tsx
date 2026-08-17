@@ -11,6 +11,8 @@ import GarageModal from '@/src/features/garage/ui/GarageModal';
 import Image from 'next/image';
 import iconCross from '../../shared/assets/icons/iconCross.svg';
 import AddVehicle from '@/src/features/vehicleFilters/ui/AddVehicle';
+import ListGarage from '@/src/features/garage/ui/ListGarage';
+import CatalogAccessories from '@/src/widgets/catalogAccessories/ui/CatalogAccessories';
 
 const ModalRoot = () => {
     const { isOpen, type, visible, closeModal } = useModal();
@@ -42,52 +44,48 @@ const ModalRoot = () => {
     const isSideModal = isRight || isLeft;
 
     const modalContent = (
-        <AnimatePresence>
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={
-                    isSideModal
-                        ? 'fixed inset-0 bg-black/50 z-50'
-                        : 'fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50'
-                }
-                onClick={closeModal}
-            >
-                <motion.div
-                    initial={
-                        isRight
-                            ? { x: '100%' }
-                            : isLeft
-                                ? { x: '-100%' }
-                                : { scale: 0.8, opacity: 0 }
-                    }
-                    animate={
-                        isRight || isLeft
-                            ? { x: 0 }
-                            : { scale: 1, opacity: 1 }
-                    }
-                    exit={
-                        isRight
-                            ? { x: '100%' }
-                            : isLeft
-                                ? { x: '-100%' }
-                                : { scale: 0.8, opacity: 0 }
-                    }
-                    transition={
-                        isRight || isLeft
-                            ? {
-                                duration: 0.3,
-                                ease: 'easeInOut',
-                            }
-                            : {
-                                duration: 0.3,
-                            }
-                    }
-                    className={
-                        isRight
-                            ? `
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className={
+            isSideModal
+              ? "fixed inset-0 bg-black/50 z-50"
+              : "fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50"
+          }
+          onClick={closeModal}
+        >
+          <motion.div
+            initial={
+              isRight
+                ? { x: "100%" }
+                : isLeft
+                  ? { x: "-100%" }
+                  : { scale: 0.8, opacity: 0 }
+            }
+            animate={isRight || isLeft ? { x: 0 } : { scale: 1, opacity: 1 }}
+            exit={
+              isRight
+                ? { x: "100%" }
+                : isLeft
+                  ? { x: "-100%" }
+                  : { scale: 0.8, opacity: 0 }
+            }
+            transition={
+              isRight || isLeft
+                ? {
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }
+                : {
+                    duration: 0.3,
+                  }
+            }
+            className={
+              isRight
+                ? `
                                 fixed
                                 top-0
                                 right-0
@@ -97,14 +95,14 @@ const ModalRoot = () => {
                                 md:right-0
                                 md:top-0
                                 md:h-full
-                                md:w-1/3
+                                sm:w-2/3 md:w-2/3 lg:w-1/3
                                 md:min-w-[400px]
                                 bg-white
                                 shadow-xl
                                 p-6
                             `
-                            : isLeft
-                                ? `
+                : isLeft
+                  ? `
                                     fixed
                                     top-0
                                     left-0
@@ -114,13 +112,13 @@ const ModalRoot = () => {
                                     md:left-0
                                     md:top-0
                                     md:h-full
-                                    md:w-1/3
+                                    sm:w-2/3 md:w-2/3 lg:w-1/3
                                     md:min-w-[400px]
                                     bg-white
                                     shadow-xl
                                     p-6
                                 `
-                                : `
+                  : `
                                     relative
                                     bg-white
                                     p-6
@@ -128,52 +126,39 @@ const ModalRoot = () => {
                                     shadow-lg
                                     min-w-[400px]
                                 `
-                    }
-                    onClick={(event) => event.stopPropagation()}
-                >
-                    <div className="absolute top-4 right-4">
-                        <button
-                            onClick={closeModal}
-                            className="text-gray-500 hover:text-gray-700 hover:cursor-pointer"
-                            type="button"
-                        >
-                            <Image
-                                src={iconCross}
-                                alt="icon-cross"
-                                width={35}
-                                height={35}
-                                className="w-[35px] h-[35px]"
-                            />
-                        </button>
-                    </div>
+            }
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="absolute top-4 right-4">
+              <button
+                onClick={closeModal}
+                className="text-gray-500 hover:text-gray-700 hover:cursor-pointer"
+                type="button"
+              >
+                <Image
+                  src={iconCross}
+                  alt="icon-cross"
+                  width={35}
+                  height={35}
+                  className="w-[35px] h-[35px]"
+                />
+              </button>
+            </div>
 
-                    {type === 'example' && (
-                        <div>
-                            Example Modal Content
-                        </div>
-                    )}
+            {type === "example" && <div>Example Modal Content</div>}
 
-                    {type === 'vinRequest' && (
-                        <VinRequestModal />
-                    )}
+            {type === "vinRequest" && <VinRequestModal />}
 
-                    {type === 'search' && (
-                        <SearchModal />
-                    )}
+            {type === "search" && <SearchModal />}
 
-                    {type === 'garage' && (
-                        <GarageModal />
-                    )}
+            {type === "garage" && <GarageModal />}
 
-                    {type === 'vehicle' && (
-                        <AddVehicle />
-                    )}
-                    {type === 'common-menu' && (
-                        <AddVehicle />
-                    )}
-                </motion.div>
-            </motion.div>
-        </AnimatePresence>
+            {type === "vehicle" && <AddVehicle />}
+            {type === "vehicle-list" && <ListGarage />}
+            {type === "accessories-menu" && <CatalogAccessories />}
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
     );
 
     return createPortal(
