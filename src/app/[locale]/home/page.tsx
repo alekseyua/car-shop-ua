@@ -9,9 +9,9 @@ export default function Home() {
 
   return (
     <Container className="flex flex-col h-full p-[0]  min-h-screen">
-      <div className="flex flex-col items-start justify-start gap-4 bg-[#f2f4f3] w-full h-full py-[17px] px-[20px]">
+      {/* <div className="sticky top-0 z-50 flex flex-col items-start justify-start gap-4 bg-[#f2f4f3] w-full h-full py-[17px] px-[20px]">
         <VehicleFilters />
-      </div>
+      </div> */}
       <CatalogLayout />
     </Container>
   );

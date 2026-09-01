@@ -1,7 +1,7 @@
 'use client';
 
-import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
-import { ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
+import { useProductDetailStore } from '@/src/entities/product-detail/model/detail.store';
+import { ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/detail.types';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
 import { useTranslations } from 'next-intl';
 

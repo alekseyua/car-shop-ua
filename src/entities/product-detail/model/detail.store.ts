@@ -1,6 +1,6 @@
 import { api } from "@/src/shared/api/client";
 import { create } from "zustand";
-import { ProductDetailResponse } from "./types";
+import { ProductDetailResponse } from "./detail.types";
 
 interface ProductDetailState {
   product: ProductDetailResponse | null;

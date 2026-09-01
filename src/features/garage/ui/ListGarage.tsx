@@ -1,11 +1,12 @@
 import React from "react";
 import VehicleCard from "./VehicleCard";
 import { useGarageStore } from "../model/garage.store";
-import { ModificationGarage, ResponseGarageCar } from "../model/garage.types";
+import { ResponseGarageCar } from "../model/garage.types";
 import { useVehicleFiltersStore } from "../../vehicleFilters/model/vehicle.store";
 import useModal from "@/src/hooks/use-modal";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { Modification } from "../../vehicleFilters/model/vehicle.type";
 
 const ListGarage = () => {
   const { listGarages, removeFromGarage } = useGarageStore();
@@ -16,11 +17,13 @@ const ListGarage = () => {
   const t = useTranslations("vehicle");
 
   const currentGarage = listGarages[0] ?? null;
-  const selectCarFromGarage = (modification: ModificationGarage) => {
+  const selectCarFromGarage = (modification: Modification) => {
+  // const selectCarFromGarage = (modification: ModificationGarage) => {
     getCatalogByModificationAutotechId(modification);
     router.push("/");
     closeModal();
   };
+  console.log({ currentGarage });
   
   return (
     <div className="felx flex-col h-full min-h-0">
@@ -36,10 +39,10 @@ const ListGarage = () => {
                 isActive={
                   activeModification?.id === gc.modification?.id
                 }
-                year={gc.modification?.typeRange}
+                year={gc.modification.range}
                 make={gc.modification.brand}
                 model={gc.modification?.model}
-                engine={gc.modification?.typeName}
+                engine={gc.modification?.engineType}
                 onSelect={() => selectCarFromGarage(gc.modification)}
               />
             ))

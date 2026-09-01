@@ -11,15 +11,14 @@ export type Model = {
 
 export type Modification = {
     id: number;
-    name: string;
-    range: string;
     kw: number;
     hp: number;
-    engineType: string;
-    modelType: string;
-    bodyType: string;
     modificationAutotechId: number;
     image: string;
+    name: string;
+    range: string;
+    engineType: string;
+    bodyType: string;
     model: string;
     brand: string;
     modelId?: number;
@@ -32,15 +31,5 @@ export type Catalog = {
     subGroupCode: string;
     count: number;
 };
-
-// export type TypeEngine = {
-//     id: string;
-//     name: string;
-// };
-
-// export type TypeBody = {
-//     id: string;
-//     name: string;
-// };
 
 export type Year =  number;

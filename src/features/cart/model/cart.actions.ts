@@ -1,4 +1,4 @@
-import { ProductImageDetail } from "@/src/entities/product-detail/model/types";
+import { ProductImageDetail } from "@/src/entities/product-detail/model/detail.types";
 import { useCartStore } from "./cart.store";
 import { ProductDto } from "./cart.types";
 import { getCart } from "../api/cart.api";

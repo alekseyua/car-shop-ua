@@ -49,21 +49,7 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
         }
 
         const { data } = result;
-        const modifications: Modification[] = data.data.map((item) => ({ 
-            id: item.id, 
-            name: item.typeName,
-            modificationAutotechId: item.modificationAutotechId,
-            range: item.typeRange,
-            kw: item.kw,
-            hp: item.hp,
-            engineType: item.engineType.name,
-            modelType: item.model.model,
-            bodyType: item.bodyType.name,
-            image: item.image,
-            modelId,
-            model: item.model.model,
-            brand: item.brand.mark
-        }));
+        const modifications: Modification[] = data.data;
         return modifications;
     }catch(error){
         console.error(error);
@@ -75,7 +61,6 @@ export const getModificationsApi = async (modelId: number): Promise<Modification
             kw: 0,
             hp: 0,
             engineType: '',
-            modelType: '',
             bodyType: '',
             modelId: 0,
             image: '',

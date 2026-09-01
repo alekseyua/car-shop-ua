@@ -32,7 +32,6 @@ const Header = () => {
           <Logo />
           <Contacts />
           <VinRequestButton />
-          <SearchButton />
           <GarageButton />
           <CartHeader />
         </div>

@@ -1,3 +1,5 @@
+import { Modification } from "../model/vehicle.type";
+
 export interface BrandsResponseDto {
     "id": number;
     "mark": string;
@@ -16,39 +18,7 @@ export interface ModelResponseDto {
     brandId: number;
 }
 
-export interface ModificationResponseDto {
-    id: number;
-    modificationAutotechId: number;
-    typeName: string;
-    typeRange: string;
-    kw: number;
-    hp: number;
-    ccmTech: number;
-    capacity: number;
-    cylinders: number;
-    valve: number;
-    tonnage: number;
-    active: boolean;
-    image: string;
-    fuelId: number;
-    engineTypeId: number;
-    fuelPreparationId: number;
-    bodyTypeId: number;
-    driveTypeId: number;
-    modelId: number;
-    model: {
-        model: string;
-    }
-    brand: {
-        mark: string;
-    }
-    "engineType": {
-        "name": string;
-    },
-    "bodyType": {
-        "name": string;
-    }
-}
+export type ModificationResponseDto = Modification;
 
 export interface CatalogResponseDto {
     typeId?: number;

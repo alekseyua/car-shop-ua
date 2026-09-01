@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useGarageStore } from '../model/garage.store';
-import { ModificationGarage, ResponseGarage, ResponseGarageCar } from '../model/garage.types';
+import { ResponseGarage, ResponseGarageCar } from '../model/garage.types';
 import IconEdit from '../../../shared/assets/icons/edit.svg';
 import IconDelete from '../../../shared/assets/icons/delete.svg';
 import Image from 'next/image';
@@ -12,6 +12,7 @@ import { useRouter } from 'next/navigation';
 import useModal from '@/src/hooks/use-modal';
 import { useVehicleFiltersStore } from '../../vehicleFilters/model/vehicle.store';
 import VehicleCard from './VehicleCard';
+import { Modification } from '../../vehicleFilters/model/vehicle.type';
 
 const GarageModal = () => {
     const t = useTranslations("garage");
@@ -92,7 +93,8 @@ const GarageModal = () => {
         clearErrorMessageGarage();
     }
 
-    const selectCarFromGarage = (modification: ModificationGarage) => {
+    const selectCarFromGarage = (modification: Modification) => {
+    // const selectCarFromGarage = (modification: ModificationGarage) => {
         getCatalogByModificationAutotechId(modification)
         router.push("/");
         closeModal();
@@ -203,10 +205,10 @@ console.log({ activeModification });
               <VehicleCard
                 key={gc.id}
                 isActive={gc.modification?.id === activeModification?.id}
-                year={gc.modification?.typeRange}
+                year={gc.modification.range}
                 make={gc.modification.brand}
                 model={gc.modification?.model}
-                engine={gc.modification?.typeName}
+                engine={gc.modification.engineType}
                 onDelete={() => {
                   removeCarFromGarage(gc.id);
                 }}

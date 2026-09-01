@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import ProductImageDetail from "./ProductImageDetail";
 import ProductInfo from "./ProductInfo";
-import { useProductDetailStore } from "@/src/entities/product-detail/model/store";
+import { useProductDetailStore } from "@/src/entities/product-detail/model/detail.store";
 import ProductReplace from "./ProductReplace";
 import ProductDetailLayoutSkeleton from "./ProductDetailLayoutSkeleton";
 

@@ -27,7 +27,6 @@ const AddVehicle = () => {
   const useFilters = useVehicleFiltersStore();
   const { filters, setFilters, setBrand, setModel, setModification, setActiveModification } = useFilters;
   const getImage = useVinImage();
-  const [selected, setSelected] = useState()
   const [search, setSearch] = useState('');
   
   const [vin, setVin] = useState("");
@@ -98,7 +97,7 @@ const AddVehicle = () => {
   ]
 
 
-
+console.log({filters})
   if (activeMenu === 'make') {
     return (
       <div className="flex flex-col h-full">

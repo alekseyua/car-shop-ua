@@ -53,7 +53,7 @@ export const useGarageStore = create<GarageState>((set, get) => ({
                 acc+=cur.cars.length;
                 return acc;
             },0)
-            
+            console.log({garages: garages.data})
             set({
                 listGarages: garages.data,
                 countGarage: count,

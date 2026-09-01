@@ -3,21 +3,20 @@
 import React, { useEffect, useState } from 'react'
 import { useVehicleFiltersStore } from '../model/vehicle.store'
 import { useTranslations } from 'next-intl';
-import { Modification } from '../model/vehicle.type';
 import Image from 'next/image';
-import { handleAddToGarage } from '../../garage/model/garage.actions';
 import iconVehicle from '../../../shared/assets/icons/iconVehicle.svg';
 import iconVehicleSelect from '../../../shared/assets/icons/iconVehicleSelect.svg';
 import useModal from '@/src/hooks/use-modal';
 import { useGarageStore } from '../../garage/model/garage.store';
+import SearchButton from '../../search/ui/SearchButton';
 
 interface IProps {
   garageId?: number;
 }
 const VehicleFilters = ({garageId}: IProps) => {
   const useFilters = useVehicleFiltersStore();
-  const { countGarage } = useGarageStore();
   const { filters, activeModification } = useFilters;
+  const { countGarage } = useGarageStore();
   const t = useTranslations("vehicle");
   const {openModal} = useModal();
   const [isOpen, setIsOpen] = useState(false)
@@ -29,11 +28,8 @@ const VehicleFilters = ({garageId}: IProps) => {
     }
   }, [filters.brands.length, useFilters]);
 
-  console.log("activeModification = ", activeModification);
-
-
   return (
-    <div className="flex flex-1 items-center justify-between pl-2 gap-2">
+    <div className="flex flex-1 items-center justify-start pl-2 gap-2">
       {/* кнопка меню */}
       <button
         type="button"
@@ -68,26 +64,31 @@ const VehicleFilters = ({garageId}: IProps) => {
       </button>
       {/* кнопка выбора автомобиля */}
       <button
-        className="hover:cursor-pointer flex flex-1 items-center truncate rounded-md 
-                    border-gray-200 px-3 py-3 max-h-[50px] min-w-[140px]
-                    hover:bg-gray-900/[0.04] hover:opacity-100 "
+        className=" 
+                    flex flex-1 items-center justify-start truncate rounded-md 
+                    border-gray-200 px-3 py-3 max-h-[50px] min-w-[170px] max-w-[170px]
+                    hover:bg-gray-900/[0.04] hover:opacity-100 hover:cursor-pointer
+                    "
         onClick={() =>
           !!countGarage
             ? openModal({ type: "vehicle-list", visible: "right" })
             : openModal({ type: "vehicle", visible: "right" })
         }
       >
+        <div>
+
         <Image
           src={activeModification?.name ? iconVehicleSelect : iconVehicle}
           alt="icon vehicle car"
           width={15}
           height={15}
           className="w-[15px] h-[15px] mr-2"
-        />
+          />
+          </div>
         <div>
           {activeModification?.name ? (
-            <div className="flex  flex-col">
-              <span className="text-sm min-w-[150px] max-w-[150px] truncate">
+            <div className="flex flex-col">
+              <span className="text-start ml-2 text-sm min-w-[150px] max-w-[150px] truncate">
                 {activeModification?.brand + " " + activeModification?.name}
               </span>
             </div>
@@ -97,6 +98,8 @@ const VehicleFilters = ({garageId}: IProps) => {
           {/* <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-md bg-gray-900/[0.04] opacity-0 transition-opacity duration-150 group-hover/row:opacity-100"></span> */}
         </div>
       </button>
+      {/* пошук */}
+      <SearchButton />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import ProductAvailabilityStatus from "@/src/shared/ui/status/ProductAvailabilityStatus";
-import { ResponseStockDto } from "../../product-detail/model/types";
+import { ResponseStockDto } from "../../product-detail/model/detail.types";
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 

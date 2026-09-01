@@ -1,4 +1,4 @@
-import { DeliveryStatus } from "@/src/entities/product-detail/model/types";
+import { DeliveryStatus } from "@/src/entities/product-detail/model/detail.types";
 
 
 export interface CartStore {

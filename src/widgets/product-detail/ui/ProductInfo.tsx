@@ -1,5 +1,5 @@
-import { useProductDetailStore } from '@/src/entities/product-detail/model/store';
-import { CriteriaItem, ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/types';
+import { useProductDetailStore } from '@/src/entities/product-detail/model/detail.store';
+import { CriteriaItem, ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/detail.types';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
 import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
 import { useTranslations } from 'next-intl';

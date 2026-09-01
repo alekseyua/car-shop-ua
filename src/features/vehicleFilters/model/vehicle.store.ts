@@ -3,7 +3,6 @@ import { Brand, Modification, Model, Year, Catalog } from "./vehicle.type";
 import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalogApi } from "../api/api";
 import { transformCatalog } from "../../../entities/catalog/model/libs";
 import { TransformCatalog } from "../../../entities/catalog/model/types";
-import { ModificationGarage } from "../../garage/model/garage.types";
 import { useCatalogStore } from "@/src/entities/catalog/model/catalog.store";
 import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
 
@@ -30,7 +29,8 @@ interface VehicleFiltersState {
     resetModel: ()=> void;
     setModification: (modification: Modification) => void;
     resetModification: ()=> void;
-    getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
+    getCatalogByModificationAutotechId: (modification: Modification) => void;
+    // getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     resetFilters: () => void;
     setActiveModification: (m: Modification) => void;
     resetActiveModification: ()=> void;
@@ -188,21 +188,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
                 ...state.filters,
                 catalogs: transformCatalog(fetchedCatalog),
             },
-            activeModification: {
-                id: modification.id,
-                name: modification.typeName,
-                range: modification.typeRange,
-                kw: modification.kw,
-                hp: modification.hp,
-                engineType: modification.engineType.name,
-                modelType: modification.model.model,
-                bodyType: modification.bodyType.name,
-                modificationAutotechId: modification.modificationAutotechId,
-                image: modification.model?.image ?? '',
-                modelId: modification.model.id,
-                model: modification.model.model,
-                brand: modification.brand
-            },
+            activeModification: modification,
         }));
     },
 }))

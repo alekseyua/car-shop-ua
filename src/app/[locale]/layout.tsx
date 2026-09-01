@@ -7,7 +7,8 @@ import ModalProvider from "../../providers/modal-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { GarageProvider } from "@/src/providers/garage-provider";
-
+import { Container } from "@/src/shared/ui/layout/Container/Container";
+import VehicleFilters from "@/src/features/vehicleFilters/ui/VehicleFilters";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,9 +32,8 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
-
   const { locale } = await params;
-  const messages =  await getMessages(locale);
+  const messages = await getMessages(locale);
 
   return (
     <html
@@ -41,12 +41,21 @@ export default async function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-screen flex flex-col">
-        <NextIntlClientProvider locale={locale} timeZone="Europe/Vienna" messages={messages}>
+        <NextIntlClientProvider
+          locale={locale}
+          timeZone="Europe/Vienna"
+          messages={messages}
+        >
           <GarageProvider />
           <Header />
-          <main className="flex-1">
-            {children}
-          </main>
+          <div className="sticky top-0 z-50 w-full bg-[#f2f4f3]">
+            <Container className="!p-0">
+              <div className="px-5 py-[17px]">
+                <VehicleFilters />
+              </div>
+            </Container>
+          </div>
+          <main className="flex-1">{children}</main>
           <Footer />
           <ModalProvider />
         </NextIntlClientProvider>

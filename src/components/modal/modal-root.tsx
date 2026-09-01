@@ -35,7 +35,16 @@ const ModalRoot = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [closeModal]);
+    React.useEffect(() => {
+      if (!isOpen) return;
 
+      document.body.classList.add("overflow-hidden");
+
+      return () => {
+        document.body.classList.remove("overflow-hidden");
+      };
+    }, [isOpen]);
+    
     if (!mounted || !isOpen) return null;
 
     const isRight = visible === 'right';

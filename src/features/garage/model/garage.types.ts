@@ -1,3 +1,5 @@
+import { Modification } from "../../vehicleFilters/model/vehicle.type";
+
 export interface ResponseGarage {
     id: number;
     name: string;
@@ -17,25 +19,26 @@ export interface BodyType {
     name: string;
 }
 
-export interface ModificationGarage {
-    id: number;
-    modificationAutotechId: number;
-    typeName: string;
-    model: string;
-    brand: string;
-    typeRange: string;
-    engineType: EngineType;
-    kw: string;
-    hp: string;
-    bodyType: BodyType;
-}
+// export interface ModificationGarage {
+//     id: number;
+//     modificationAutotechId: number;
+//     typeName: string;
+//     model: string;
+//     brand: string;
+//     typeRange: string;
+//     engineType: EngineType;
+//     kw: string;
+//     hp: string;
+//     bodyType: BodyType;
+// }
 
 export interface ResponseGarageCar {
     id: number;
     vin: string | null;
     nickname: string | null;
     isDefault: boolean;
-    modification: ModificationGarage;
+    modification: Modification;
+    // modification: ModificationGarage;
 }
 
 export interface CreateGarageCarDto {

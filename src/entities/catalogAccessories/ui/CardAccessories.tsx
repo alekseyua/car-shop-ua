@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { CategoryAccessories } from "../model/accessories.type";
+import { scrollToTop } from "@/src/shared/libs/helpers";
 
 interface IProps {
   item: CategoryAccessories;
@@ -39,7 +40,14 @@ export const CardAccessories = ({ item, handleFetchDataAccessories }: IProps) =>
             height={15}
           />
         )} */}
-        <button onClick={() => hasChildren? setIsOpen((prev) => !prev) : handleFetchDataAccessories(item.id)}>
+        <button onClick={() => {
+          if(hasChildren){
+            setIsOpen((prev) => !prev)
+          } else {
+            handleFetchDataAccessories(item.id);
+            scrollToTop();
+          } 
+        }}>
           <span
             className={`text-sm block text-start hover:cursor-pointer hover:text-gray-500`}
           >

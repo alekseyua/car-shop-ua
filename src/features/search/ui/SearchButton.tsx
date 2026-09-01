@@ -9,7 +9,7 @@ const SearchButton = () => {
     const {openModal} = useModal();
 
   return (
-    <div className='flex self-start'>
+    <div className='flex'>
           <button 
             className='flex rounded-md border items-center pl-2 bg-[#f8f8f8] text-[#757575] min-w-[400px] w-[100%] justify-between'
             onClick={()=> openModal({type: 'search'})}    

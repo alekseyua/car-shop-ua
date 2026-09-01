@@ -1,5 +1,5 @@
-import { useProductDetailStore } from "@/src/entities/product-detail/model/store";
-import { ProductDetailResponse } from "@/src/entities/product-detail/model/types";
+import { useProductDetailStore } from "@/src/entities/product-detail/model/detail.store";
+import { ProductDetailResponse } from "@/src/entities/product-detail/model/detail.types";
 import { normolizeImagePath } from "@/src/shared/libs/helpers";
 import Image from "next/image";
 import React from "react";
