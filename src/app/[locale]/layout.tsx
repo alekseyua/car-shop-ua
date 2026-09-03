@@ -8,7 +8,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { GarageProvider } from "@/src/providers/garage-provider";
 import { Container } from "@/src/shared/ui/layout/Container/Container";
-import VehicleFilters from "@/src/features/vehicleFilters/ui/VehicleFilters";
+import VehicleFiltersLayout from "@/src/features/vehicleFilters/ui/VehicleFiltersLayout";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +51,7 @@ export default async function RootLayout({
           <div className="sticky top-0 z-50 w-full bg-[#f2f4f3]">
             <Container className="!p-0">
               <div className="px-5 py-[17px]">
-                <VehicleFilters />
+                <VehicleFiltersLayout />
               </div>
             </Container>
           </div>

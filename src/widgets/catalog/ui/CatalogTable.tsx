@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import CardPreview from "@/src/shared/ui/Card/CardPreview";
 import CardPreviewSkeleton from "@/src/shared/ui/Card/CardPreviewSkeleton";
 import React from "react";
+import { getOldPrice } from "@/src/shared/libs/helpers";
 
 const CatalogTable = () => {
   const {
@@ -14,13 +15,13 @@ const CatalogTable = () => {
   const t = useTranslations();
 
   return (
-    <div>
+    <div className="block w-full">
       {listItemsCatalog.length > 0 ? (
         <div
           className="
                         w-full 
                         bg-white 
-                        grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3
+                        grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
                         justify-items-center
                         "
         >
@@ -44,7 +45,9 @@ const CatalogTable = () => {
                   rating={4} // Placeholder rating
                   price={item.price}
                   oldPrice={
-                    item.retail !== item.price ? item.retail : undefined
+                    item.inStock
+                      ? getOldPrice(item.price)
+                      : undefined
                   }
                   item={item}
                 />

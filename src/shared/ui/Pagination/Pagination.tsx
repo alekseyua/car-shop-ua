@@ -73,7 +73,7 @@ type PaginationItem = number | "dots"; export function Pagination({
           onClick={prevPage}
           disabled={!canGoPrev}
           aria-label="Previous page"
-          className=" flex h-20 w-14 items-center justify-center text-3xl text-neutral-400 transition hover:text-neutral-900 disabled:pointer-events-none disabled:opacity-30 "
+          className=" flex h-20 w-8 items-center justify-center text-3xl text-neutral-400 transition hover:text-neutral-900 disabled:pointer-events-none disabled:opacity-30 "
         >
           {" "}
           ←{" "}
@@ -84,7 +84,7 @@ type PaginationItem = number | "dots"; export function Pagination({
             return (
               <span
                 key={`dots-${index}`}
-                className=" flex h-20 w-14 items-center justify-center text-xl text-neutral-500 "
+                className=" flex h-20 w-8 items-center justify-center text-xl text-neutral-500 "
               >
                 {" "}
                 ...{" "}
@@ -99,7 +99,7 @@ type PaginationItem = number | "dots"; export function Pagination({
               disabled={isLoading || isActive}
               onClick={() => goToPage(item)}
               aria-current={isActive ? "page" : undefined}
-              className={` flex h-20 w-14 items-center justify-center text-xl transition ${isActive ? ` border-t-2 border-neutral-800 bg-neutral-50 text-neutral-900 ` : ` text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900 `} disabled:cursor-default `}
+              className={` flex h-20 w-8 items-center justify-center text-xl transition ${isActive ? ` border-t-2 border-neutral-800 bg-neutral-50 text-neutral-900 ` : ` text-neutral-500 hover:bg-neutral-50 hover:text-neutral-900 `} disabled:cursor-default `}
             >
               {" "}
               {item}{" "}
@@ -112,7 +112,7 @@ type PaginationItem = number | "dots"; export function Pagination({
           onClick={nextPage}
           disabled={!canGoNext}
           aria-label="Next page"
-          className=" ml-8 flex h-20 w-14 items-center justify-center text-3xl text-neutral-400 transition hover:text-neutral-900 disabled:pointer-events-none disabled:opacity-30 "
+          className=" ml-8 flex h-20 w-8 items-center justify-center text-3xl text-neutral-400 transition hover:text-neutral-900 disabled:pointer-events-none disabled:opacity-30 "
         >
           {" "}
           →{" "}

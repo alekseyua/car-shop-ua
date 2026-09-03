@@ -4,9 +4,9 @@ import { useGarageStore } from "../model/garage.store";
 import { ResponseGarageCar } from "../model/garage.types";
 import { useVehicleFiltersStore } from "../../vehicleFilters/model/vehicle.store";
 import useModal from "@/src/hooks/use-modal";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Modification } from "../../vehicleFilters/model/vehicle.type";
+import { useRouter } from "@/src/i18n/navigation";
 
 const ListGarage = () => {
   const { listGarages, removeFromGarage } = useGarageStore();

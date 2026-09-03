@@ -12,10 +12,12 @@ import Image from 'next/image';
 import iconCross from '../../shared/assets/icons/iconCross.svg';
 import AddVehicle from '@/src/features/vehicleFilters/ui/AddVehicle';
 import ListGarage from '@/src/features/garage/ui/ListGarage';
-import CatalogAccessories from '@/src/widgets/catalogAccessories/ui/CatalogAccessories';
+import MenuAccessories from '@/src/widgets/catalogAccessories/ui/MenuAccessories';
+import MobileMenuContact from '@/src/widgets/header/ui/MobileMenuContact';
+import CatalogSidebar from '@/src/widgets/catalog/ui/CatalogSidebar';
 
 const ModalRoot = () => {
-    const { isOpen, type, visible, closeModal } = useModal();
+    const { isOpen, openModal, type, visible, closeModal, isActive } = useModal();
     const [mounted, setMounted] = React.useState(false);
 
     React.useEffect(() => {
@@ -35,21 +37,28 @@ const ModalRoot = () => {
             window.removeEventListener('keydown', handleKeyDown);
         };
     }, [closeModal]);
+
     React.useEffect(() => {
-      if (!isOpen) return;
+        if (!isOpen) return;
 
-      document.body.classList.add("overflow-hidden");
+        document.body.classList.add('overflow-hidden');
 
-      return () => {
-        document.body.classList.remove("overflow-hidden");
-      };
+        return () => {
+            document.body.classList.remove('overflow-hidden');
+        };
     }, [isOpen]);
-    
+
+    React.useEffect(() => {
+      console.log({ isActive, type, openModal, visible });
+      if (isActive && type) {
+        openModal({ type, visible });
+      }
+    }, [isActive, type, openModal, visible]);
+
     if (!mounted || !isOpen) return null;
 
     const isRight = visible === 'right';
     const isLeft = visible === 'left';
-
     const isSideModal = isRight || isLeft;
 
     const modalContent = (
@@ -61,8 +70,8 @@ const ModalRoot = () => {
           transition={{ duration: 0.3 }}
           className={
             isSideModal
-              ? "fixed inset-0 bg-black/50 z-50"
-              : "fixed top-0 left-0 w-full h-full bg-black/50 flex items-center justify-center z-50"
+              ? "fixed inset-0 bg-black/50 z-250"
+              : "fixed inset-0 bg-black/50 flex items-center justify-center z-250 p-2 sm:p-4"
           }
           onClick={closeModal}
         >
@@ -98,62 +107,77 @@ const ModalRoot = () => {
                                 fixed
                                 top-0
                                 right-0
-                                h-full
+                                h-dvh
                                 w-full
-                                md:absolute
-                                md:right-0
-                                md:top-0
-                                md:h-full
-                                sm:w-2/3 md:w-2/3 lg:w-1/3
+                                sm:w-2/3
+                                md:w-2/3
+                                lg:w-1/3
                                 md:min-w-[400px]
                                 bg-white
                                 shadow-xl
-                                p-6
+                                p-4
+                                sm:p-6
+                                overflow-y-auto
                             `
                 : isLeft
                   ? `
-                                    fixed
-                                    top-0
-                                    left-0
-                                    h-full
-                                    w-full
-                                    md:absolute
-                                    md:left-0
-                                    md:top-0
-                                    md:h-full
-                                    sm:w-2/3 md:w-2/3 lg:w-1/3
-                                    md:min-w-[400px]
-                                    bg-white
-                                    shadow-xl
-                                    p-6
-                                `
+                                fixed
+                                top-0
+                                left-0
+                                h-dvh
+                                w-full
+                                sm:w-2/3
+                                md:w-2/3
+                                lg:w-1/3
+                                md:min-w-[400px]
+                                bg-white
+                                shadow-xl
+                                p-4
+                                sm:p-6
+                                overflow-y-auto
+                            `
                   : `
-                                    relative
-                                    bg-white
-                                    p-6
-                                    rounded-lg
-                                    shadow-lg
-                                    min-w-[400px]
-                                `
+                                relative
+                                bg-white
+                                w-full
+                                max-w-[600px]
+                                max-h-[calc(100dvh-16px)]
+                                sm:max-h-[calc(100dvh-32px)]
+                                p-4
+                                sm:p-6
+                                rounded-lg
+                                shadow-lg
+                                overflow-y-auto
+                            `
             }
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="absolute top-4 right-4">
+            {/* Close button */}
+            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 z-210">
               <button
                 onClick={closeModal}
-                className="text-gray-500 hover:text-gray-700 hover:cursor-pointer"
+                className="
+                                flex
+                                items-center
+                                justify-center
+                                text-gray-500
+                                hover:text-gray-700
+                                cursor-pointer
+                            "
                 type="button"
+                aria-label="Close modal"
               >
                 <Image
                   src={iconCross}
                   alt="icon-cross"
                   width={35}
                   height={35}
-                  className="w-[35px] h-[35px]"
+                  className="w-7 h-7 sm:w-[35px] sm:h-[35px]"
                 />
               </button>
             </div>
 
+            {/* Content */}
             {type === "example" && <div>Example Modal Content</div>}
 
             {type === "vinRequest" && <VinRequestModal />}
@@ -163,8 +187,13 @@ const ModalRoot = () => {
             {type === "garage" && <GarageModal />}
 
             {type === "vehicle" && <AddVehicle />}
+
             {type === "vehicle-list" && <ListGarage />}
-            {type === "accessories-menu" && <CatalogAccessories />}
+
+            {type === "accessories-menu" && <MenuAccessories />}
+
+            {type === "mobile-contact-menu" && <MobileMenuContact />}
+            {type === "menu-catalog" && <CatalogSidebar />}
           </motion.div>
         </motion.div>
       </AnimatePresence>

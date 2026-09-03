@@ -1,116 +1,126 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react'
-import { useGarageStore } from '../model/garage.store';
-import { ResponseGarage, ResponseGarageCar } from '../model/garage.types';
-import IconEdit from '../../../shared/assets/icons/edit.svg';
-import IconDelete from '../../../shared/assets/icons/delete.svg';
-import Image from 'next/image';
-import FormGarage from '@/src/shared/ui/garage/formGarage';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import useModal from '@/src/hooks/use-modal';
-import { useVehicleFiltersStore } from '../../vehicleFilters/model/vehicle.store';
-import VehicleCard from './VehicleCard';
-import { Modification } from '../../vehicleFilters/model/vehicle.type';
+import React, { useState } from "react";
+import { useGarageStore } from "../model/garage.store";
+import { ResponseGarage, ResponseGarageCar } from "../model/garage.types";
+import IconEdit from "../../../shared/assets/icons/edit.svg";
+import IconDelete from "../../../shared/assets/icons/delete.svg";
+import Image from "next/image";
+import FormGarage from "@/src/shared/ui/garage/formGarage";
+import { useTranslations } from "next-intl";
+import useModal from "@/src/hooks/use-modal";
+import { useVehicleFiltersStore } from "../../vehicleFilters/model/vehicle.store";
+import VehicleCard from "./VehicleCard";
+import { Modification } from "../../vehicleFilters/model/vehicle.type";
+import { useRouter } from "@/src/i18n/navigation";
 
 const GarageModal = () => {
-    const t = useTranslations("garage");
+  const t = useTranslations("garage");
 
-    const router = useRouter();
-    const {closeModal, openModal} = useModal();
-    const {
-      getCatalogByModificationAutotechId,
-      activeModification,
-      resetActiveModification,
-    } = useVehicleFiltersStore();
-    const {
-      listGarages,
-      createGarage,
-      errorMessageGarage,
-      clearErrorMessageGarage,
-      removeFromGarage,
-      editItemGarage,
-      changeDefaultGarage,
-    } = useGarageStore();
-    // const [currentGarage, setCurrentGarage] = useState<ResponseGarage | null>(null);
-    const [selectedGarage, setSelectedGarage] = useState<ResponseGarage | null>(
-      null,
+  const router = useRouter();
+  const { closeModal, openModal } = useModal();
+  const {
+    getCatalogByModificationAutotechId,
+    activeModification,
+    resetActiveModification,
+  } = useVehicleFiltersStore();
+  const {
+    listGarages,
+    createGarage,
+    errorMessageGarage,
+    clearErrorMessageGarage,
+    removeFromGarage,
+    editItemGarage,
+    changeDefaultGarage,
+  } = useGarageStore();
+  // const [currentGarage, setCurrentGarage] = useState<ResponseGarage | null>(null);
+  const [selectedGarage, setSelectedGarage] = useState<ResponseGarage | null>(
+    null,
+  );
+  const [isAddGarage, setIsAddGarage] = useState<boolean>(false);
+  const [isEditGarage, setIsEditGarage] = useState<number | null>(null);
+  const [dataGarage, setDataGarage] = useState<{
+    name: string;
+    comment?: string;
+  } | null>(null);
+  const [dataEditGarage, setDataEditGarage] = useState<{
+    name: string;
+    comment?: string;
+  } | null>(null);
+  const currentGarage = selectedGarage ?? listGarages[0] ?? null;
+
+  const handleSelectActiveGarage = (garageId: number) => {
+    changeDefaultGarage(garageId);
+    const garage = listGarages.find((g) => g.id === garageId);
+    setSelectedGarage(garage ?? null);
+  };
+
+  const handleAddGarage = () => {
+    setIsAddGarage(true);
+  };
+
+  const handleDataCreateGarage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setDataGarage((s) => ({
+      ...s,
+      [name]: value,
+    }));
+  };
+  const handleDataEditGarage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setDataEditGarage((s) => ({
+      ...s,
+      [name]: value,
+    }));
+  };
+
+  const handleApplyGarage = async () => {
+    if (!dataGarage) return;
+    if (!dataGarage.name) return;
+    const res = await createGarage(dataGarage.name, dataGarage?.comment);
+    if (res) {
+      handleCancelAddGarage();
+    }
+  };
+  const handleApplyEditGarage = async (garageId: number) => {
+    if (!dataEditGarage) return;
+    if (!dataEditGarage.name) return;
+    const res = await editItemGarage(
+      garageId,
+      dataEditGarage?.name,
+      dataEditGarage?.comment,
     );
-    const [isAddGarage, setIsAddGarage] = useState<boolean>(false);
-    const [isEditGarage, setIsEditGarage] = useState<number | null>(null);
-    const [dataGarage, setDataGarage] = useState<{name: string, comment?:string} | null>(null);
-    const [dataEditGarage, setDataEditGarage] = useState<{name: string, comment?:string} | null>(null);
-    const currentGarage = selectedGarage ?? listGarages[0] ?? null;
-    
-    const handleSelectActiveGarage = (garageId: number) => {
-        changeDefaultGarage(garageId);
-        const garage = listGarages.find((g) => g.id === garageId);
-        setSelectedGarage(garage ?? null);
+    if (res) {
+      handleCancelAddGarage();
     }
-    
-    const handleAddGarage = () => {
-        setIsAddGarage(true);
-    }
+  };
 
-    const handleDataCreateGarage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setDataGarage(s=>({
-            ...s,
-            [name]:value
-        }))
-    }
-    const handleDataEditGarage = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, value} = e.target;
-        setDataEditGarage(s=>({
-            ...s,
-            [name]:value
-        }))
-    }
+  const handleCancelAddGarage = () => {
+    setIsAddGarage(false);
+    setDataGarage(null);
+    setDataEditGarage(null);
+    setIsEditGarage(null);
+    clearErrorMessageGarage();
+  };
 
-    const handleApplyGarage = async () => {
-        if (!dataGarage) return;
-        if (!dataGarage.name) return;
-        const res = await createGarage(dataGarage.name, dataGarage?.comment);
-        if(res){
-            handleCancelAddGarage();
-        }
-    }
-    const handleApplyEditGarage = async (garageId: number) => {
-        if (!dataEditGarage) return;
-        if (!dataEditGarage.name) return;
-        const res = await editItemGarage(garageId, dataEditGarage?.name, dataEditGarage?.comment);
-        if(res){
-            handleCancelAddGarage();
-        }
-    }
-
-    const handleCancelAddGarage = () => {
-        setIsAddGarage(false);
-        setDataGarage(null);
-        setDataEditGarage(null);
-        setIsEditGarage(null);
-        clearErrorMessageGarage();
-    }
-
-    const selectCarFromGarage = (modification: Modification) => {
+  const selectCarFromGarage = (modification: Modification) => {
     // const selectCarFromGarage = (modification: ModificationGarage) => {
-        getCatalogByModificationAutotechId(modification)
-        router.push("/");
-        closeModal();
-    }
+    getCatalogByModificationAutotechId(modification);
+    router.push("/");
+    closeModal();
+  };
 
-    const handleAddCarToGarage = () => {
-        openModal({type: "vehicle", visible: "right"});
-    }
+  const handleAddCarToGarage = () => {
+    openModal({ type: "vehicle", visible: "right" });
+  };
 
-    const removeCarFromGarage = (id: number) => {}
+  const removeCarFromGarage = (id: number) => {};
 
-console.log({ activeModification });
+  console.log({ activeModification });
   return (
     <div className="h-full">
       <h2 className="font-bold text-lg text-center">{t("title")}</h2>
-      <div className="grid grid-cols-2 h-[600px] min-h-0 overflow-hidden">
+      <div className="grid sm:grid-cols-2 grid-cols-1 h-[600px] min-h-0 overflow-hidden">
         <div className="flex w-full p-1.5 flex-col min-h-0 overflow-y-auto">
           {!!listGarages?.length &&
             listGarages.map((g) => (
@@ -252,6 +262,6 @@ console.log({ activeModification });
       </div>
     </div>
   );
-}
+};
 
-export default GarageModal
+export default GarageModal;

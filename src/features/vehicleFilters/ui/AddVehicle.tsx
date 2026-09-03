@@ -11,9 +11,9 @@ import useModal from '@/src/hooks/use-modal';
 import { isYearInRange } from '@/src/shared/libs/helpers';
 import Tooltip from '@/src/shared/ui/Tooltip';
 import { useVinImage } from '../model/useVinImage';
-import { filter } from 'framer-motion/client';
 import { handleAddToGarage } from '../../garage/model/garage.actions';
 import { Modification } from '../model/vehicle.type';
+import { useRouter } from '@/src/i18n/navigation';
 
 
 const AddVehicle = () => {
@@ -28,7 +28,7 @@ const AddVehicle = () => {
   const { filters, setFilters, setBrand, setModel, setModification, setActiveModification } = useFilters;
   const getImage = useVinImage();
   const [search, setSearch] = useState('');
-  
+  const router = useRouter();
   const [vin, setVin] = useState("");
   const handleAddVehicle = () => {
     if (!vin.trim()) return;
@@ -39,6 +39,8 @@ const AddVehicle = () => {
     setActiveModification(modification);
     closeModal();
     console.log({ response })
+    router.push('/');
+    // response true когда авторизован и добавлен
     if (response) {
       // cameBack!();
     }

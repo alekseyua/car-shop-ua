@@ -21,19 +21,21 @@ const Header = () => {
         fill
         sizes="100vw"
         priority
-      />    
+      />
 
       <Container className="flex flex-col gap-3 px-[15px] pt-[5px] pb-[10px]">
-        <div className="flex w-full justify-between mb-2">
+        <div className="hidden w-full justify-between mb-2 sm:flex">
           <LanguageSwitcher />
           <TopNav />
         </div>
         <div className="flex w-full gap-5 items-center justify-between mb-2">
           <Logo />
           <Contacts />
-          <VinRequestButton />
-          <GarageButton />
-          <CartHeader />
+          <div className='sm:flex hidden gap-3'>
+            <VinRequestButton />
+            <GarageButton colorIcon='white'/>
+            <CartHeader colorIcon='white'/>
+          </div>
         </div>
         {/* <NavMenu /> */}
       </Container>

@@ -1,9 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import React from 'react'
 import IconLogo from "@/src/shared/assets/images/logo-bg.png"
 import Image from 'next/image';
+import { useRouter } from '@/src/i18n/navigation';
 
 const Logo = () => {
   const router = useRouter();

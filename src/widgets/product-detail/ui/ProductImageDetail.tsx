@@ -15,7 +15,11 @@ const ProductImageDetail = () => {
     : null;
 
   return (
-    <div>
+    <div
+      className="flex 
+        justify-center items-center
+    "
+    >
       {imagePath && (
         <Image
           src={"https://img2.ad.ua/imgs/" + imagePath}

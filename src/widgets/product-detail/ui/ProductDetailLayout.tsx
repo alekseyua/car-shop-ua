@@ -22,7 +22,10 @@ const ProductDetailLayout = ({ itemNo }: { itemNo: string }) => {
       {isLoading ? (
         <ProductDetailLayoutSkeleton />
       ) : (
-        <div className="grid grid-cols-[1.1fr_0.9fr] gap-4 bg-white w-full items-stretch ">
+        <div className="
+        grid grid-cols-1
+        md:grid-cols-[1.1fr_0.9fr]
+        gap-4 bg-white w-full items-stretch ">
           <ProductImageDetail />
           <ProductInfo />
         </div>

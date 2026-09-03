@@ -14,19 +14,14 @@ import Switch from "./Switch";
 
 export default function VinCheck() {
 
-
     const {
         register
     } = useFormContext();
-
-
 
     const {
         vinCheck,
         setVinCheck
     } = useCheckoutStore();
-
-
 
     return (
 
@@ -35,7 +30,7 @@ export default function VinCheck() {
             border
             rounded-xl
             p-5
-            bg-[#FFF1B8]
+            bg-[#FFF1B8]/30
         ">
 
 

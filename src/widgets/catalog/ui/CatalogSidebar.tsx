@@ -1,77 +1,83 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { useVehicleFiltersStore } from '../../../features/vehicleFilters/model/vehicle.store';
-import { useCatalogStore } from '../../../entities/catalog/model/catalog.store';
-import { useTranslations } from 'next-intl';
+import React, { useState } from "react";
+import { useVehicleFiltersStore } from "../../../features/vehicleFilters/model/vehicle.store";
+import { useCatalogStore } from "../../../entities/catalog/model/catalog.store";
+import { useTranslations } from "next-intl";
+import useModal from "@/src/hooks/use-modal";
 
 const CatalogSidebar = () => {
-    const {filters} = useVehicleFiltersStore();
-    const t = useTranslations();
-    const { getListItemsCatalogCatalog } = useCatalogStore();
-    const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
+  const { filters } = useVehicleFiltersStore();
+  const { closeModal } = useModal();
+  const t = useTranslations();
+  const { getListItemsCatalogCatalog } = useCatalogStore();
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({});
 
-    const toggleGroup = (groupCode: string) => {
-        setOpenGroups((prev) => ({
-            ...prev,
-            [groupCode]: !prev[groupCode],
-        }));
-    };
+  const toggleGroup = (groupCode: string) => {
+    setOpenGroups((prev) => ({
+      ...prev,
+      [groupCode]: !prev[groupCode],
+    }));
+  };
 
   return (
-          <div className="flex flex-col gap-1">
-              <span className="text-2xl font-bold text-black">{t("catalog.title")}</span>
+    <div className="flex flex-col gap-1 ">
+      <span className="text-2xl font-bold text-black">
+        {t("catalog.title")}
+      </span>
 
-              {Object.entries(filters.catalogs).map(([groupCode, catalogItem]) => {
-                  const isOpen = openGroups[groupCode];
+      {Object.entries(filters.catalogs).map(([groupCode, catalogItem]) => {
+        const isOpen = openGroups[groupCode];
 
-                  return (
-                      <div key={groupCode} className=" rounded-md border border-gray-200 bg-white">
-                          {/* HEADER (кликабельный) */}
-                          <div
-                              onClick={() => toggleGroup(groupCode)}
-                              className="px-2 py-1 cursor-pointer flex justify-between items-center"
-                          >
-                              <span className="text-lg font-semibold text-gray-900 hover:text-gray-700">
-                                  {groupCode}
-                              </span>
+        return (
+          <div
+            key={groupCode}
+            className=" rounded-md border border-gray-200 bg-white"
+          >
+            {/* HEADER (кликабельный) */}
+            <div
+              onClick={() => toggleGroup(groupCode)}
+              className="px-2 py-1 cursor-pointer flex justify-between items-center"
+            >
+              <span className="text-lg font-semibold text-gray-900 hover:text-gray-700">
+                {groupCode}
+              </span>
 
-                              <span className="text-xs text-gray-400">
-                                  {catalogItem.length}
-                              </span>
-                          </div>
+              <span className="text-xs text-gray-400">
+                {catalogItem.length}
+              </span>
+            </div>
 
-                          {/* DROPDOWN */}
-                          {isOpen && (
-                              <div className="border-t">
-                                  {catalogItem.map((item) => (
-                                      <div
-                                          key={item.subGroupCode}
-                                          className="px-2 py-1 
+            {/* DROPDOWN */}
+            {isOpen && (
+              <div className="border-t">
+                {catalogItem.map((item) => (
+                  <div
+                    key={item.subGroupCode}
+                    className="px-2 py-1 
                                           text-sm text-black hover:cursor-pointer hover:text-gray-700 transition-colors duration-300
                                           grid grid-cols-[150px_1fr] items-start"
-                                          onClick={() => getListItemsCatalogCatalog(item.typeId, item.groupId)}
-                                      >
-                                          <span>{item.subGroupCode}</span>
+                    onClick={() => {
+                      closeModal();
+                      getListItemsCatalogCatalog(item.typeId, item.groupId);
+                    }}
+                  >
+                    <span>{item.subGroupCode}</span>
 
-                                          <div className="flex items-center gap-2 justify-end  h-full">
-                                              <span className="text-xs text-gray-500 whitespace-nowrap">
-                                                  {item.count} parts
-                                              </span>
-
-                                              {/* <button className="px-2 py-1 text-xs text-white bg-[#ed1c24] rounded-md hover:bg-[#c71515] transition-colors duration-300">
-                                                  View
-                                              </button> */}
-                                          </div>
-                                      </div>
-                                  ))}
-                              </div>
-                          )}
-                      </div>
-                  );
-              })}
+                    <div className="flex items-center gap-2 justify-end  h-full">
+                      <span className="text-xs text-gray-500 whitespace-nowrap">
+                        {item.count} parts
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-  )
-}
+        );
+      })}
+    </div>
+  );
+};
 
 export default CatalogSidebar;

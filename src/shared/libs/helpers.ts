@@ -22,3 +22,5 @@ export const isYearInRange = (year: number, range: string) => {
       behavior: "smooth",
     });
   };
+
+  export const getOldPrice = (price: number): number => price + (price - price * 0.95);

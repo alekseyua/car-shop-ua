@@ -3,9 +3,9 @@
 // │   ├── AuthByEmail.tsx
 'use client';
 
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { loginUserbyEmail, registerUserByEmail } from "../api/api";
+import { useRouter } from "@/src/i18n/navigation";
 
 const AuthByEmail = () => {
     const [isLogin, setIsLogin] = useState(true);
@@ -63,9 +63,9 @@ const AuthByEmail = () => {
             if (typeof error === "object" 
                 && error !== null 
                 && "message" in error) {
-                    const errMsg = (error as any).message;
-                    if(typeof errMsg === "object" && errMsg.length > 0){
-                        return setError(msgAuth + errMsg.join(", "));
+                    const errMsg = (error).message;
+                    if(Array.isArray(errMsg) && typeof errMsg === "object" && errMsg.length > 0){
+                        return setError(msgAuth + errMsg!.join(", "));
                     }else{
                         return setError(msgAuth + errMsg);
                     }

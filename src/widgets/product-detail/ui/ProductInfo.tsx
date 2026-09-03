@@ -1,7 +1,8 @@
 import { useProductDetailStore } from '@/src/entities/product-detail/model/detail.store';
-import { CriteriaItem, ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/detail.types';
+import { ProductImageDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/detail.types';
 import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
 import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
+import { CriteriaItem } from '@/src/shared/api/dto';
 import { useTranslations } from 'next-intl';
 import React from 'react'
 
@@ -11,8 +12,11 @@ const ProductInfo = () => {
   return (
     <div className="flex flex-col gap-2 p-4 border-l w-full h-full">
       <h1 className="text-2xl font-bold mb-4 text-black text-center">
-        {product?.item.description}
+        {product?.item.brand + " " + product?.item.itemNo}
       </h1>
+      <h2 className="text-2xl font-bold mb-4 text-black text-center">
+        {product?.item.description}
+      </h2>
       {/* description product */}
       {!!product?.item.criterias.length ||
       !!product?.item?.searchDescription ? (

@@ -1,9 +1,9 @@
 'use client';
 
 import { useAccessoriesStore } from '@/src/entities/catalogAccessories/model/accessories.store';
+import { getOldPrice } from '@/src/shared/libs/helpers';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
 import { Pagination } from '@/src/shared/ui/Pagination/Pagination';
-import React, { useEffect } from 'react'
 
 const TableCatalogAccessories = () => {
   const {
@@ -27,7 +27,7 @@ const TableCatalogAccessories = () => {
           className="
                         w-full 
                         bg-white 
-                        grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-3
+                        grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
                         justify-items-center
                         "
         >
@@ -39,7 +39,11 @@ const TableCatalogAccessories = () => {
               description={item.description}
               rating={4} // Placeholder rating
               price={item.price}
-              oldPrice={item.retail !== item.price ? item.retail : undefined}
+              oldPrice={
+                                  item.inStock
+                                    ? getOldPrice(item.price)
+                                    : undefined
+                                }
               item={item}
             />
           ))}

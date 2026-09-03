@@ -9,7 +9,7 @@ export const fetchCatalogItems = async (typeId: number, groupId: number): Promis
             throw new Error(result.error);
         }
         const { data } = result;
-        return data;
+        return data.sort((a, b) => Number(b.inStock) - Number(a.inStock));
 }
 
 export const fetchTopProducts = async (): Promise<ResponseTopProduct[]> => {

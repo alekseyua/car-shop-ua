@@ -7,28 +7,84 @@ import TopProductLayout from "./TopProductLayout";
 import { useVehicleFiltersStore } from "@/src/features/vehicleFilters/model/vehicle.store";
 import CatalogLayoutAccessories from "../../catalogAccessories/ui/CatalogLayoutAccessories";
 import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
+import useModal from "@/src/hooks/use-modal";
 
 const CatalogLayout = () => {
   const { activeModification } = useVehicleFiltersStore();
+  const { openModal } = useModal();
   const { categoryId } = useAccessoriesStore();
+  React.useEffect(() => {
+    if (!activeModification) return;
+
+    const mediaQuery = window.matchMedia("(max-width: 699px)");
+
+    if (mediaQuery.matches) {
+      openModal({
+        type: "menu-catalog",
+        visible: "left",
+        isActive: true,
+      });
+    }
+  }, [activeModification, openModal]);
+
+
   console.log({ categoryId });
   if (categoryId) {
     return (
-      <div className="bg-white w-full h-full py-[17px] px-[20px] min-h-screen">
+      <div
+        className="bg-white w-full h-full min-h-screen
+      py-4 px-2
+      md:py-[17px] md:px-5"
+      >
         <CatalogLayoutAccessories />
       </div>
     );
   }
   if (activeModification) {
     return (
-      <div className="grid gap-4 grid-cols-[300px_1fr] bg-white w-full h-full py-[17px] px-[20px]  min-h-screen">
-        <CatalogSidebar />
+      <div
+        className="
+      md:grid grid-cols-[300px_1fr] gap-4 
+      bg-white w-full h-full 
+      sm:py-[17px] sm:px-[20px]
+      py-4 px-2
+      min-h-screen
+      grid-cols-[1fr]
+      "
+      >
+        {/* catalog for mobile */}
+        <div className="md:hidden block p-3 -mt-3">
+          <button
+            className="mt-2
+                w-full
+                rounded-md
+                bg-blue-500
+                p-2
+                mb-3
+                text-white
+                transition-colors
+                hover:cursor-pointer
+                hover:bg-blue-600"
+            onClick={() => openModal({ type: "menu-catalog", visible: "left" })}
+          >
+            {" "}
+            catalog{" "} 
+            {activeModification.brand + " " + activeModification.name}
+          </button>
+        </div>
+        {/* catalog for desktop */}
+        <div className="hidden md:block">
+          <CatalogSidebar />
+        </div>
         <CatalogTable />
       </div>
     );
   }
   return (
-    <div className="bg-white w-full h-full py-[17px] px-[20px] min-h-[calc(100vh-151px)]">
+    <div
+      className="bg-white w-full h-full min-h-[calc(100vh-151px)]
+    "
+    >
       <TopProductLayout />;
     </div>
   );

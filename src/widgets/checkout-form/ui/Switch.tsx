@@ -25,7 +25,7 @@ export default function Switch({
 
             className={`
                 relative
-                w-12
+                min-w-12
                 h-7
                 rounded-full
                 transition
