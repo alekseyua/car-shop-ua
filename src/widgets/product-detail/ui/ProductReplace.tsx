@@ -2,7 +2,7 @@
 
 import { useProductDetailStore } from "@/src/entities/product-detail/model/detail.store";
 import {
-  ProductImageDetail,
+  ProductItemDetail,
   ProductDetailResponse,
 } from "@/src/entities/product-detail/model/detail.types";
 import { getOldPrice } from "@/src/shared/libs/helpers";
@@ -33,7 +33,7 @@ const ProductReplace = () => {
             "
           >
             {product &&
-              product.replaces.map((item: ProductImageDetail) => {
+              product.replaces.map((item: ProductItemDetail) => {
                 return (
                   <CardPreview
                     key={item.itemNo}
@@ -45,7 +45,7 @@ const ProductReplace = () => {
                     oldPrice={
                       item.inStock ? getOldPrice(item.price) : undefined
                     }
-                    item={item}
+                    item={item as ProductItemDetail}
                   />
                 );
               })}

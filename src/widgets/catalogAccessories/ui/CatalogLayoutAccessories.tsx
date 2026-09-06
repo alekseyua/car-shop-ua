@@ -1,5 +1,5 @@
 import React from 'react'
-import TableCatalogAccessories from './TableCatalogAccessories'
+import TableCatalogAccessories from '../../../entities/catalogAccessories/ui/TableCatalogAccessories'
 
 const CatalogLayoutAccessories = () => {
   return (

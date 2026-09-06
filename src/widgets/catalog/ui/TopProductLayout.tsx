@@ -1,4 +1,4 @@
-import TopProductTable from "./TopProductTable";
+import TopProductTable from "../../../entities/product/ui/TopProductTable";
 
 const TopProductLayout = () => {
   return (

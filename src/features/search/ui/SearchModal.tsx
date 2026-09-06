@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSearchStore } from '../model/search.store';
 import { Link } from '@/src/i18n/navigation';
 import useModal from '@/src/hooks/use-modal';
@@ -15,6 +15,20 @@ const SearchModal = () => {
 
   const { closeModal } = useModal();
 
+  // useEffect(()=>{
+  //   console.log('load useEffenct');
+  //   return () => console.log('unload useEffect')
+  // },[]);
+
+useEffect(() => {
+  console.log("load useEffect");
+
+  return () => {
+    console.log("cleanup useEffect");
+    resetListSearch();
+  };
+}, [resetListSearch]);
+  
   return (
     <div className="flex w-full min-w-0 flex-col">
       {/* TITLE */}
@@ -197,7 +211,7 @@ const SearchModal = () => {
                     sm:text-base
                   "
                 >
-                  {item.price} ₴
+                  {Number(item.price).toFixed(2)} ₴
                 </div>
               </div>
             </div>

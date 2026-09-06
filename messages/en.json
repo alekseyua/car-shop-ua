@@ -1,4 +1,7 @@
 {
+  "commonPhrase": {
+    "del": "Delete"
+  },
   "HomePage": {
     "title": "Hello, world!"
   },
@@ -80,6 +83,7 @@
     "notProduct": "No products to display"
   },
   "catalog": {
+    "searchCatalogCar": "Search by section",
     "title": "Parts Catalog",
     "filters": {
       "title": "Filters",

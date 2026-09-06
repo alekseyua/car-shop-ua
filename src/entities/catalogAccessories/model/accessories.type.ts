@@ -1,3 +1,5 @@
+import { ResponseStockDto } from "@/src/shared/api/dto";
+
 export interface CategoryAccessories {
   comId: number;
   sort: number;
@@ -42,7 +44,7 @@ export interface ProductAccessories {
 
   sort: number;
 
-  firstPic: string | null;
+  firstPic: string;
 
   criteriaLine: string;
 
@@ -52,7 +54,7 @@ export interface ProductAccessories {
   /**
    * JSON string с информацией о наличии на складах.
    */
-  stock: string;
+  stock: ResponseStockDto[];
 
   inAction: boolean | null;
 

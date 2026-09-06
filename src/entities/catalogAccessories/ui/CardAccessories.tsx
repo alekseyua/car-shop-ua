@@ -13,6 +13,9 @@ export const CardAccessories = ({ item, handleFetchDataAccessories }: IProps) =>
 
   return (
     <div>
+      {/* search accessories */}
+
+      {/* catalog */}
       <div className="flex items-center gap-2 py-2">
         {hasChildren ? (
           <button

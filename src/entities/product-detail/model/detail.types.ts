@@ -1,6 +1,6 @@
 import { CriteriaItem, ResponseStockDto } from "@/src/shared/api/dto";
 
-export interface ProductImageDetail {
+export interface ProductItemDetail {
   itemNo: string;
   brand: string;
   description: string;
@@ -15,8 +15,20 @@ export interface ProductImageDetail {
 }
 
 export interface ProductDetailResponse {
-  files: string[];
-  item: ProductImageDetail;
-  replaces: ProductImageDetail[];
+  files: fileItem[];
+  item: ProductItemDetail;
+  replaces: ProductItemDetail[];
   pictures: string[];
+}
+
+interface fileItem {
+  comID: string;
+  itemNo: string;
+  sort: string;
+  manual: string;
+  pathName: string;
+  fileName: string;
+  url: string;
+  fileType: string;
+  fileDescript: string;
 }

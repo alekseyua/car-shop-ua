@@ -1,4 +1,7 @@
 {
+    "commonPhrase": {
+        "del": "Видалити"
+    },
     "HomePage": {
         "title": "Привіт, світ!"
     },
@@ -81,6 +84,7 @@
         "notProduct": "Немає товарів для відображення"
     },
     "catalog": {
+        "searchCatalogCar": "Пошук по розділу",
         "title": "Каталог запчастин",
         "filters": {
             "title": "Фільтри",

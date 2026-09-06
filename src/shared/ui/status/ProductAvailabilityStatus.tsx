@@ -1,6 +1,8 @@
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import iconCartWhite from '../../../shared/assets/icons/cartWhite.svg';
+import { useState } from "react";
+
+import iconCartWhite from "../../../shared/assets/icons/cartWhite.svg";
 
 interface Props {
   status: string;
@@ -9,48 +11,111 @@ interface Props {
 }
 
 const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
-  const t = useTranslations('catalog');
+  const t = useTranslations("catalog");
+
+  const [clicked, setClicked] = useState(false);
+
+  const handleClick = () => {
+    // Показываем анимацию
+    setClicked(true);
+
+    // Выполняем переданный onClick
+    onClick?.();
+
+    // Через 600мс убираем кольцо
+    setTimeout(() => {
+      setClicked(false);
+    }, 600);
+  };
+
   const getStyleStatus = (status: string): string => {
     const styleStatus: Record<string, string> = {
       today: "bg-green-500",
       tomorrow: "bg-yellow-500",
       reserved: "bg-orange-500",
-      notAvailable: "bg-red-500"
+      notAvailable: "bg-red-500",
     };
-    return styleStatus[status];
+
+    return styleStatus[status] ?? "bg-gray-400";
   };
+
   return (
     <div className="flex justify-between w-full">
+      {/* STATUS */}
       <div className="flex min-w-0 items-center gap-1">
         <span
-          className={`${getStyleStatus(status)} h-[10px] w-[10px] shrink-0 rounded-full`}
+          className={`
+            ${getStyleStatus(status)}
+            h-[10px]
+            w-[10px]
+            shrink-0
+            rounded-full
+          `}
         />
 
         <span className="min-w-0 truncate text-gray-500">{t(status)}</span>
 
-        {count && (
+        {count !== undefined && (
           <div className="flex shrink-0 items-center gap-1">
             <span className="text-gray-500">{count}</span>
+
             <span className="text-gray-500">{t("pieces")}</span>
           </div>
         )}
       </div>
 
+      {/* CART */}
       {onClick && (
-        <div className="ml-auto">
+        <div className="ml-auto relative">
           <button
-            onClick={onClick}
-            className="px-2.5 py-3 text-sm bg-red-500 text-white rounded hover:bg-red-600 hover:shadow-md transition duration-300 hover:cursor-pointer"
+            type="button"
+            onClick={handleClick}
+            className="
+              relative
+              flex
+              items-center
+              justify-center
+              w-8
+              h-8
+              rounded-md
+              bg-red-500
+              hover:bg-red-700
+              hover:scale-110
+              cursor-pointer
+              transition-all
+              duration-300
+              focus:outline-none
+            "
           >
+            {/* АНИМАЦИЯ КОЛЬЦА */}
+            {clicked && (
+              <span
+                className="
+                  absolute
+                  inset-0
+                  rounded-full
+                  border-2
+                  border-red-500
+                  animate-ping
+                  pointer-events-none
+                "
+              />
+            )}
+
             <Image
               src={iconCartWhite}
               alt="cart"
-              width={20}
-              height={20}
-              className="hover:cursor-pointer hover:scale-110 transition-transform duration-300 bg-red-500 rounded-md p-[2px]"
-              onClick={onClick}
+              width={32}
+              height={32}
+              className="
+                relative
+                z-10
+                w-8
+                h-8
+                p-2
+                rounded-md
+              "
             />
-            {/* {t('order')} */}
           </button>
         </div>
       )}

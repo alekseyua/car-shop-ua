@@ -61,41 +61,43 @@ export default function CheckoutForm() {
 
  
     return (
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="
-                    max-w-4xl
-                    mx-auto
-                    bg-white
-                    p-6
-                    rounded-xl
-                    "
-        >
-          <ContactFields />
-          <div className="border-t my-8" />
-          <CitySelect />
-          <div className="border-t my-8" />
-          <DeliveryMethod />
-          <CommentBox />
-          <VinCheck />
-          {!!cartItems.length && (
-            <button
-              type="submit"
-              className="
-                                w-full
-                                h-14
-                                mt-8
-                                bg-red-600
-                                text-white
-                                rounded-lg
-                                font-semibold
-                                "
-            >
-              Замовлення підтверджую
-            </button>
-          )}
-        </form>
-      </FormProvider>
+      <div className="order-2 md:order-1">
+        <FormProvider {...methods}>
+          <form
+            onSubmit={methods.handleSubmit(onSubmit)}
+            className="
+                      max-w-4xl
+                      mx-auto
+                      bg-white
+                      p-6
+                      rounded-xl
+                      "
+          >
+            <ContactFields />
+            <div className="border-t my-8" />
+            <CitySelect />
+            <div className="border-t my-8" />
+            <DeliveryMethod />
+            <CommentBox />
+            <VinCheck />
+            {!!cartItems.length && (
+              <button
+                type="submit"
+                className="
+                                  w-full
+                                  h-14
+                                  mt-8
+                                  bg-red-600
+                                  text-white
+                                  rounded-lg
+                                  font-semibold
+                                  "
+              >
+                Замовлення підтверджую
+              </button>
+            )}
+          </form>
+        </FormProvider>
+      </div>
     );
 }

@@ -32,7 +32,6 @@ type PaginationItem = number | "dots"; export function Pagination({
   const canGoNext = page < totalPages && !isLoading;
   const canShowMore = !!showMore && page < totalPages && !isLoading;
 
-  console.log({ canGoNext, page, totalPages });
   return (
     <div className="w-full">
       {/* Показать еще */}

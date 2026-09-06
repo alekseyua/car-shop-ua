@@ -1,13 +1,20 @@
-import { DeliveryStatus } from "@/src/entities/product-detail/model/detail.types";
+import { ResponseCatalogItem, ResponseTopProduct } from "@/src/entities/catalog/api/dto";
+import { ProductAccessories } from "@/src/entities/catalogAccessories/model/accessories.type";
+import { ProductItemDetail } from "@/src/entities/product-detail/model/detail.types";
+import { DeliveryStatus } from "@/src/shared/api/dto";
 
 
 export interface CartStore {
     cartItems: CartItem[];
-    addToCart: (item: ProductDto, statusDelivery: string) => void;
+    total: number;
+    addToCart: (item: | ResponseCatalogItem
+        | ResponseTopProduct
+        | ProductAccessories
+        | ProductItemDetail, statusDelivery: string) => void;
     removeFromCart: (itemNo: string) => void;
     clearCart: () => void;
     changeQuantity: (itemNo: string, count: number) => void;
-    syncWithServer: (items: CartItem[]) => void;
+    syncWithServer: (items: CartItem[], total: number) => void;
 }
 
 export interface CartItem {
@@ -16,11 +23,11 @@ export interface CartItem {
     title: string;
     searchDescription: string;
     imageUrl: string;
-    groupCode: string;
-    subGroupCode: string;
+    groupCode?: string;
+    subGroupCode?: string;
     price: number;
     retail: number;
-    salesUoM: string;
+    salesUoM?: string;
     stock: ProductStock[];
 
     quantity: number; // Quantity of the item in the cart

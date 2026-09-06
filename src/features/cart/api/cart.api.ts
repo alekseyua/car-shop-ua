@@ -1,6 +1,7 @@
 import { api } from "@/src/shared/api/client";
 import { CartResponse } from "./response.dto";
 import { AddToCartDto } from "./query.dto";
+import { syncServerCart } from "../model/cart.actions";
 
 export const getCart = async () => {
     const result = await api<CartResponse>("/cart", {
@@ -29,6 +30,8 @@ export const deleteItemFromCart = async ( itemNo: string) => {
         console.log('response delete item from cart: ', res)
     } catch (error) {
         throw error;
+    } finally{
+        syncServerCart();
     }
 }
 
@@ -43,5 +46,7 @@ export const updateQuantityItemCart = async (itemNo: string, count: number) => {
         })
     } catch (error) {
         throw error;
+    } finally{
+        syncServerCart();
     }
 }

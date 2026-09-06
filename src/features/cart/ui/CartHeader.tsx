@@ -7,6 +7,7 @@ import { useTranslations } from 'next-intl';
 import { useCartStore } from '../model/cart.store';
 import { CartItem } from '../model/cart.types';
 import { useRouter } from '@/src/i18n/navigation';
+import useModal from '@/src/hooks/use-modal';
 
 const getTotalPrice = (cart: CartItem[]) => {
   const total = cart.reduce((acc: number, cur: CartItem ) => {
@@ -21,10 +22,11 @@ interface IProps {
 
 const CartHeader = ({colorIcon='white'}:IProps) => {
   const router = useRouter();
+  const {openModal} = useModal();
   const t = useTranslations('Header');
   const { cartItems } = useCartStore();
   const count = cartItems.length;
-  const total = getTotalPrice(cartItems).toFixed(2);
+  const total = 0 //getTotalPrice(cartItems).toFixed(2);
 
   return (
     <div className="flex gap-2 sm:self-start self-center">
@@ -33,7 +35,7 @@ const CartHeader = ({colorIcon='white'}:IProps) => {
         2) add real data from cart state
         3) add dropdown with cart items on hover
       */}
-      <div className="flex relative" onClick={() => router.push("/order")}>
+      <div className="flex relative hover:cursor-pointer" onClick={() => openModal({type: 'cart'})}>
         <Image
           src={colorIcon === "white" ? iconCartWhite : iconCartBlack}
           alt="icon cart"

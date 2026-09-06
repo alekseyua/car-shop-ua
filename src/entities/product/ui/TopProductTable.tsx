@@ -46,7 +46,7 @@ const TopProductTable = () => {
               rating={4} // Placeholder rating
               price={item.price}
               oldPrice={item.inStock ? getOldPrice(item.price) : undefined}
-              item={item}
+              item={item as ResponseTopProduct}
             />
           ))}
         </React.Fragment>

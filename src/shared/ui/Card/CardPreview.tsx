@@ -7,6 +7,9 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/src/i18n/navigation";
 import { handleAddToCart } from "@/src/features/cart/model/cart.actions";
 import { ProductAvailabilityList } from "@/src/entities/product/ui/ProductAvailabilityList";
+import { ResponseCatalogItem, ResponseTopProduct } from "@/src/entities/catalog/api/dto";
+import { ProductAccessories } from "@/src/entities/catalogAccessories/model/accessories.type";
+import { ProductItemDetail } from "@/src/entities/product-detail/model/detail.types";
 
 interface CardPreviewProps {
   imageSrc: string;
@@ -15,7 +18,11 @@ interface CardPreviewProps {
   rating: number;
   price: number;
   oldPrice?: number;
-  item: any;
+  item:
+    | ResponseCatalogItem
+    | ResponseTopProduct
+    | ProductAccessories
+    | ProductItemDetail;
 }
 
 const CardPreview: React.FC<CardPreviewProps> = ({

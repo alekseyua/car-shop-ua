@@ -4,7 +4,7 @@
 import { api, ApiResult } from "@/src/shared/api/client";
 import { useAuthStore } from "../model/store";
 import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
-import { synchronServerCart } from "../../cart/model/cart.actions";
+import { syncServerCart } from "../../cart/model/cart.actions";
 
 export const registerUserByEmail = async (dto: RegisterDTO) => {
     try {
@@ -25,7 +25,7 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
             data.refreshToken
         );
         
-        synchronServerCart();
+        syncServerCart();
         return data;
     } catch (error) {
         throw error;
@@ -51,7 +51,7 @@ export const loginUserbyEmail = async (dto: LoginDTO) => {
         // console.log("loginUserbyEmail data:", data);
         
         useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken, data.refreshToken);
-        synchronServerCart();
+        syncServerCart();
     }
     catch (error) {
         console.log("Error in loginUserbyEmail:", error);

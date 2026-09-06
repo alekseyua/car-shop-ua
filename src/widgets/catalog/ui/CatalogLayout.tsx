@@ -1,13 +1,13 @@
 "use client";
 
 import React from "react";
-import CatalogSidebar from "./CatalogSidebar";
-import CatalogTable from "./CatalogTable";
+import CatalogTable from "../../../entities/catalog/ui/CatalogTable";
 import TopProductLayout from "./TopProductLayout";
 import { useVehicleFiltersStore } from "@/src/features/vehicleFilters/model/vehicle.store";
 import CatalogLayoutAccessories from "../../catalogAccessories/ui/CatalogLayoutAccessories";
 import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
 import useModal from "@/src/hooks/use-modal";
+import CatalogSidebar from "@/src/entities/catalog/ui/CatalogSidebar";
 
 const CatalogLayout = () => {
   const { activeModification } = useVehicleFiltersStore();

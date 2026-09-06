@@ -1,4 +1,4 @@
-export const normolizeImagePath = (path: string): string =>
+export const normalizeImagePath = (path: string): string =>
   path.replace(/tcd\//, "tcd-pic/").split("?")[0];
 
 export const isYearInRange = (year: number, range: string) => {

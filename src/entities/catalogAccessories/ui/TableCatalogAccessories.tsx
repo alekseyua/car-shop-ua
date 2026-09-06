@@ -1,6 +1,7 @@
 'use client';
 
 import { useAccessoriesStore } from '@/src/entities/catalogAccessories/model/accessories.store';
+import { ProductAccessories } from '@/src/entities/catalogAccessories/model/accessories.type';
 import { getOldPrice } from '@/src/shared/libs/helpers';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
 import { Pagination } from '@/src/shared/ui/Pagination/Pagination';
@@ -31,7 +32,7 @@ const TableCatalogAccessories = () => {
                         justify-items-center
                         "
         >
-          {catalogAccessories.map((item) => (
+          {catalogAccessories.map((item: ProductAccessories) => (
             <CardPreview
               key={item.itemNo}
               imageSrc={"https://img2.ad.ua/imgs/" + item.firstPic}
@@ -39,12 +40,8 @@ const TableCatalogAccessories = () => {
               description={item.description}
               rating={4} // Placeholder rating
               price={item.price}
-              oldPrice={
-                                  item.inStock
-                                    ? getOldPrice(item.price)
-                                    : undefined
-                                }
-              item={item}
+              oldPrice={item.inStock ? getOldPrice(item.price) : undefined}
+              item={item as ProductAccessories}
             />
           ))}
         </div>

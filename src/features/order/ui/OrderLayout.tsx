@@ -1,13 +1,19 @@
 'use client'
-import OrderTable from './OrderTable'
+import CartTable from '../../cart/ui/CartTable'
 import { Container } from '@/src/shared/ui/layout/Container/Container'
 import CheckoutForm from '@/src/widgets/checkout-form/ui/CheckoutForm'
 import Image from "next/image";
 import iconEmptyTrash from "../../../shared/assets/icons/iconEmptyTrash.svg";
 import { useCartStore } from '../../cart/model/cart.store';
+import { useEffect } from 'react';
+import { syncServerCart } from '../../cart/model/cart.actions';
 
 const OrderLayout = () => {
       const { cartItems } = useCartStore();
+      
+      useEffect(() => {
+        syncServerCart();
+      }, []);
     
      if (!cartItems.length) {
         return (
@@ -30,12 +36,13 @@ const OrderLayout = () => {
 
             <h1 className='text-center text-black w-full text-3xl font-bold mt-4'>{'Оформлення замовлення'}</h1>
             <div className='grid 
-            grid-cols-1
-            md:grid-cols-[1fr_1fr] '>
+                            grid-cols-1
+                            md:grid-cols-[1fr_1fr] '
+            >
                 {/* left side */}
                 <CheckoutForm />
                 {/* right side */}
-                <OrderTable />
+                <CartTable />
             </div>
         </Container>
     )

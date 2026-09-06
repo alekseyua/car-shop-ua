@@ -17,15 +17,18 @@ const ProductDetailLayout = ({ itemNo }: { itemNo: string }) => {
   if (error) {
     return <div className="p-4 text-red-500">{error}</div>;
   }
+  console.log({isLoading})
   return (
     <div className="min-h-[calc(100vh-151px)] bg-white">
       {isLoading ? (
         <ProductDetailLayoutSkeleton />
       ) : (
-        <div className="
+        <div
+          className="
         grid grid-cols-1
         md:grid-cols-[1.1fr_0.9fr]
-        gap-4 bg-white w-full items-stretch ">
+        gap-4 bg-white w-full items-stretch "
+        >
           <ProductImageDetail />
           <ProductInfo />
         </div>

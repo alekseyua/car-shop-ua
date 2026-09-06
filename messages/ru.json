@@ -1,4 +1,7 @@
 {
+  "commonPhrase": {
+    "del": "Удалить"
+  },
   "HomePage": {
     "title": "Привет, мир!"
   },
@@ -80,6 +83,7 @@
     "notProduct": "Нет товаров для отображения"
   },
   "catalog": {
+    "searchCatalogCar": "Поиск по разделу",
     "title": "Каталог запчастей",
     "filters": {
       "title": "Фильтры",

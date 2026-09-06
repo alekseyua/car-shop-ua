@@ -1,5 +1,7 @@
 import {create} from 'zustand';
 
+type Visible = "center" | "right" | "left" | "top" | "top_top";
+
 interface ModalState {
   isOpen: boolean;
   openModal: ({
@@ -8,13 +10,13 @@ interface ModalState {
     isActive,
   }: {
     type: string;
-    visible?: "center" | "right" | "left";
+    visible?: Visible;
     isActive?: boolean;
   }) => void;
   closeModal: () => void;
   type: string | null;
   isActive: boolean;
-  visible: "center" | "right" | "left";
+  visible: Visible;
   setType: (type: string) => void;
 }
 

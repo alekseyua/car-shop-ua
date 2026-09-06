@@ -44,12 +44,8 @@ const CatalogTable = () => {
                   description={item.description}
                   rating={4} // Placeholder rating
                   price={item.price}
-                  oldPrice={
-                    item.inStock
-                      ? getOldPrice(item.price)
-                      : undefined
-                  }
-                  item={item}
+                  oldPrice={item.inStock ? getOldPrice(item.price) : undefined}
+                  item={item as ResponseCatalogItem}
                 />
               ))}
             </React.Fragment>
