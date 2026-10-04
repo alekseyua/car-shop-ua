@@ -6,21 +6,22 @@ import { useTranslations } from 'next-intl';
 import React, { useEffect } from 'react'
 
 const MenuAccessories = () => {
-    const { getAccessoriesMenu, accessoriesMenu, getCatalogAccessories, setCategoryId } =
+    const { getAccessoriesMenu, accessoriesMenu, getCatalogAccessories, setCategoryId, categoryId, isLoading } =
       useAccessoriesStore();
     const {closeModal} = useModal();
     const t = useTranslations("catalog");
-    const router = useRouter();
+    const route = useRouter();
 
     const handleFetchDataAccessories = (id: number)=> {
         setCategoryId(id);
         getCatalogAccessories(id, 1);
         closeModal();
-        router.push('/')
-    }
-    useEffect(() => {
-      getAccessoriesMenu();
-    }, [getAccessoriesMenu]);
+        route.push('/accessories')
+      }
+      useEffect(() => {
+        getAccessoriesMenu();
+      }, [getAccessoriesMenu]);
+
   return (
     <div className="felx flex-col h-full">
       <h2 className="font-bold text-lg text-center">
@@ -32,6 +33,10 @@ const MenuAccessories = () => {
           key={i}
           item={la}
           handleFetchDataAccessories={handleFetchDataAccessories}
+          isLoading={{
+            loading: isLoading,
+            id: categoryId,
+          }}
         />
       ))}
     </div>

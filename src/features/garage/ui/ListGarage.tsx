@@ -1,5 +1,4 @@
 import React from "react";
-import VehicleCard from "./VehicleCard";
 import { useGarageStore } from "../model/garage.store";
 import { ResponseGarageCar } from "../model/garage.types";
 import { useVehicleFiltersStore } from "../../vehicleFilters/model/vehicle.store";
@@ -7,43 +6,65 @@ import useModal from "@/src/hooks/use-modal";
 import { useTranslations } from "next-intl";
 import { Modification } from "../../vehicleFilters/model/vehicle.type";
 import { useRouter } from "@/src/i18n/navigation";
+import VehicleCardGarage from "./VehicleCardGarage";
+import Loading from "@/src/shared/ui/loading/Loading";
 
 const ListGarage = () => {
-  const { listGarages, removeFromGarage } = useGarageStore();
-  const { getCatalogByModificationAutotechId, activeModification } =
-    useVehicleFiltersStore();
+  const { listGarages, removeCarFromGarage, loadingCarGarage } =
+    useGarageStore();
+  const {
+    getCatalogByModificationAutotechId,
+    activeModification,
+    isLoadingCurrentModification,
+  } = useVehicleFiltersStore();
   const { closeModal, openModal } = useModal();
-  const router = useRouter();
+  const route = useRouter();
   const t = useTranslations("vehicle");
 
   const currentGarage = listGarages[0] ?? null;
-  const selectCarFromGarage = (modification: Modification) => {
-  // const selectCarFromGarage = (modification: ModificationGarage) => {
-    getCatalogByModificationAutotechId(modification);
-    router.push("/");
-    closeModal();
+
+  const selectCarFromGarage = async (modification: Modification) => {
+    const isSetModification = await getCatalogByModificationAutotechId(modification);
+    if(isSetModification){
+      route.push("/catalog");
+      closeModal();
+    };
   };
-  console.log({ currentGarage });
   
+  const handleDeleteCardGarage = (e: React.MouseEvent<HTMLButtonElement>,id: number) => {
+    e.stopPropagation();
+    removeCarFromGarage(id);
+   
+  };
+
   return (
     <div className="felx flex-col h-full min-h-0">
       <div className="flex flex-col h-full">
         <h2 className="font-bold text-lg text-center">
           {t("choose-new-vehicle")}
         </h2>
-        <div className="flex flex-col min-h-0 flex-1 gap-4">
+        <div className="relative flex flex-col min-h-0 flex-1 gap-4">
+          {loadingCarGarage && (
+            <div className="absolute w-full h-full bg-gray-900/20 z-999 flex items-center justify-center">
+              <Loading />
+            </div>
+          )}
+          {isLoadingCurrentModification && (
+            <div className="absolute w-full h-full bg-gray-900/20 z-999 flex items-center justify-center">
+              <Loading />
+            </div>
+          )}
           {currentGarage?.cars?.length ? (
             currentGarage?.cars.map((gc: ResponseGarageCar) => (
-              <VehicleCard
+              <VehicleCardGarage
                 key={gc.id}
-                isActive={
-                  activeModification?.id === gc.modification?.id
-                }
+                isActive={activeModification?.id === gc.modification?.id}
                 year={gc.modification.range}
                 make={gc.modification.brand}
                 model={gc.modification?.model}
                 engine={gc.modification?.engineType}
                 onSelect={() => selectCarFromGarage(gc.modification)}
+                onDelete={(e) => handleDeleteCardGarage(e, gc.id)}
               />
             ))
           ) : (
@@ -67,7 +88,7 @@ const ListGarage = () => {
                     hover:bg-[#f5f5f5]
                     active:bg-[#eaeaea]
                     "
-                    onClick={() => openModal({ type: "garage" })}
+            onClick={() => openModal({ type: "garage" })}
           >
             Manage Vehicles
           </button>

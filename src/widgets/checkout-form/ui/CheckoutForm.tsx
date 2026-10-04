@@ -11,15 +11,21 @@ import { useCreateOrder } from "@/src/features/order/model/useCreateOrder";
 import { useCheckoutStore } from "../model/checkout.store";
 import { ApiResult } from "@/src/shared/api/client";
 import { ResponseOrder } from "@/src/features/order/api/response.dto";
-import { useCartStore } from "@/src/features/cart/model/cart.store";
 import { useRouter } from "@/src/i18n/navigation";
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 
 
 export default function CheckoutForm() {
   const { submit } = useCreateOrder();
   const router = useRouter();
   const { deliveryMethod, deliveryCityRef } = useCheckoutStore();
-  const { clearCart, cartItems } = useCartStore();
+  const cartItems = useCartStore((state) => state.cartItems);
+  const guestItems = useCartStore((state) => state.guestItems);
+  const user = useAuthStore(s=>s.user);
+  const clearCart = useCartStore(s=> s.clearCart);
+
+  const listCart = user ? cartItems : guestItems;
   const methods = useForm<CheckoutFormValues>({
     defaultValues: {
       deliveryCity: "",
@@ -36,7 +42,7 @@ export default function CheckoutForm() {
       deliveryHouse: "",
       deliveryApartment: "",
     },
-  });
+  }); 
 
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
@@ -61,29 +67,28 @@ export default function CheckoutForm() {
 
  
     return (
-      <div className="order-2 md:order-1">
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="
                       max-w-4xl
                       mx-auto
                       bg-white
                       p-6
                       rounded-xl
                       "
-          >
-            <ContactFields />
-            <div className="border-t my-8" />
-            <CitySelect />
-            <div className="border-t my-8" />
-            <DeliveryMethod />
-            <CommentBox />
-            <VinCheck />
-            {!!cartItems.length && (
-              <button
-                type="submit"
-                className="
+        >
+          <ContactFields />
+          <div className="border-t my-8" />
+          <CitySelect />
+          <div className="border-t my-8" />
+          <DeliveryMethod />
+          <CommentBox />
+          <VinCheck />
+          {!!listCart.length && (
+            <button
+              type="submit"
+              className="
                                   w-full
                                   h-14
                                   mt-8
@@ -92,12 +97,11 @@ export default function CheckoutForm() {
                                   rounded-lg
                                   font-semibold
                                   "
-              >
-                Замовлення підтверджую
-              </button>
-            )}
-          </form>
-        </FormProvider>
-      </div>
+            >
+              Замовлення підтверджую
+            </button>
+          )}
+        </form>
+      </FormProvider>
     );
 }

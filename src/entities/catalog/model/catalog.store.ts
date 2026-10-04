@@ -10,7 +10,7 @@ export const useCatalogStore = create<CatalogState>((set) => ({
   listTopProducts: [],
   isLoadingItemsCatalog: false,
   isLoadingTopProducts: false,
-
+  currentItemCatalog: null,
   itemsCatalogError: null,
   topProductsError: null,
   getListItemsCatalogCatalog: async (
@@ -20,6 +20,7 @@ export const useCatalogStore = create<CatalogState>((set) => ({
     set({
       isLoadingItemsCatalog: true,
       itemsCatalogError: null,
+      currentItemCatalog: groupId,
     });
 
     try {

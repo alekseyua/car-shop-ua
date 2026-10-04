@@ -18,12 +18,12 @@ const GarageButton = ({colorIcon}: IProps) => {
       <Image
         src={colorIcon === 'white'? iconGarageWhite : iconGarageBlack}
         alt="Garage"
-        className='sm:w-10 sm:h-10 w-7 h-7'
+        className='w-6 h-6'
         onClick={() => openModal({ type: "garage" })}
       />
       {!!countGarage && (
-        <span className="absolute sm:-top-1.5 sm:right-0 bg-red-500 
-          text-white text-xs rounded-full w-5 h-5 
+        <span className="absolute sm:-top-1.4 sm:-right-1 bg-red-500 
+          text-white text-xs rounded-full w-4 h-4 
           flex items-center justify-center
           -top-2
           -right-2

@@ -20,6 +20,7 @@ interface VehicleFiltersState {
         catalog: Catalog | null;
     };
     activeModification: Modification | null;
+    isLoadingCurrentModification: boolean;
     init: () => Promise<void>;
     getYears: () => Promise<Year[]>;
     getBrands: () => Promise<Brand[]>;
@@ -29,7 +30,7 @@ interface VehicleFiltersState {
     resetModel: ()=> void;
     setModification: (modification: Modification) => void;
     resetModification: ()=> void;
-    getCatalogByModificationAutotechId: (modification: Modification) => void;
+    getCatalogByModificationAutotechId: (modification: Modification) => Promise<boolean>;
     // getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     resetFilters: () => void;
     setActiveModification: (m: Modification) => void;
@@ -51,6 +52,7 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         // typeEngine: null,
         // typeBody: null,
     },
+    isLoadingCurrentModification: false,
     activeModification: null,
     init: async () => {
         const [brands, years] = await Promise.all([getBrandsApi(), getYearsApi()]);
@@ -180,15 +182,20 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         }})),
 
     getCatalogByModificationAutotechId: async (modification) => {
+        set({
+          isLoadingCurrentModification: true,
+        });
         useCatalogStore.getState().resetListItemsCatalog();
         const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
         useAccessoriesStore.getState().resetCategoryId();
         set((state) => ({
-            filters: {
-                ...state.filters,
-                catalogs: transformCatalog(fetchedCatalog),
-            },
-            activeModification: modification,
+          filters: {
+            ...state.filters,
+            catalogs: transformCatalog(fetchedCatalog),
+          },
+          activeModification: modification,
+          isLoadingCurrentModification: false,
         }));
+        return true;
     },
 }))

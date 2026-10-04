@@ -2,7 +2,7 @@
 // ├── client.ts
 // src/shared/api/client.ts
 import { HOST } from "@/src/config";
-import { useAuthStore } from "@/src/features/auth-by-email/model/store";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 import { getRefreshToken } from "../auth/refrashManager";
 
 type FetchOptions = RequestInit & {

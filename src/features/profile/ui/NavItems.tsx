@@ -3,6 +3,7 @@
 import React from 'react'
 import { useProfileStore } from '../model/profile.store'
 import { handleLogout } from '@/src/processes/logout/model/logout';
+import { useRouter } from '@/src/i18n/navigation';
 
 const listNav = [
   {
@@ -25,7 +26,7 @@ const listNav = [
 
 const NavItems = () => {
   const { setCurrentSection } = useProfileStore();
-
+  const route = useRouter();
   return (
     <div className="border-r border-gray-500">
       <ul>
@@ -39,6 +40,7 @@ const NavItems = () => {
             onClick={()=>{
               if(ln.id === 10){
                 handleLogout();
+                route.push('/');
                 return;
               }
               setCurrentSection(ln.id)

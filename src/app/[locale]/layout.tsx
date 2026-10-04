@@ -9,6 +9,8 @@ import { getMessages } from "next-intl/server";
 import { GarageProvider } from "@/src/providers/garage-provider";
 import { Container } from "@/src/shared/ui/layout/Container/Container";
 import VehicleFiltersLayout from "@/src/features/vehicleFilters/ui/VehicleFiltersLayout";
+import CartProvider from "@/src/providers/cart-provider";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,10 +49,11 @@ export default async function RootLayout({
           messages={messages}
         >
           <GarageProvider />
+          <CartProvider />
           <Header />
           <div className="sticky top-0 z-50 w-full bg-[#f2f4f3]">
             <Container className="!p-0">
-              <div className="px-5 py-[17px]">
+              <div className="px-5 py-2">
                 <VehicleFiltersLayout />
               </div>
             </Container>
@@ -58,6 +61,13 @@ export default async function RootLayout({
           <main className="flex-1">{children}</main>
           <Footer />
           <ModalProvider />
+          <Toaster
+            position="bottom-right"
+            richColors
+            closeButton
+            expand={false}
+            duration={1000}
+          />
         </NextIntlClientProvider>
       </body>
     </html>

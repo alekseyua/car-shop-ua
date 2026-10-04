@@ -3,8 +3,12 @@
 import { useAccessoriesStore } from '@/src/entities/catalogAccessories/model/accessories.store';
 import { ProductAccessories } from '@/src/entities/catalogAccessories/model/accessories.type';
 import { getOldPrice } from '@/src/shared/libs/helpers';
+import { BreadcrumbItem, useBreadcrumbStore } from '@/src/shared/stores/breadcrumbs/breadcrumbs.store';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';
+import CardPreviewSkeleton from '@/src/shared/ui/Card/CardPreviewSkeleton';
 import { Pagination } from '@/src/shared/ui/Pagination/Pagination';
+import React from 'react';
+import { useEffect } from 'react';
 
 const TableCatalogAccessories = () => {
   const {
@@ -17,11 +21,26 @@ const TableCatalogAccessories = () => {
     prevPage,
     goToPage,
     showMore,
+    resetCategoryId,
   } = useAccessoriesStore();
 
+  const {setBreadcrumbItems, resetBreadcrumbItems } = useBreadcrumbStore();
   // if (isLoading) {
   //   return (<div> loading ....</div>)
   // }
+
+  
+  useEffect(()=>{
+    const breadcrumbs:BreadcrumbItem[] = [
+      {
+        title: 'Accessories',
+        href: ''
+      }
+    ]
+    setBreadcrumbItems(breadcrumbs)
+    return () => resetBreadcrumbItems();
+  }, [setBreadcrumbItems, resetBreadcrumbItems]);
+
     return (
       <div className="w-full">
         <div
@@ -32,18 +51,26 @@ const TableCatalogAccessories = () => {
                         justify-items-center
                         "
         >
-          {catalogAccessories.map((item: ProductAccessories) => (
-            <CardPreview
-              key={item.itemNo}
-              imageSrc={"https://img2.ad.ua/imgs/" + item.firstPic}
-              title={item.itemNo}
-              description={item.description}
-              rating={4} // Placeholder rating
-              price={item.price}
-              oldPrice={item.inStock ? getOldPrice(item.price) : undefined}
-              item={item as ProductAccessories}
-            />
-          ))}
+          {isLoading ? (
+            <React.Fragment>
+              {Array.from({ length: 12 }).map((el, i) => (
+                <CardPreviewSkeleton key={i} />
+              ))}
+            </React.Fragment>
+          ) : (
+            catalogAccessories.map((item: ProductAccessories) => (
+              <CardPreview
+                key={item.itemNo}
+                imageSrc={"https://img2.ad.ua/imgs/" + item.firstPic}
+                title={item.itemNo}
+                description={item.description}
+                rating={4} // Placeholder rating
+                price={item.price}
+                oldPrice={item.inStock ? getOldPrice(item.price) : undefined}
+                item={item as ProductAccessories}
+              />
+            ))
+          )}
         </div>
         <div className=" mt-4">
           <Pagination

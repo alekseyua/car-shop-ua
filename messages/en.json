@@ -80,7 +80,8 @@
     "description": "Product description",
     "price": "Price",
     "oldPrice": "Old price",
-    "notProduct": "No products to display"
+    "notProduct": "No products to display",
+    "bayProduct": "Buy"
   },
   "catalog": {
     "searchCatalogCar": "Search by section",
@@ -202,5 +203,9 @@
     "edit-vehicle": "Edit Vehicle",
     "delete-vehicle": "Delete Vehicle",
     "shop-without-vehicle": "Shop Without Vehicle"
+  },
+  "breadcrumb": {
+    "home": "Home",
+    "order": "Order"
   }
 }

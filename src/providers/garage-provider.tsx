@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useGarageStore } from "../features/garage/model/garage.store";
-import { useAuthStore } from "../features/auth-by-email/model/store";
+import { useAuthStore } from "../features/auth-by-email/model/auth.store";
 
 export const GarageProvider = () => {
     const init = useGarageStore((state) => state.init);

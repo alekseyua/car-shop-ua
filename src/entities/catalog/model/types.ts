@@ -12,6 +12,7 @@ export interface CatalogState {
   getTopProduct: () => Promise<void>;
   resetTopProduct: () => void;
   // getListTopProducts: () => Promise<ResponseTopProduct[]>;
+  currentItemCatalog: number | null;
   listItemsCatalog: ResponseCatalogItem[];
   listTopProducts: ResponseTopProduct[];
   isLoadingItemsCatalog: boolean;

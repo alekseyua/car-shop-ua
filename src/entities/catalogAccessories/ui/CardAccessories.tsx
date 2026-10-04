@@ -1,18 +1,23 @@
 import { useState } from "react";
 import { CategoryAccessories } from "../model/accessories.type";
 import { scrollToTop } from "@/src/shared/libs/helpers";
+import Loading from "@/src/shared/ui/loading/Loading";
 
 interface IProps {
   item: CategoryAccessories;
   handleFetchDataAccessories: (id: number) => void;
+  isLoading?: {
+    loading: boolean;
+    id: number | null;
+  } | null;
 }
-export const CardAccessories = ({ item, handleFetchDataAccessories }: IProps) => {
+export const CardAccessories = ({ item, handleFetchDataAccessories, isLoading }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const hasChildren = item.childElements?.length > 0;
 
   return (
-    <div>
+    <div className="relative">
       {/* search accessories */}
 
       {/* catalog */}
@@ -43,14 +48,16 @@ export const CardAccessories = ({ item, handleFetchDataAccessories }: IProps) =>
             height={15}
           />
         )} */}
-        <button onClick={() => {
-          if(hasChildren){
-            setIsOpen((prev) => !prev)
-          } else {
-            handleFetchDataAccessories(item.id);
-            scrollToTop();
-          } 
-        }}>
+        <button
+          onClick={() => {
+            if (hasChildren) {
+              setIsOpen((prev) => !prev);
+            } else {
+              handleFetchDataAccessories(item.id);
+              scrollToTop();
+            }
+          }}
+        >
           <span
             className={`text-sm block text-start hover:cursor-pointer hover:text-gray-500`}
           >
@@ -61,10 +68,19 @@ export const CardAccessories = ({ item, handleFetchDataAccessories }: IProps) =>
       {hasChildren && isOpen && (
         <div className="ml-6 border-l pl-3">
           {item.childElements.map((child) => (
-            <CardAccessories key={child.id} item={child} handleFetchDataAccessories={handleFetchDataAccessories} />
+            <CardAccessories
+              key={child.id}
+              item={child}
+              handleFetchDataAccessories={handleFetchDataAccessories}
+            />
           ))}
         </div>
       )}
+      {
+          (isLoading && isLoading.id === item.id ) &&
+        <div className="absolute w-full h-full bg-gray-900/30 z-999 flex items-center justify-end pr-4">
+        <Loading size={20} />
+      </div>}
     </div>
   );
 }

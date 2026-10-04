@@ -2,9 +2,9 @@
 // ├── api
 // │   ├── api.ts
 import { api, ApiResult } from "@/src/shared/api/client";
-import { useAuthStore } from "../model/store";
-import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./dto";
-import { syncServerCart } from "../../cart/model/cart.actions";
+import { useAuthStore } from "../model/auth.store";
+import { AuthResponse, LoginDTO, RegisterDTO, UserDTO } from "./auth.dto";
+import { syncCartAfterLogin } from "../../cart/model/action-sync-cart";
 
 export const registerUserByEmail = async (dto: RegisterDTO) => {
     try {
@@ -25,7 +25,7 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
             data.refreshToken
         );
         
-        syncServerCart();
+        await syncCartAfterLogin();
         return data;
     } catch (error) {
         throw error;
@@ -51,7 +51,7 @@ export const loginUserbyEmail = async (dto: LoginDTO) => {
         // console.log("loginUserbyEmail data:", data);
         
         useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken, data.refreshToken);
-        syncServerCart();
+        await syncCartAfterLogin();
     }
     catch (error) {
         console.log("Error in loginUserbyEmail:", error);
@@ -77,5 +77,18 @@ export const getMe = async () => {
         method: "GET",
     });
     // useAuthStore.getState().setUser(res);
+    console.log({userMe: res})
+    if(!res.ok && res.status === 401){
+        getMeSession();
+    }
     return res;
 };
+
+export const getMeSession = async () => {
+    const res = await api<UserDTO>("/guest-session", {
+      method: "POST",
+    });
+    // useAuthStore.getState().setUser(res);
+    return res;
+
+}

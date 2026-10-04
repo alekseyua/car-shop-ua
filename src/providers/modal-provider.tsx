@@ -1,13 +1,10 @@
-import React from 'react'
-import ModalRoot from '../components/modal/modal-root';
+import React from "react";
+import ModalRoot from "../components/modal/modal-root";
 
-interface IProps {
-}
+interface IProps {}
 
 const ModalProvider: React.FC<IProps> = () => {
-  return (
-      <ModalRoot />
-  )
-}
+  return <ModalRoot />;
+};
 
 export default ModalProvider;

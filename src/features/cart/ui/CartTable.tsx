@@ -1,27 +1,41 @@
 "use client";
 
-import { useCartStore } from "../model/cart.store";
-import { CartItem } from "../model/cart.types";
 import Image from "next/image";
 import QuantitySelector from "@/src/shared/ui/QuantitySelector/QuantitySelector";
 import { RemoveCartItemButton } from "./RemoveCartItem";
 import ProductAvailabilityStatus from "@/src/shared/ui/status/ProductAvailabilityStatus";
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
+import { CartItem } from "@/src/entities/cart/model/types";
+import { useAuthStore } from "../../auth-by-email/model/auth.store";
+import { handleUpdateToCart } from "../model/action.updateToCar";
+import { handleRemoveToCart } from "../model/action.removeToCar";
+import { useEffect } from "react";
 
 const CartTable = () => {
-  const { cartItems, changeQuantity, removeFromCart, total } = useCartStore();
-  if (!!!cartItems.length) return null;
+  const cartItems = useCartStore((state) => state.cartItems);
+  const guestItems = useCartStore((state) => state.guestItems);
+  const user = useAuthStore(s=>s.user);
+  const total = useCartStore((state) => state.total);
+  const calculateGuestCart = useCartStore((s) => s.calculateGuestCart);
+  const listCart = user ? cartItems : guestItems;
+  useEffect(() => {
+    if (!user) {
+      calculateGuestCart();
+    }
+  }, [calculateGuestCart, guestItems, user]);
+
+  if (!listCart.length) return null;
+
   return (
     <div
       className="
       max-w-4xl mx-auto bg-white rounded-xl
-      order-1 
-      md:order-2 
-      sm:p-6 p-2 "
+      sm:p-6 p-2"
     >
       <h2 className="text-3xl font-bold mb-6 text-black">Найменування</h2>
 
       <div className="flex gap-4 flex-col">
-        {cartItems.map((item: CartItem) => (
+        {listCart.map((item: CartItem) => (
           <div
             key={item.itemNo}
             className="
@@ -99,13 +113,14 @@ const CartTable = () => {
               >
                 <QuantitySelector
                   initialValue={item.quantity}
-                  onChange={(count: number) =>
-                    changeQuantity(item.itemNo, count)
+                  onChange={
+                    (count: number) => handleUpdateToCart(item, count)
+                    // changeQuantity(item.itemNo, count)
                   }
                 />
 
                 <RemoveCartItemButton
-                  onClick={() => removeFromCart(item.itemNo)}
+                  onClick={() => handleRemoveToCart(item.itemNo)}
                 />
               </div>
             </div>

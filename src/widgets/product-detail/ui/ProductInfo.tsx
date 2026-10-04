@@ -1,21 +1,30 @@
-import { usePdfStore } from '@/src/entities/PdfViewer/model/pdf.store';
-import { useProductDetailStore } from '@/src/entities/product-detail/model/detail.store';
-import { ProductItemDetail, ProductDetailResponse } from '@/src/entities/product-detail/model/detail.types';
-import { ProductAvailabilityList } from '@/src/entities/product/ui/ProductAvailabilityList';
-import { handleAddToCart } from '@/src/features/cart/model/cart.actions';
-import useModal from '@/src/hooks/use-modal';
-import { CriteriaItem } from '@/src/shared/api/dto';
-import { useTranslations } from 'next-intl';
-import React from 'react'
+import { usePdfStore } from "@/src/entities/PdfViewer/model/pdf.store";
+import { useProductDetailStore } from "@/src/entities/product-detail/model/detail.store";
+import {
+  ProductDetailResponse,
+  ProductItemDetail,
+} from "@/src/entities/product-detail/model/detail.types";
+import { ProductAvailabilityList } from "@/src/entities/product/ui/ProductAvailabilityList";
+import { handleAddToCart } from "@/src/features/cart/model/action.addToCart";
+import useModal from "@/src/hooks/use-modal";
+import { CriteriaItem } from "@/src/shared/api/dto";
+import DeliveryInfo from "@/src/shared/ui/deliveryInfo/DeliveryInfo";
+import { useTranslations } from "next-intl";
 
 const ProductInfo = () => {
-    const { product }:{ product: ProductDetailResponse | null } = useProductDetailStore();
-    const t = useTranslations("catalog");
-    const { setPdfFile } = usePdfStore();
-    const { openModal } = useModal();
-    if(!product) return null;
-    const  files =
-      product.files?.filter((file) => file.fileType === "2") ?? [];
+  const { product }: { product: ProductDetailResponse | null } =
+    useProductDetailStore();
+  const t = useTranslations("catalog");
+  const tCard = useTranslations("card");
+  const { setPdfFile } = usePdfStore();
+  const { openModal } = useModal();
+  if (!product) return null;
+  const filesPdf = product.files?.filter((file) => file.fileType === "2") ?? [];
+  const filesCertificate =
+    product.files?.filter(
+      (file) => file.fileType === "4" && !file.url.includes("youtube"),
+    ) ?? [];
+
   return (
     <div className="flex flex-col gap-2 p-4 border-l w-full h-full">
       <h1 className="text-2xl font-bold mb-4 text-black text-center">
@@ -44,7 +53,12 @@ const ProductInfo = () => {
               <h2 className="text-xl font-semibold mb-2 text-black">
                 {t("add-characteristics")}
               </h2>
-              <p>{product.item.searchDescription}</p>
+              <p>
+                {product.item.searchDescription
+                  .replace(/,\s*/g, ", ")
+                  .replace(/\s*,\s*/g, ", ")
+                  .trim()}
+              </p>
             </>
           )}
         </div>
@@ -53,13 +67,65 @@ const ProductInfo = () => {
           {t("descriptionNotLook")}
         </div>
       )}
-      {/* specification */}
-      {files?.length > 0 && (
+      {/* certificate */}
+      {filesCertificate?.length > 0 && (
         <div className="mt-4 flex flex-col gap-2">
-          {files.map((f) => {
-            const fileUrl = `${f.pathName}/${encodeURIComponent(
-              f.fileName,
-            )}`;
+          {filesCertificate.map((f, i) => {
+            const fileUrl = `${encodeURIComponent(f.url)}`;
+
+            return (
+              <div
+                key={`${f.url}/${f.fileName}` + i}
+                className="
+                  flex
+                  items-center
+                  justify-between
+                  gap-3
+                  rounded-md
+                  border
+                  border-gray-200
+                  bg-white
+                  px-3
+                  py-2
+                "
+              >
+                {/* Описание */}
+                <p className="min-w-0 text-sm text-gray-700">
+                  {f.fileDescript || f.fileName}
+                </p>
+
+                {/* Ссылка */}
+                <button
+                  onClick={() => {
+                    setPdfFile(fileUrl);
+                    openModal({ type: "pdf" });
+                  }}
+                  className="
+                    shrink-0
+                    rounded-md
+                    bg-gray-100
+                    px-3
+                    py-1.5
+                    text-sm
+                    font-medium
+                    text-gray-700
+                    transition
+                    hover:bg-gray-200
+                    hover:text-black
+                  "
+                >
+                  Відкрити
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {/* specification */}
+      {filesPdf?.length > 0 && (
+        <div className="mt-4 flex flex-col gap-2">
+          {filesPdf.map((f) => {
+            const fileUrl = `${f.pathName}/${encodeURIComponent(f.fileName)}`;
 
             return (
               <div
@@ -84,9 +150,9 @@ const ProductInfo = () => {
 
                 {/* Ссылка */}
                 <button
-                  onClick={() =>{
-                    setPdfFile(fileUrl)
-                    openModal({type: 'pdf'})
+                  onClick={() => {
+                    setPdfFile(fileUrl);
+                    openModal({ type: "pdf" });
                   }}
                   className="
                     shrink-0
@@ -111,8 +177,9 @@ const ProductInfo = () => {
       )}
       {/* available and price */}
       <div className="border rounded-md p-4 mt-4 bg-yellow-50">
-        <p className="text-lg text-gray-700 mb-2">
-          <span> {t("price")}: </span>
+        {/* price */}
+        <p className="text-xl text-gray-700 mb-2 text-end">
+          {/* <span> {t("price")}: </span> */}
           <span className="font-bold">
             {!!product?.item.price && Number(product?.item.price).toFixed(2)}
           </span>
@@ -123,19 +190,26 @@ const ProductInfo = () => {
             {t("available")}:
             <ProductAvailabilityList
               onClick={(statusDelivery: string) =>
-                handleAddToCart(
-                  product?.item as ProductItemDetail,
+                handleAddToCart({
+                  itemNo: product.item.itemNo,
+                  title: product.item.brand,
+                  price: product.item.price,
+                  imageUrl: product.item.firstPic,
+                  quantity: 1,
                   statusDelivery,
-                )
+                })
               }
+              buttonPayStyle={"min-w-40 h-8"}
+              buttonBuyText={tCard("bayProduct")}
               stock={product.item.stock}
             />
           </div>
         )}
       </div>
        {/* Additional product info can be added here */}
+      <DeliveryInfo />
     </div>
   );
-}
+};
 
-export default ProductInfo
+export default ProductInfo;

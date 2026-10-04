@@ -1,0 +1,33 @@
+<svg
+    viewBox="0 0 48 48"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M7 15.5C7 13.57 8.57 12 10.5 12H36.5C38.43 12 40 13.57 40 15.5V38C40 39.66 38.66 41 37 41H10C8.34 41 7 39.66 7 38V15.5Z"
+      stroke="currentColor"
+      strokeWidth="3.5"
+      strokeLinejoin="round"
+    />
+
+    <path
+      d="M8 15L12 8.5C12.7 7.36 14 6.7 15.34 6.7H34"
+      stroke="currentColor"
+      strokeWidth="3.5"
+      strokeLinecap="round"
+    />
+
+    <path
+      d="M31 22H41V31H31C28.24 31 26 28.76 26 26.5C26 24.24 28.24 22 31 22Z"
+      fill="white"
+      stroke="currentColor"
+      strokeWidth="3.5"
+    />
+
+    <circle
+      cx="31"
+      cy="26.5"
+      r="1.5"
+      fill="currentColor"
+    />
+  </svg>

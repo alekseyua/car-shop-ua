@@ -5,17 +5,17 @@ import iconCheck from "../../../shared/assets/icons/iconCheck.svg";
 import iconVehicle from "../../../shared/assets/icons/iconVehicle.svg";
 import iconDelete from "../../../shared/assets/icons/delete.svg";
 
-type VehicleCardProps = {
+type VehicleCardGarageProps = {
   isActive?: boolean;
   year: string;
   make: string;
   model: string;
   engine:string;
-  onDelete?: () => void;
+  onDelete?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   onSelect: () => void;
 };
 
-export default function VehicleCard({
+export default function VehicleCardGarage({
   isActive = false,
   year,
   make,
@@ -23,7 +23,7 @@ export default function VehicleCard({
   engine,
   onDelete,
   onSelect
-}: VehicleCardProps) {
+}: VehicleCardGarageProps) {
   return (
     <div 
       className="relative w-full max-w-[1070px] overflow-hidden shrink-0
@@ -77,9 +77,14 @@ export default function VehicleCard({
         {/* Delete */}
        {onDelete && <button
           type="button"
-          onClick={onDelete}
+          onClick={e=>onDelete(e)}
           aria-label="Delete vehicle"
-          className=" flex p-2 justify-center rounded-md text-[#292929] transition-colors hover:bg-gray-100 active:bg-gray-200"
+          className=" 
+            flex p-2 justify-center 
+            rounded-md text-[#292929] transition-colors 
+            hover:bg-gray-100
+            hover:cursor-pointer
+            active:bg-gray-200"
         >
           <Image
             className="w-10 h-10"

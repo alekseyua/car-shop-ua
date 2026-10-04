@@ -1,5 +1,5 @@
 // src/shared/auth/refreshManager.ts
-import { useAuthStore } from "@/src/features/auth-by-email/model/store";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 import { handleRefresh } from "./handleRefresh";
 import { handleLogout } from "@/src/processes/logout/model/logout";
 
@@ -7,7 +7,6 @@ let refreshPromise: Promise<string | null> | null = null;
 
 export function getRefreshToken(): Promise<string | null> | null {
     const refreshToken = useAuthStore.getState().refreshToken;
-    console.log({refreshToken})
     if(!refreshToken) {
         handleLogout();
         return null; 

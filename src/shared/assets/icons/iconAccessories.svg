@@ -1,0 +1,51 @@
+<svg
+  class="your-class"
+  viewBox="0 0 24 24"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    d="M3 13.5L5.2 7.8C5.5 7.05 6.2 6.5 7 6.5H17C17.8 6.5 18.5 7.05 18.8 7.8L21 13.5"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M3 13.5V18C3 18.55 3.45 19 4 19H6C6.55 19 7 18.55 7 18V16H17V18C17 18.55 17.45 19 18 19H20C20.55 19 21 18.55 21 18V13.5"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M5 13.5H19"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+  />
+
+  <circle
+    cx="7"
+    cy="13.5"
+    r="1"
+    fill="currentColor"
+  />
+
+  <circle
+    cx="17"
+    cy="13.5"
+    r="1"
+    fill="currentColor"
+  />
+
+  <path
+    d="M14.5 4.5L16 3L18 5L16.5 6.5"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

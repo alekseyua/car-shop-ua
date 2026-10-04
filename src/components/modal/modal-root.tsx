@@ -86,7 +86,7 @@ const ModalRoot = () => {
           fixed
           inset-0
           bg-black/50
-          z-[250]
+          z-[1550]
         `
       : `
           fixed
@@ -95,7 +95,7 @@ const ModalRoot = () => {
           flex
           items-center
           justify-center
-          z-[250]
+          z-[1550]
           p-2
           sm:p-4
         `;
@@ -181,6 +181,7 @@ const ModalRoot = () => {
 
   const modalClassName = isRight
     ? `
+        relative
         fixed
         top-0
         right-0
@@ -198,6 +199,7 @@ const ModalRoot = () => {
       `
     : isLeft
       ? `
+        relative
           fixed
           top-0
           left-0
@@ -215,6 +217,7 @@ const ModalRoot = () => {
         `
       : isTopTop
         ? `
+        relative
             fixed
             top-4
             left-1/2

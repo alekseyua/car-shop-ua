@@ -10,17 +10,19 @@ import FormGarage from "@/src/shared/ui/garage/formGarage";
 import { useTranslations } from "next-intl";
 import useModal from "@/src/hooks/use-modal";
 import { useVehicleFiltersStore } from "../../vehicleFilters/model/vehicle.store";
-import VehicleCard from "./VehicleCard";
 import { Modification } from "../../vehicleFilters/model/vehicle.type";
 import { useRouter } from "@/src/i18n/navigation";
+import VehicleCardGarage from "./VehicleCardGarage";
+import Loading from "@/src/shared/ui/loading/Loading";
 
 const GarageModal = () => {
   const t = useTranslations("garage");
 
-  const router = useRouter();
+  const route = useRouter();
   const { closeModal, openModal } = useModal();
   const {
     getCatalogByModificationAutotechId,
+    isLoadingCurrentModification,
     activeModification,
     resetActiveModification,
   } = useVehicleFiltersStore();
@@ -29,9 +31,10 @@ const GarageModal = () => {
     createGarage,
     errorMessageGarage,
     clearErrorMessageGarage,
-    removeFromGarage,
+    removeCarFromGarage,
     editItemGarage,
     changeDefaultGarage,
+    loadingGarage,
   } = useGarageStore();
   // const [currentGarage, setCurrentGarage] = useState<ResponseGarage | null>(null);
   const [selectedGarage, setSelectedGarage] = useState<ResponseGarage | null>(
@@ -103,34 +106,50 @@ const GarageModal = () => {
     clearErrorMessageGarage();
   };
 
-  const selectCarFromGarage = (modification: Modification) => {
+  const selectCarFromGarage = async (modification: Modification) => {
     // const selectCarFromGarage = (modification: ModificationGarage) => {
-    getCatalogByModificationAutotechId(modification);
-    router.push("/");
-    closeModal();
+    const isSetModification =
+      await getCatalogByModificationAutotechId(modification);
+    if (isSetModification) {
+      route.push("/catalog");
+      closeModal();
+    }
   };
 
   const handleAddCarToGarage = () => {
     openModal({ type: "vehicle", visible: "right" });
   };
 
-  const removeCarFromGarage = (id: number) => {};
-
-  console.log({ activeModification });
+  const handleDeleteCardGarage = (e: React.MouseEvent<HTMLButtonElement>, id: number) => {
+    e.stopPropagation();
+    removeCarFromGarage(id);
+  };
+console.log({ loadingGarage });
   return (
-    <div className="h-full">
+    <div className="h-full w-full relative">
+      {loadingGarage && (
+        <div className="absolute w-full h-full bg-gray-900/30 z-999 flex items-center justify-center">
+          <Loading />
+        </div>
+      )}
+
       <h2 className="font-bold text-lg text-center">{t("title")}</h2>
       <div className="grid sm:grid-cols-2 grid-cols-1 h-[600px] min-h-0 overflow-hidden">
+        {isLoadingCurrentModification && (
+          <div className="absolute w-full h-full bg-gray-900/20 z-999 flex items-center justify-center">
+            <Loading />
+          </div>
+        )}
         <div className="flex w-full p-1.5 flex-col min-h-0 overflow-y-auto">
           {!!listGarages?.length &&
             listGarages.map((g) => (
               <div
                 key={g.id}
-                className={`flex flex-col border-b hover:cursor-pointer rounded-md p-3 min-w-xl ${currentGarage?.id === g.id ? "bg-blue-100 border-blue-500" : "hover:bg-gray-50"}`}
+                className={`flex flex-col border-b hover:cursor-pointer rounded-md p-3 ${currentGarage?.id === g.id ? "bg-gray-100 border-gray-500" : "hover:bg-gray-50"}`}
                 onClick={() => handleSelectActiveGarage(g.id)}
               >
                 <div className="flex justify-between">
-                  <div className="felx flex-col">
+                  <div className="flex flex-col">
                     <p className="text-base font-black text-black">{g.name}</p>
                     <p className="text-sm text-gray-500">{g?.comment ?? "."}</p>
                   </div>
@@ -161,7 +180,7 @@ const GarageModal = () => {
                         width: 24,
                         height: 24,
                       }}
-                      onClick={() => removeFromGarage(g.id)}
+                      onClick={() => removeCarFromGarage(g.id)}
                     />
                   </div>
                 </div>
@@ -212,15 +231,15 @@ const GarageModal = () => {
         <div className="flex flex-col w-full p-1.5 gap-3 min-h-0 overflow-y-auto">
           {currentGarage?.cars?.length ? (
             currentGarage?.cars.map((gc: ResponseGarageCar) => (
-              <VehicleCard
+              <VehicleCardGarage
                 key={gc.id}
                 isActive={gc.modification?.id === activeModification?.id}
                 year={gc.modification.range}
                 make={gc.modification.brand}
                 model={gc.modification?.model}
                 engine={gc.modification.engineType}
-                onDelete={() => {
-                  removeCarFromGarage(gc.id);
+                onDelete={(e) => {
+                  handleDeleteCardGarage(e, gc.id);
                 }}
                 onSelect={() => selectCarFromGarage(gc.modification)}
               />

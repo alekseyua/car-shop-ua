@@ -1,11 +1,9 @@
-import { useAuthStore } from "@/src/features/auth-by-email/model/store";
-import { useCartStore } from "@/src/features/cart/model/cart.store";
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 
 export const handleLogout = () => {
-    useAuthStore.getState().logout()
-    useCartStore.setState({
-        cartItems: []
-    })
-    localStorage.removeItem("auth-storage");
+  useAuthStore.getState().logout();
+  useCartStore.getState().clearCart();
+  // localStorage.removeItem("auth-storage");
+  useAuthStore.persist.clearStorage();
 };
-

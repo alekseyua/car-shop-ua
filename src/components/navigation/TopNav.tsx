@@ -1,7 +1,7 @@
 "use client";
 
-import { getMe } from "@/src/features/auth-by-email/api/api";
-import { useAuthStore } from "@/src/features/auth-by-email/model/store";
+import { getMe } from "@/src/features/auth-by-email/api/auth.api";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 import useModal from "@/src/hooks/use-modal";
 import { Link } from "@/src/i18n/navigation";
 import { useTranslations } from "next-intl";
@@ -20,8 +20,9 @@ const TopNav = () => {
   return (
     <div
       className="
-        sm:justify-end sm:text-white sm:mt-0 sm:flex-row
-        flex items-start gap-3 flex-start flex-col
+      w-full
+        justify-end sm:text-white sm:mt-0 sm:flex-row
+        flex items-start gap-3 flex-col
         min-w-0 truncate 
         text-black mt-3"
     >
@@ -48,8 +49,8 @@ const TopNav = () => {
       </Link>
       {user ? (
         <Link
-          className="block w-full"
-          href="profile"
+          className="block"
+          href="/profile"
           onClick={closeModal}
         >
           <div className="rounded-lg bg-[#fef9c24f] p-4 sm:bg-transparent sm:p-0">
@@ -104,7 +105,7 @@ const TopNav = () => {
         <Link
           href="/login"
           onClick={closeModal}
-          className="block border-t border-gray-200 sm:border-0 w-full"
+          className="block border-t border-gray-200 sm:border-0"
         >
           <div className=" rounded-lg  p-4 text-center sm:p-0 bg-[#fef9c24f] sm:bg-transparent">
             <div className="flex justify-center sm:justify-start sm:items-center">

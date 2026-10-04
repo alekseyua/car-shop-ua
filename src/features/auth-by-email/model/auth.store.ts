@@ -3,8 +3,7 @@
 // │   ├── store.ts
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { AuthState } from "./types";
-import { useCartStore } from "../../cart/model/cart.store";
+import { AuthState } from "./auth.types";
 
 export const useAuthStore = create<AuthState>()(
     persist(
@@ -29,10 +28,6 @@ export const useAuthStore = create<AuthState>()(
 
             logout: () => {
                 set({ user: null, accessToken: null });
-                // useCartStore.setState({
-                //     cartItems: []
-                // })
-                // localStorage.removeItem("auth-storage");
             },
         }),
         {

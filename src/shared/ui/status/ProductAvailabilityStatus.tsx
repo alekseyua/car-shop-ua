@@ -8,9 +8,17 @@ interface Props {
   status: string;
   count?: number;
   onClick?: () => void;
+  classNameButton?: string;
+  buttonBuyText?: string;
 }
 
-const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
+const ProductAvailabilityStatus = ({
+  status,
+  count,
+  onClick,
+  classNameButton,
+  buttonBuyText,
+}: Props) => {
   const t = useTranslations("catalog");
 
   const [clicked, setClicked] = useState(false);
@@ -70,13 +78,11 @@ const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
           <button
             type="button"
             onClick={handleClick}
-            className="
+            className={`
               relative
               flex
               items-center
               justify-center
-              w-8
-              h-8
               rounded-md
               bg-red-500
               hover:bg-red-700
@@ -85,7 +91,8 @@ const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
               transition-all
               duration-300
               focus:outline-none
-            "
+              ${classNameButton}
+            `}
           >
             {/* АНИМАЦИЯ КОЛЬЦА */}
             {clicked && (
@@ -116,6 +123,11 @@ const ProductAvailabilityStatus = ({ status, count, onClick }: Props) => {
                 rounded-md
               "
             />
+            {buttonBuyText && 
+            <span className="text-base text-black">
+              {buttonBuyText}
+            </span>
+            }
           </button>
         </div>
       )}

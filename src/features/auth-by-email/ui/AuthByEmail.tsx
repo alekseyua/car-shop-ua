@@ -4,7 +4,7 @@
 'use client';
 
 import { useState } from "react";
-import { loginUserbyEmail, registerUserByEmail } from "../api/api";
+import { loginUserbyEmail, registerUserByEmail } from "../api/auth.api";
 import { useRouter } from "@/src/i18n/navigation";
 
 const AuthByEmail = () => {

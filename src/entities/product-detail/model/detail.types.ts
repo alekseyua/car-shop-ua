@@ -12,6 +12,7 @@ export interface ProductItemDetail {
   stock: ResponseStockDto[];
   salesOrderMultiple: number;
   criterias: CriteriaItem[];
+  longText: string | null;
 }
 
 export interface ProductDetailResponse {
