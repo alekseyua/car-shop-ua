@@ -6,11 +6,13 @@ export const handleRemoveToCart = (itemNo: string) => {
   const user = useAuthStore.getState().user;
   const removeGuestFromCart = useCartStore.getState().removeGuestFromCart;
   const removeFromCart = useCartStore.getState().removeFromCart;
-  if (user) {
-    console.log("remove from cart then login");
     removeFromCart(itemNo);
-  } else {
-    console.log("remove without login");
-    removeGuestFromCart(itemNo);
-  }
+
+  // if (user) {
+  //   console.log("remove from cart then login");
+  //   removeFromCart(itemNo);
+  // } else {
+  //   console.log("remove without login");
+  //   removeGuestFromCart(itemNo);
+  // }
 };

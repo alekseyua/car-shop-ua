@@ -17,13 +17,14 @@ const CartTable = () => {
   const user = useAuthStore(s=>s.user);
   const total = useCartStore((state) => state.total);
   const calculateGuestCart = useCartStore((s) => s.calculateGuestCart);
-  const listCart = user ? cartItems : guestItems;
-  useEffect(() => {
-    if (!user) {
-      calculateGuestCart();
-    }
-  }, [calculateGuestCart, guestItems, user]);
-
+  const listCart = cartItems;
+  // const listCart = user ? cartItems : guestItems;
+  // useEffect(() => {
+  //   if (!user) {
+  //     calculateGuestCart();
+  //   }
+  // }, [calculateGuestCart, guestItems,cartItems, user]);
+console.log({total})
   if (!listCart.length) return null;
 
   return (

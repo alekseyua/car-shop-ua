@@ -10,29 +10,27 @@ import { useCartStore } from '@/src/entities/cart/model/cart.store';
 import { useAuthStore } from '../../auth-by-email/model/auth.store';
 
 const CartModal = () => {
-    const { closeModal } = useModal();
-    const isLoading = useCartStore(s=>s.isLoading);
-    const cartItems = useCartStore(s=>s.cartItems);
-    const guestItems = useCartStore((s) => s.guestItems);
-    const user = useAuthStore(s=>s.user);
+  const { closeModal } = useModal();
+  const isLoading = useCartStore((s) => s.isLoading);
+  const cartItems = useCartStore((s) => s.cartItems);
+  const guestItems = useCartStore((s) => s.guestItems);
+  const user = useAuthStore((s) => s.user);
 
-    const route = useRouter();
+  const route = useRouter();
+  const listCart = cartItems;
+  // const listCart = user ? cartItems : guestItems;
 
-     if (user ? !cartItems.length : !guestItems.length) {
-       return (
-         <Container className="flex flex-col min-h-[calc(100dvh-270px)] justify-center  p-[0] flex-[1_1_0] bg-white">
-           <div className="flex flex-col w-full h-full justify-center items-center mb-10">
-             <Image
-               src={iconEmptyTrash}
-               alt="empty trash"
-               className="w-40 h-40"
-             />
-             <h3>Кошик порожній :(</h3>
-             <span>Але це ніколи не складно виправити 😉</span>
-           </div>
-         </Container>
-       );
-     }
+  if (!listCart.length) {
+    return (
+      <Container className="flex flex-col min-h-[calc(100dvh-270px)] justify-center  p-[0] flex-[1_1_0] bg-white">
+        <div className="flex flex-col w-full h-full justify-center items-center mb-10">
+          <Image src={iconEmptyTrash} alt="empty trash" className="w-40 h-40" />
+          <h3>Кошик порожній :(</h3>
+          <span>Але це ніколи не складно виправити 😉</span>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <div className="relative">

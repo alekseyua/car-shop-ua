@@ -9,11 +9,11 @@ export const handleAddToCart = (item: CartItem) => {
   const addItemToCart = useCartStore.getState().addItemToCart;
   const openModal = useModal.getState().openModal;
   openModal({ type: "cart" });
-  if (user) {
-    console.log("ADD to cart then login");
-    addItemToCart(item);
-  } else {
-    console.log("without login");
-    addGuestItem(item);
-  }
+  addItemToCart(item);
+  // if (user) {
+  //   console.log("ADD to cart then login");
+  // } else {
+  //   console.log("without login");
+  //   addGuestItem(item);
+  // }
 };

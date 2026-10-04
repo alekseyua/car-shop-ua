@@ -18,7 +18,8 @@ const OrderLayout = () => {
   const user = useAuthStore(s=>s.user);
   const t = useTranslations("breadcrumb");
   const { setBreadcrumbItems, resetBreadcrumbItems } = useBreadcrumbStore();
-  const listCart = user? cartItems : guestItems;
+  const listCart = cartItems;
+  // const listCart = user? cartItems : guestItems;
   useEffect(()=>{
     const itemsBreadcrumb: BreadcrumbItem[]= [
       {
@@ -28,7 +29,6 @@ const OrderLayout = () => {
     setBreadcrumbItems(itemsBreadcrumb);
     return () => resetBreadcrumbItems();
   },[setBreadcrumbItems, resetBreadcrumbItems, t]);
-
   if (!listCart.length) {
     return (
       <Container className="flex flex-col min-h-[calc(100dvh-270px)] justify-center  p-[0] flex-[1_1_0] bg-white">

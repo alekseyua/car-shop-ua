@@ -319,7 +319,7 @@ export const useCartStore = create<CartStore>()(
 
         try {
           const response = await cartApi.getCart();
-
+          
           // Адаптируй проверку под тип своего api-клиента.
           if (!response.ok) {
             throw new Error("Не удалось загрузить корзину");

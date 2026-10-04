@@ -22,10 +22,11 @@ export default function CheckoutForm() {
   const { deliveryMethod, deliveryCityRef } = useCheckoutStore();
   const cartItems = useCartStore((state) => state.cartItems);
   const guestItems = useCartStore((state) => state.guestItems);
-  const user = useAuthStore(s=>s.user);
-  const clearCart = useCartStore(s=> s.clearCart);
+  const user = useAuthStore((s) => s.user);
+  const clearCart = useCartStore((s) => s.clearCart);
 
-  const listCart = user ? cartItems : guestItems;
+  const listCart = cartItems;
+  // const listCart = user ? cartItems : guestItems;
   const methods = useForm<CheckoutFormValues>({
     defaultValues: {
       deliveryCity: "",
@@ -42,7 +43,7 @@ export default function CheckoutForm() {
       deliveryHouse: "",
       deliveryApartment: "",
     },
-  }); 
+  });
 
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
@@ -65,30 +66,29 @@ export default function CheckoutForm() {
     }
   };
 
- 
-    return (
-      <FormProvider {...methods}>
-        <form
-          onSubmit={methods.handleSubmit(onSubmit)}
-          className="
+  return (
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="
                       max-w-4xl
                       mx-auto
                       bg-white
                       p-6
                       rounded-xl
                       "
-        >
-          <ContactFields />
-          <div className="border-t my-8" />
-          <CitySelect />
-          <div className="border-t my-8" />
-          <DeliveryMethod />
-          <CommentBox />
-          <VinCheck />
-          {!!listCart.length && (
-            <button
-              type="submit"
-              className="
+      >
+        <ContactFields />
+        <div className="border-t my-8" />
+        <CitySelect />
+        <div className="border-t my-8" />
+        <DeliveryMethod />
+        <CommentBox />
+        <VinCheck />
+        {!!listCart.length && (
+          <button
+            type="submit"
+            className="
                                   w-full
                                   h-14
                                   mt-8
@@ -97,11 +97,11 @@ export default function CheckoutForm() {
                                   rounded-lg
                                   font-semibold
                                   "
-            >
-              Замовлення підтверджую
-            </button>
-          )}
-        </form>
-      </FormProvider>
-    );
+          >
+            Замовлення підтверджую
+          </button>
+        )}
+      </form>
+    </FormProvider>
+  );
 }

@@ -6,11 +6,13 @@ export const handleUpdateToCart = (item: CartItem, count: number) => {
   const user = useAuthStore.getState().user;
   const updateGuestQuantity = useCartStore.getState().updateGuestQuantity;
   const updateQuantityItemCart = useCartStore.getState().updateQuantityItemCart;
-  if (user) {
-    console.log("update to cart then login");
     updateQuantityItemCart(item, count);
-  } else {
-    console.log("update without login");
-    updateGuestQuantity(item, count);
-  }
+
+  // if (user) {
+  //   console.log("update to cart then login");
+  //   updateQuantityItemCart(item, count);
+  // } else {
+  //   console.log("update without login");
+  //   updateGuestQuantity(item, count);
+  // }
 };

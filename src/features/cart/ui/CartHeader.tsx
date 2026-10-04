@@ -12,11 +12,12 @@ interface IProps {
 }
 
 const CartHeader = ({colorIcon='white'}:IProps) => {
-  const {openModal} = useModal();
-  const cartItems = useCartStore(s=>s.cartItems);
+  const { openModal } = useModal();
+  const cartItems = useCartStore((s) => s.cartItems);
   const guestItems = useCartStore((s) => s.guestItems);
-  const user = useAuthStore(s=>s.user);
-  const count = user ? cartItems.length : guestItems.length;
+  const user = useAuthStore((s) => s.user);
+  const count = cartItems.length;
+  // const count = user ? cartItems.length : guestItems.length;
 
   return (
     <div className="flex gap-2 sm:self-start self-center">
@@ -25,7 +26,10 @@ const CartHeader = ({colorIcon='white'}:IProps) => {
         2) add real data from cart state
         3) add dropdown with cart items on hover
       */}
-      <div className="flex relative hover:cursor-pointer" onClick={() => openModal({type: 'cart'})}>
+      <div
+        className="flex relative hover:cursor-pointer"
+        onClick={() => openModal({ type: "cart" })}
+      >
         <Image
           src={colorIcon === "white" ? iconCartWhite : iconCartBlack}
           alt="icon cart"

@@ -35,9 +35,9 @@ export const cartApi = {
   },
 
   syncCart: async (items: AddToCartDto[]) => {
-    const res = await api("/cart/sync", {
+    const res = await api("/cart/merge", {
       method: "POST",
-      body: JSON.stringify(items),
+      // body: JSON.stringify(items),
     });
 
     return res;
