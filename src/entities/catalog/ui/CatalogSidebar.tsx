@@ -6,6 +6,7 @@ import { useCatalogStore } from "../../../entities/catalog/model/catalog.store";
 import { useTranslations } from "next-intl";
 import useModal from "@/src/hooks/use-modal";
 import Loading from "@/src/shared/ui/loading/Loading";
+import { goToTop } from "@/src/shared/libs/helpers";
 
 const CatalogSidebar = () => {
   const { filters } = useVehicleFiltersStore();
@@ -180,6 +181,7 @@ const CatalogSidebar = () => {
                         onClick={() => {
                           closeModal();
                           getListItemsCatalogCatalog(item.typeId, item.groupId);
+                          goToTop();
                         }}
                       >
                         <span>{item.subGroupCode}</span>

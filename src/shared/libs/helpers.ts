@@ -24,3 +24,10 @@ export const isYearInRange = (year: number, range: string) => {
   };
 
   export const getOldPrice = (price: number): number => price + (price - price * 0.95);
+
+  export const goToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };

@@ -5,5 +5,5 @@ export const handleLogout = () => {
   useAuthStore.getState().logout();
   useCartStore.getState().clearCart();
   // localStorage.removeItem("auth-storage");
-  useAuthStore.persist.clearStorage();
+  // useAuthStore.persist.clearStorage();
 };

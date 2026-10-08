@@ -87,11 +87,11 @@ export const useCartStore = create<CartStore>()(
 
       calculateGuestCart: () => {
         const guestItems = get().guestItems;
-        const total = calculateTotal(guestItems)
-        console.log({total, guestItems})
+        const total = calculateTotal(guestItems);
+        console.log({ total, guestItems });
         set({
-            total,
-        })
+          total,
+        });
       },
 
       updateGuestQuantity: async (item, count) => {
@@ -111,21 +111,23 @@ export const useCartStore = create<CartStore>()(
       updateQuantityItemCart: (item, count) => {
         const itemNo = item.itemNo;
 
-        // optimistic UI
         const previousItems = get().cartItems;
 
+        const previousItem = previousItems.find(
+          (cartItem) => cartItem.itemNo === itemNo,
+        );
+
+        // optimistic update
         set({
           cartItems: updateQuantityOptimistically(previousItems, item, count),
         });
 
-        // отменяем старый timer
         const oldTimer = updateTimers.get(itemNo);
 
         if (oldTimer) {
           clearTimeout(oldTimer);
         }
 
-        // увеличиваем версию
         const version = (updateVersions.get(itemNo) ?? 0) + 1;
 
         updateVersions.set(itemNo, version);
@@ -133,13 +135,11 @@ export const useCartStore = create<CartStore>()(
         const timer = setTimeout(() => {
           updateTimers.delete(itemNo);
 
-          // Проверяем, что это всё ещё последний вызов
           if (updateVersions.get(itemNo) !== version) {
             return;
           }
 
           enqueueCartMutation(async () => {
-            // Ещё раз проверяем
             if (updateVersions.get(itemNo) !== version) {
               return;
             }
@@ -152,32 +152,43 @@ export const useCartStore = create<CartStore>()(
               return;
             }
 
-            console.log(
-              "SEND quantity:",
-              currentItem.quantity,
-              "version:",
-              version,
-            );
+            try {
+              const response = await cartApi.updateQuantity(
+                itemNo,
+                currentItem.quantity,
+              );
 
-            const response = await cartApi.updateQuantity(
-              itemNo,
-              currentItem.quantity,
-            );
+              if (!response.ok) {
+                throw new Error("Failed to update quantity");
+              }
 
-            if (!response.ok) {
-              throw new Error("Failed to update quantity");
+              // Пользователь уже сделал новое изменение
+              if (updateVersions.get(itemNo) !== version) {
+                return;
+              }
+
+              set({
+                cartItems: response.data.items,
+                total: response.data.total,
+              });
+            } catch (error) {
+              console.error("Failed to update quantity:", error);
+
+              // Не откатываем старый запрос поверх нового изменения
+              if (updateVersions.get(itemNo) !== version) {
+                return;
+              }
+
+              if (!previousItem) {
+                return;
+              }
+
+              set({
+                cartItems: get().cartItems.map((cartItem) =>
+                  cartItem.itemNo === itemNo ? previousItem : cartItem,
+                ),
+              });
             }
-
-            // Проверяем, не было ли нового изменения,
-            // пока API выполнялся
-            if (updateVersions.get(itemNo) !== version) {
-              return;
-            }
-
-            set({
-              cartItems: response.data.items,
-              total: response.data.total,
-            });
           });
         }, 300);
 
@@ -319,7 +330,7 @@ export const useCartStore = create<CartStore>()(
 
         try {
           const response = await cartApi.getCart();
-          
+
           // Адаптируй проверку под тип своего api-клиента.
           if (!response.ok) {
             throw new Error("Не удалось загрузить корзину");

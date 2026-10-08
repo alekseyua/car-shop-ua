@@ -7,18 +7,14 @@ import { Container } from '@/src/shared/ui/layout/Container/Container';
 import Image from 'next/image';
 import iconEmptyTrash from '../../../shared/assets/icons/iconEmptyTrash.svg';
 import { useCartStore } from '@/src/entities/cart/model/cart.store';
-import { useAuthStore } from '../../auth-by-email/model/auth.store';
 
 const CartModal = () => {
   const { closeModal } = useModal();
   const isLoading = useCartStore((s) => s.isLoading);
   const cartItems = useCartStore((s) => s.cartItems);
-  const guestItems = useCartStore((s) => s.guestItems);
-  const user = useAuthStore((s) => s.user);
 
   const route = useRouter();
   const listCart = cartItems;
-  // const listCart = user ? cartItems : guestItems;
 
   if (!listCart.length) {
     return (

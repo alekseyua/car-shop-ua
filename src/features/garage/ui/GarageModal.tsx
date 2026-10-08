@@ -36,6 +36,7 @@ const GarageModal = () => {
     changeDefaultGarage,
     loadingGarage,
   } = useGarageStore();
+
   // const [currentGarage, setCurrentGarage] = useState<ResponseGarage | null>(null);
   const [selectedGarage, setSelectedGarage] = useState<ResponseGarage | null>(
     null,
@@ -124,7 +125,7 @@ const GarageModal = () => {
     e.stopPropagation();
     removeCarFromGarage(id);
   };
-console.log({ loadingGarage });
+
   return (
     <div className="h-full w-full relative">
       {loadingGarage && (
@@ -140,6 +141,7 @@ console.log({ loadingGarage });
             <Loading />
           </div>
         )}
+        {/* list car */}
         <div className="flex w-full p-1.5 flex-col min-h-0 overflow-y-auto">
           {!!listGarages?.length &&
             listGarages.map((g) => (
@@ -228,6 +230,7 @@ console.log({ loadingGarage });
             </div>
           )}
         </div>
+
         <div className="flex flex-col w-full p-1.5 gap-3 min-h-0 overflow-y-auto">
           {currentGarage?.cars?.length ? (
             currentGarage?.cars.map((gc: ResponseGarageCar) => (

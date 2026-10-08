@@ -42,6 +42,7 @@ export default async function RootLayout({
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <!-- Website made by Highbiza. See highbiza.com for inquiries. -->
       <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider
           locale={locale}

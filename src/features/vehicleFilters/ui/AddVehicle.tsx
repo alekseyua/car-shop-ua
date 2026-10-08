@@ -35,14 +35,11 @@ const AddVehicle = () => {
     console.log("VIN:", vin);
   };
   const handleClickAddToGarage = async (modification: Modification, garageId?: number) => {
-    const response = await handleAddToGarage(modification, garageId);
-    setActiveModification(modification);
+    await handleAddToGarage(modification, garageId);
+    const res = await setActiveModification(modification);
     closeModal();
-    console.log({ response })
-    router.push('/');
-    // response true когда авторизован и добавлен
-    if (response) {
-      // cameBack!();
+    if(res){
+      router.push('/catalog');
     }
   };
 
@@ -98,8 +95,6 @@ const AddVehicle = () => {
     // },
   ]
 
-
-console.log({filters})
   if (activeMenu === 'make') {
     return (
       <div className="flex flex-col h-full">
@@ -150,11 +145,10 @@ console.log({filters})
                 key={item.id}
                 type="button"
                 className={`
-          relative flex flex-col items-center justify-center
-          px-2 py-2 text-sm
-          
-          ${activeType === item.type ? "text-black font-bold" : "text-gray-500 hover:cursor-pointer"}
-        `}
+                  relative flex flex-col items-center justify-center
+                  px-2 py-2 text-sm
+                  ${activeType === item.type ? "text-black font-bold" : "text-gray-500 hover:cursor-pointer"}
+                `}
                 onClick={() => {
                   setActiveType(item.type);
                   setActiveTypeTitle(t("make/model." + item.type));

@@ -16,6 +16,7 @@ import Breadcrumbs from "@/src/shared/ui/breadcrumbs/Breadcrumbs";
 import { usePathname, useRouter } from "@/src/i18n/navigation";
 import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
 import CartHeader from "../../cart/ui/CartHeader";
+import { useAuthStore } from "../../auth-by-email/model/auth.store";
 
 interface IProps {
   garageId?: number;
@@ -31,10 +32,11 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
   const pathname = usePathname();
   const t = useTranslations("vehicle");
   const { openModal } = useModal();
+  const user = useAuthStore(s=>s.user);
 
   const handleVehicleClick = () => {
     // выбрать машину из гаража или показать каталог
-    if (!countGarage) {
+    if (!countGarage && user) {
       openModal({
         type: "vehicle",
         visible: "right",
@@ -44,6 +46,12 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
     }
 
     if (!activeModification) {
+      if(!user){
+        return openModal({
+          type: "vehicle",
+          visible: "right",
+        });
+      }
       openModal({
         type: "vehicle-list",
         visible: "right",
@@ -53,6 +61,13 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
     }
 
     if (pathname === "/catalog") {
+      if(!user) {
+        return openModal({
+          type: "vehicle",
+          visible: "right",
+        });
+      }
+      
       openModal({
         type: "vehicle-list",
         visible: "right",
@@ -85,7 +100,6 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
         min-w-0
         flex-col
         gap-1
-
         sm:flex-row
         sm:items-center
         sm:gap-2

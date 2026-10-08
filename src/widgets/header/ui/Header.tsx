@@ -27,17 +27,17 @@ const Header = () => {
           {/* <LanguageSwitcher /> */}
         </div>
         <div className="flex w-full gap-5 items-center justify-between mb-2">
-          <div className='flex flex-row w-full items-center gap-3 sm:justify-start justify-between'>
+          <div className="flex flex-row w-full items-center gap-3 sm:justify-start justify-between">
             <Logo />
             <Contacts />
           </div>
-          <div className='w-full flex flex-col gap-2'>
+          <div className="w-full flex flex-col gap-2 sm:flex hidden">
             <TopNav />
-            <div className='sm:flex hidden gap-3 w-full justify-end'>
+            <div className="flex gap-3 w-full justify-end">
               <VinRequestButton />
-              <GarageButton colorIcon='white'/>
+              <GarageButton colorIcon="white" />
               <FavoriteButton />
-              <CartHeader colorIcon='white'/>
+              <CartHeader colorIcon="white" />
             </div>
           </div>
         </div>

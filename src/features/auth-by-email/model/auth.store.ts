@@ -6,8 +6,9 @@ import { persist, createJSONStorage } from "zustand/middleware";
 import { AuthState } from "./auth.types";
 
 export const useAuthStore = create<AuthState>()(
-    persist(
-        (set, get) => ({
+    // persist(
+        (set, get) => (
+            {
             user: null,
             accessToken: null,
             refreshToken: null,
@@ -27,19 +28,20 @@ export const useAuthStore = create<AuthState>()(
                     set({refreshToken}),
 
             logout: () => {
-                set({ user: null, accessToken: null });
+                set({ user: null, accessToken: null, refreshToken: null });
             },
-        }),
-        {
-            name: "auth-storage", // ключ в localStorage
-
-            storage: createJSONStorage(() => localStorage),
-
-            partialize: (state) => ({
-                accessToken: state.accessToken,
-                refreshToken: state.refreshToken,
-                user: state.user,
-            }),
         }
+    // ),
+        // {
+        //     name: "auth-storage", // ключ в localStorage
+
+        //     storage: createJSONStorage(() => localStorage),
+
+        //     partialize: (state) => ({
+        //         accessToken: state.accessToken,
+        //         refreshToken: state.refreshToken,
+        //         user: state.user,
+        //     }),
+        // }
     )
 );

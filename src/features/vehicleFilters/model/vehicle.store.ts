@@ -33,7 +33,7 @@ interface VehicleFiltersState {
     getCatalogByModificationAutotechId: (modification: Modification) => Promise<boolean>;
     // getCatalogByModificationAutotechId: (modification: ModificationGarage) => void;
     resetFilters: () => void;
-    setActiveModification: (m: Modification) => void;
+    setActiveModification: (m: Modification) => Promise<boolean>;
     resetActiveModification: ()=> void;
 }
 
@@ -73,18 +73,24 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
         });
     },
     setActiveModification: async (m) => {
-        const fetchedCatalog: Catalog[] = await getCatalogApi(m.modificationAutotechId);
-        useCatalogStore.getState().resetListItemsCatalog();
-        useAccessoriesStore.getState().resetCategoryId();
-        set((state) => ({
-            activeModification: m,
-            filters: {
-                ...state.filters,
-                catalogs: transformCatalog(fetchedCatalog),
-            },
-        }));
+        try{
+
+            const fetchedCatalog: Catalog[] = await getCatalogApi(m.modificationAutotechId);
+            useCatalogStore.getState().resetListItemsCatalog();
+            useAccessoriesStore.getState().resetCategoryId();
+            set((state) => ({
+                activeModification: m,
+                filters: {
+                    ...state.filters,
+                    catalogs: transformCatalog(fetchedCatalog),
+                },
+            }));
+            return true;
+        }catch(e){
+            return false;
+        }
     },
-    resetActiveModification: () => {
+        resetActiveModification: () => {
         set({
             activeModification: null,
         });

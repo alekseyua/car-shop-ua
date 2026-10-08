@@ -17,6 +17,7 @@ import MobileMenuContact from "@/src/widgets/header/ui/MobileMenuContact";
 import CartModal from "@/src/features/cart/ui/CartModal";
 import CatalogSidebar from "@/src/entities/catalog/ui/CatalogSidebar";
 import PdfViewer from "@/src/entities/PdfViewer/ui/PdfViewer";
+import { RegistrationRequiredModal } from "@/src/features/auth-by-email/ui/registration-required-modal/registration-required-modal";
 
 const ModalRoot = () => {
   const { isOpen, openModal, type, visible, closeModal, isActive } = useModal();
@@ -181,7 +182,6 @@ const ModalRoot = () => {
 
   const modalClassName = isRight
     ? `
-        relative
         fixed
         top-0
         right-0
@@ -325,6 +325,8 @@ const ModalRoot = () => {
           {type === "cart" && <CartModal />}
 
           {type === "pdf" && <PdfViewer />}
+
+          {type === "please_registration" && <RegistrationRequiredModal />}
         </motion.div>
       </motion.div>
     </AnimatePresence>
