@@ -5,6 +5,6 @@ services:
     container_name: nextjs-app
     restart: unless-stopped
     ports:
-      - "3000:3000"
+      - "3000:4001"
     env_file:
       - .env.production
