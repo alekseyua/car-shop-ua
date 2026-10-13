@@ -1,15 +1,16 @@
+import WarrantyAndReturn from '@/src/pagesContent/warranty-return/WarrantyInfo';
 import { Container } from '@/src/shared/ui/layout/Container/Container';
-import { useTranslations } from 'next-intl';
-import React from 'react'
 
 const Warranty = () => {
-  const t = useTranslations('Header');
   
   return (
-    <Container className="">
-      {t('Info.Warranty.title')}
+    <Container
+      className="bg-white mx-auto flex w-full max-w-7xl flex-1 flex-col"
+      noPadding
+    >
+      <WarrantyAndReturn />
     </Container>
-  )
+  );
 }
 
 export default Warranty;

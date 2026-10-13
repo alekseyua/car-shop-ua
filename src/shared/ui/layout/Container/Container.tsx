@@ -21,7 +21,7 @@ export const Container: React.FC<ContainerProps> = ({
   return (
     <div
       className={`
-                max-w-4xl mx-auto 
+                max-w-4xl mx-auto
                 ${noPadding ? "" : "p-2 sm:p-4"}
                 ${className}
             `}

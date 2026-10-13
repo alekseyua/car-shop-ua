@@ -1,21 +1,12 @@
 "use client";
 
 import Image from 'next/image';
-// import {
-//   MapPin,
-//   Truck,
-//   WalletCards,
-//   ShieldCheck,
-//   MoveUpDown,
-//   ChevronRight,
-// } from "lucide-react";
-import mapPin from '../../../shared/assets/icons/mapPin.svg'
 import truck from '../../../shared/assets/icons/truck.svg';
 import novaPost from '../../../shared/assets/icons/novaPost.svg';
 import wallet from '../../../shared/assets/icons/wallet.svg';
 import shield from '../../../shared/assets/icons/shield.svg';
 
-const DeliveryInfo = () => {
+const DeliveryInfoDetail = () => {
   return (
     <div className="w-full max-w-[812px] rounded-[12px] border border-[#d1d1d1] bg-white px-[15px] py-[28px] text-[#292929]">
       {/* Самовивіз */}
@@ -188,4 +179,4 @@ const DeliveryRow = ({ text }: DeliveryRowProps) => {
   );
 };
 
-export default DeliveryInfo;
+export default DeliveryInfoDetail;

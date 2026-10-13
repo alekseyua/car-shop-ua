@@ -66,7 +66,6 @@ export const logoutUser = async () => {
             skipAuth: true,
             credentials: "include", // 👈 важно (cookie refresh token)
         });
-        useAuthStore.getState().logout();
     } catch (error) {
         throw error;
     }

@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.0.114"],
-
+  output: "standalone",
   /* config options here */
   images: {
     remotePatterns: [

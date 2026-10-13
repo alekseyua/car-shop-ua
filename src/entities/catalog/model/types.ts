@@ -1,5 +1,5 @@
 import { Catalog } from "../../../features/vehicleFilters/model/vehicle.type";
-import { ResponseCatalogItem, ResponseTopProduct } from "../api/dto";
+import { CarDetails, CarResponse, ResponseCatalogItem, ResponseTopProduct } from "../api/dto";
 
 export interface TransformCatalog {
     [key:string]: Catalog[]; 
@@ -20,4 +20,11 @@ export interface CatalogState {
 
   itemsCatalogError: string | null;
   topProductsError: string | null;
+
+  kroonOilCarCatalog: CarResponse | null;
+  kroonOilDetailCarCatalog: CarDetails | null;
+  isLoadingKroonOilCarCatalog: boolean;
+  isLoadingKroonOilDetailCarCatalog: boolean;
+  getKroonOilCarCatalog: (nameSearch: string) => Promise<void>;
+  getKroonOilDetailCarCatalog: ({}) => void;
 };

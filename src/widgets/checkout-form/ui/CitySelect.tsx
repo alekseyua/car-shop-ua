@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { useCheckoutStore } from "../model/checkout.store";
 import { CheckoutFormValues, NovaPoshtaCity } from "../model/checkout.types";
@@ -8,44 +8,84 @@ export default function CitySelect() {
     register,
     setValue,
     resetField,
+    clearErrors,
+    trigger,
     formState: { errors },
   } = useFormContext<CheckoutFormValues>();
 
-  const { getListCities, setDeliveryCity, setDeliveryCityRef, resetDeliveryCity } = useCheckoutStore();
+  const {
+    getListCities,
+    setDeliveryCity,
+    setDeliveryCityRef,
+    resetDeliveryCity,
+    setDeliveryMethod,
+  } = useCheckoutStore();
 
   const [cities, setCities] = useState<NovaPoshtaCity[]>([]);
   const [query, setQuery] = useState("");
+  const [selectedCity, setSelectedCity] = useState<NovaPoshtaCity | null>(null);
+
+  const validateCity = (value: string) => {
+    return (
+      (selectedCity !== null && selectedCity.Description === value) ||
+      "Виберіть місто зі списку"
+    );
+  };
 
   const resetForms = () => {
-    resetDeliveryCity()
-    resetField('deliveryPoint')
+    resetDeliveryCity();
+    resetField('deliveryPoint');
     resetField("deliveryCity");
+    setDeliveryMethod("");
   };
 
   const handleSearch = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
 
     setQuery(value);
-    setValue("deliveryCity", value);
+    setSelectedCity(null);
     resetForms();
+    // selectedCityRef.current = null;
+
+    setValue("deliveryCity", value, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
+
+    setDeliveryCity("");
+    setDeliveryCityRef("");
+    resetField("deliveryPoint");
+
     if (value.length < 2) {
       setCities([]);
       return;
     }
 
     const result = await getListCities(value);
-
     setCities(result);
   };
 
+
   const handleSelect = (city: NovaPoshtaCity) => {
+    setSelectedCity(city);
     setQuery(city.Description);
-    setValue("deliveryCity", city.Description);
+
+    setValue("deliveryCity", city.Description, {
+      shouldDirty: true,
+      shouldValidate: false,
+    });
+
     setDeliveryCity(city.Description);
     setDeliveryCityRef(city.Ref);
     setCities([]);
   };
 
+  useEffect(() => {
+    if (selectedCity) {
+      void trigger("deliveryCity");
+    }
+  }, [selectedCity, trigger]);
+  
   return (
     <section>
       <h2 className="text-3xl font-bold mb-4 text-black">
@@ -54,7 +94,10 @@ export default function CitySelect() {
 
       <div className="relative">
         <input
-          {...register("deliveryCity", { required: "Поле обов'язкове для заповнення" })}
+          {...register("deliveryCity", {
+            required: "Выберите город",
+            validate: validateCity,
+          })}
           value={query}
           onChange={handleSearch}
           placeholder="Почніть вводити місто..."

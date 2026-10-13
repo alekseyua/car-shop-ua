@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchCatalogItems, fetchTopProducts } from "../api/catalog.api";
+import { fetchCatalogItems, fetchKroonOilCarCatalog, fetchTopProducts } from "../api/catalog.api";
 import { ResponseCatalogItem } from "../api/dto";
 import { CatalogState } from "./types";
 
@@ -8,15 +8,39 @@ import { CatalogState } from "./types";
 export const useCatalogStore = create<CatalogState>((set) => ({
   listItemsCatalog: [],
   listTopProducts: [],
+
   isLoadingItemsCatalog: false,
   isLoadingTopProducts: false,
   currentItemCatalog: null,
   itemsCatalogError: null,
   topProductsError: null,
-  getListItemsCatalogCatalog: async (
-    typeId: number,
-    groupId: number,
-  ) => {
+
+  kroonOilCarCatalog: null,
+  kroonOilDetailCarCatalog: null,
+  isLoadingKroonOilCarCatalog: false,
+  isLoadingKroonOilDetailCarCatalog: false,
+  getKroonOilCarCatalog: async (nameSearch: string) => {
+    set({
+      isLoadingKroonOilCarCatalog: true,
+    });
+    try {
+      const result = await fetchKroonOilCarCatalog(nameSearch);
+      set({
+        kroonOilCarCatalog: result
+      })
+    } catch (error) {
+      set({
+        kroonOilCarCatalog: null,
+      });
+    } finally{
+      set({
+        isLoadingKroonOilCarCatalog: false,
+      });
+    }
+  },
+  getKroonOilDetailCarCatalog: ({}) => {},
+
+  getListItemsCatalogCatalog: async (typeId: number, groupId: number) => {
     set({
       isLoadingItemsCatalog: true,
       itemsCatalogError: null,
@@ -24,8 +48,10 @@ export const useCatalogStore = create<CatalogState>((set) => ({
     });
 
     try {
-      const res: ResponseCatalogItem[] =
-        await fetchCatalogItems(typeId, groupId);
+      const res: ResponseCatalogItem[] = await fetchCatalogItems(
+        typeId,
+        groupId,
+      );
 
       set({
         listItemsCatalog: res ?? [],
@@ -62,7 +88,7 @@ export const useCatalogStore = create<CatalogState>((set) => ({
 
     try {
       const res = await fetchTopProducts();
-        console.log({res})
+      console.log({ res });
       set({
         listTopProducts: res ?? [],
       });

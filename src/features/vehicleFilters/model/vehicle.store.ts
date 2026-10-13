@@ -5,6 +5,7 @@ import { transformCatalog } from "../../../entities/catalog/model/libs";
 import { TransformCatalog } from "../../../entities/catalog/model/types";
 import { useCatalogStore } from "@/src/entities/catalog/model/catalog.store";
 import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
+import { handleKroonOilCarCatalog } from "@/src/entities/catalog/model/action.catalog";
 
 interface VehicleFiltersState {
     filters: {
@@ -74,8 +75,9 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
     },
     setActiveModification: async (m) => {
         try{
-
+           
             const fetchedCatalog: Catalog[] = await getCatalogApi(m.modificationAutotechId);
+
             useCatalogStore.getState().resetListItemsCatalog();
             useAccessoriesStore.getState().resetCategoryId();
             set((state) => ({
@@ -192,6 +194,10 @@ export const useVehicleFiltersStore = create<VehicleFiltersState>((set, get) => 
           isLoadingCurrentModification: true,
         });
         useCatalogStore.getState().resetListItemsCatalog();
+        
+        //  handleKroonOilCarCatalog(
+        //    `${modification.brand} ${modification.model.split(" ")[0]} ${modification.name.split(" ")[0].trim()} ${modification.range.split("-")[0].split(".")[0].trim()}`,
+        //  );
         const fetchedCatalog: Catalog[] = await getCatalogApi(modification.id);
         useAccessoriesStore.getState().resetCategoryId();
         set((state) => ({

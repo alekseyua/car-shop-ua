@@ -1,6 +1,5 @@
 "use client";
 
-import { getMe } from "@/src/features/auth-by-email/api/auth.api";
 import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 import useModal from "@/src/hooks/use-modal";
 import { Link } from "@/src/i18n/navigation";
@@ -8,22 +7,24 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import iconEntries from "../../shared/assets/icons/iconEntries.svg";
 import Image from "next/image";
+import { getDataUser } from "@/src/features/auth-by-email/model/auth.action";
 
 const TopNav = () => {
   const t = useTranslations("Header");
-  const { user } = useAuthStore();
-  const { closeModal } = useModal();
+  const user = useAuthStore(s=>s.user);
+  const closeModal = useModal(s=>s.closeModal);
+
   useEffect(() => {
-    getMe();
+    getDataUser();
   }, []);
 
   return (
     <div
       className="
-      w-full
+        w-full
         justify-end sm:text-white sm:mt-0 sm:flex-row
         flex items-start gap-3 flex-col
-        min-w-0 truncate 
+        min-w-0 truncate
         text-black mt-3"
     >
       <Link

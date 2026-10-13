@@ -5,12 +5,15 @@ import CardPreview from "@/src/shared/ui/Card/CardPreview";
 import CardPreviewSkeleton from "@/src/shared/ui/Card/CardPreviewSkeleton";
 import React from "react";
 import { getOldPrice } from "@/src/shared/libs/helpers";
+import CarCategories from "./CarCategoriesKroonOil";
 
 const CatalogTable = () => {
   const {
     listItemsCatalog,
     isLoadingItemsCatalog,
     itemsCatalogError,
+    isLoadingKroonOilCarCatalog,
+    kroonOilCarCatalog,
   } = useCatalogStore();
   const t = useTranslations();
 
@@ -52,7 +55,14 @@ const CatalogTable = () => {
           )}
         </div>
       ) : (
-        <p>{t("card.notProduct")}</p>
+        <div>
+          {isLoadingKroonOilCarCatalog ? (
+            <span> something </span>
+          ) : (
+            <CarCategories categories={kroonOilCarCatalog?.categories ?? null} />
+          )}
+          <p>{t("card.notProduct")}</p>
+        </div>
       )}
     </div>
   );

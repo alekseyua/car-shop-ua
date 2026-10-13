@@ -1,14 +1,11 @@
 import { usePdfStore } from "@/src/entities/PdfViewer/model/pdf.store";
 import { useProductDetailStore } from "@/src/entities/product-detail/model/detail.store";
-import {
-  ProductDetailResponse,
-  ProductItemDetail,
-} from "@/src/entities/product-detail/model/detail.types";
+import { ProductDetailResponse } from "@/src/entities/product-detail/model/detail.types";
 import { ProductAvailabilityList } from "@/src/entities/product/ui/ProductAvailabilityList";
 import { handleAddToCart } from "@/src/features/cart/model/action.addToCart";
 import useModal from "@/src/hooks/use-modal";
 import { CriteriaItem } from "@/src/shared/api/dto";
-import DeliveryInfo from "@/src/shared/ui/deliveryInfo/DeliveryInfo";
+import DeliveryInfoDetail from "@/src/shared/ui/deliveryInfo/DeliveryInfoDetail";
 import { useTranslations } from "next-intl";
 
 const ProductInfo = () => {
@@ -207,7 +204,7 @@ const ProductInfo = () => {
         )}
       </div>
        {/* Additional product info can be added here */}
-      <DeliveryInfo />
+      <DeliveryInfoDetail />
     </div>
   );
 };

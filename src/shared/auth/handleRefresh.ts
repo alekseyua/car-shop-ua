@@ -1,13 +1,8 @@
 import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
-import { refreshToken } from "../api/refresh";
-import { handleLogout } from "@/src/processes/logout/model/logout";
+import { getRefreshToken } from "../api/refresh";
 
-export async function handleRefresh(refreshT: string | null): Promise<string | null> {
-    const token = await refreshToken(refreshT);
-    if (token === 'logout'){
-        handleLogout();
-        return null;
-    }
+export async function handleRefresh(): Promise<string | null> {
+    const token = await getRefreshToken();
     if (!token) return null;
 
     useAuthStore.getState().setToken(token);

@@ -17,8 +17,23 @@ export default function DeliveryMethod() {
         getListWherehouse,
         getListWherehouseType,
     } = useCheckoutStore();
-    const { register, setValue, resetField } = useFormContext();
+    const {
+      register,
+      setValue,
+      resetField,
+      trigger,
+      formState: { errors },
+    } = useFormContext();
     const [addressWherehoyse, setAddressWherehouse] = useState<string>('');
+    const [nameDeliveryMethods, setNameDeliveryMethods] = useState<string>("");
+    const [selectedBranch, setSelectedBranch] = useState<string | null>(null);
+
+    const validateBranch = (value: string) => {
+      return (
+        (selectedBranch !== null && selectedBranch === value) ||
+        "Виберіть відділення зі списку"
+      );
+    };
 
     const placeholder =
         deliveryMethod === "warehouse"
@@ -29,22 +44,44 @@ export default function DeliveryMethod() {
         void getListWherehouseType();
     }, []);
 
-    const handleSelect = (wherehouse: Warehouse, ref: string) => {
-        setAddressWherehouse(wherehouse.Description);
-        resetListWherehouse();
-        setValue("deliveryPoint", wherehouse.Description);
-        setValue("deliveryPointRef", ref);
-    };
+   const handleSelect = async (wherehouse: Warehouse, ref: string) => {
+     setSelectedBranch(wherehouse.Description);
+     setAddressWherehouse(wherehouse.Description);
 
+     setValue("deliveryPoint", wherehouse.Description, {
+       shouldValidate: false,
+       shouldDirty: true,
+     });
+
+     setValue("deliveryPointRef", ref);
+
+     resetListWherehouse();
+
+     await trigger("deliveryPoint");
+   };
     const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const target = e.target;
-        getListWherehouse(target.value);
-        setAddressWherehouse(target.value);
-        resetField("deliveryPointRef");
-        resetField("deliveryPoint");
+      const value = e.target.value;
+
+      setSelectedBranch(null);
+      setAddressWherehouse(value);
+
+      setValue("deliveryPoint", value, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+
+      setValue("deliveryPointRef", "");
+
+      getListWherehouse(value);
     };
 
-    if (!deliveryCity) return null;
+      useEffect(() => {
+        if (selectedBranch) {
+          void trigger("deliveryPoint");
+        }
+      }, [selectedBranch, trigger]);
+
+      if (!deliveryCity) return null;
       return (
         <section>
           <h2
@@ -59,10 +96,12 @@ export default function DeliveryMethod() {
           </h2>
           {warehouseTypes && (
             <div className="space-y-3">
-              {warehouseTypes.map((item) => (
-                <label
-                  key={item.Ref}
-                  className={`
+              {warehouseTypes
+                .filter((item, i) => i !== 0)
+                .map((item) => (
+                  <label
+                    key={item.Ref}
+                    className={`
                                 flex
                                 items-center
                                 gap-4
@@ -77,41 +116,47 @@ export default function DeliveryMethod() {
                                     : "border-gray-200"
                                 }
                             `}
-                >
-                  <input
-                    type="radio"
-                    checked={deliveryMethod === item.Ref}
-                    onChange={() => {
-                      setDeliveryMethod(item.Ref);
-                      setAddressWherehouse('');
-                      resetField("deliveryPoint");
-                    }}
-                    className="
+                  >
+                    <input
+                      type="radio"
+                      checked={deliveryMethod === item.Ref}
+                      onChange={() => {
+                        setDeliveryMethod(item.Ref);
+                        setNameDeliveryMethods(item.Description);
+                        setAddressWherehouse("");
+                        resetField("deliveryPoint");
+                      }}
+                      className="
                                     w-5
                                     h-5
                                 "
-                  />
-                  <span
-                    className="
+                    />
+
+                    <span
+                      className="
                                 font-semibold
                                 text-gray-900
                             "
-                  >
-                    {item.Description}
-                  </span>
-                </label>
-              ))}
+                    >
+                      {item.Description}
+                    </span>
+                  </label>
+                ))}
             </div>
           )}
           {deliveryMethod && (
             <div className="mt-5">
               <label className="block mb-2 font-semibold text-gray-900">
-                {deliveryMethod === "warehouse" ? "Відділення" : "Поштомат"}
+                {nameDeliveryMethods &&
+                  "Введіть " + nameDeliveryMethods.toLocaleLowerCase()}
               </label>
               <div className="relative">
                 <input
                   type="text"
-                  {...register("deliveryPoint")}
+                  {...register("deliveryPoint", {
+                    required: "вкажіть адресу",
+                    validate: validateBranch,
+                  })}
                   placeholder={placeholder}
                   value={addressWherehoyse}
                   className="
@@ -124,6 +169,11 @@ export default function DeliveryMethod() {
                     "
                   onChange={handleSearch}
                 />
+                {errors.deliveryPoint && (
+                  <p className="mt-1 text-sm text-red-500">
+                    {String(errors.deliveryPoint.message)}
+                  </p>
+                )}
                 {listWherehouse.length > 0 && (
                   <ul className="absolute left-0 right-0 mt-1 bg-white border rounded-lg shadow-lg max-h-60 overflow-auto z-50">
                     {listWherehouse.map((wherehouse) => (

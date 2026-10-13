@@ -4,6 +4,8 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { AuthState } from "./auth.types";
+import { getMe } from "../api/auth.api";
+import { useCartStore } from "@/src/entities/cart/model/cart.store";
 
 export const useAuthStore = create<AuthState>()(
     // persist(
@@ -11,10 +13,23 @@ export const useAuthStore = create<AuthState>()(
             {
             user: null,
             accessToken: null,
-            refreshToken: null,
-
+            // refreshToken: null,
+             getMeAuth: async ()=>{
+                const response = await getMe();
+                if (!response.ok) {
+                  set({
+                    user: null,
+                    accessToken: null,
+                  });
+                  return;
+                }
+                useCartStore.getState().loadServerCart();
+                set({
+                  user: response.data,
+                });
+            },
             setAuth: (user, accessToken, refreshToken) =>
-                set({ user, accessToken, refreshToken }),
+                set({ user, accessToken }),
 
             setUser: (user) =>{
                 console.log('setUser');
@@ -24,11 +39,11 @@ export const useAuthStore = create<AuthState>()(
             setToken: (accessToken) =>
                 set({ accessToken }),
 
-            setRefreshToken: (refreshToken) =>
-                    set({refreshToken}),
+            // setRefreshToken: (refreshToken) =>
+            //         set({refreshToken}),
 
             logout: () => {
-                set({ user: null, accessToken: null, refreshToken: null });
+                set({ user: null, accessToken: null,});
             },
         }
     // ),

@@ -13,7 +13,6 @@ import { ApiResult } from "@/src/shared/api/client";
 import { ResponseOrder } from "@/src/features/order/api/response.dto";
 import { useRouter } from "@/src/i18n/navigation";
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
-import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 
 
 export default function CheckoutForm() {
@@ -21,8 +20,6 @@ export default function CheckoutForm() {
   const router = useRouter();
   const { deliveryMethod, deliveryCityRef } = useCheckoutStore();
   const cartItems = useCartStore((state) => state.cartItems);
-  const guestItems = useCartStore((state) => state.guestItems);
-  const user = useAuthStore((s) => s.user);
   const clearCart = useCartStore((s) => s.clearCart);
 
   const listCart = cartItems;

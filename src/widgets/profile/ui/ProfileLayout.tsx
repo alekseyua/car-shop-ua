@@ -1,6 +1,3 @@
-import React from 'react'
-import { handleLogout } from "@/src/processes/logout/model/logout";
-import NavItems from '@/src/features/profile/ui/NavItems';
 import { Container } from '@/src/shared/ui/layout/Container/Container';
 import ProfileSidebar from './ProfileSidebar';
 import ProfileSection from './ProfileSection';

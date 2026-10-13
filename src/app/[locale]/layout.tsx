@@ -35,14 +35,16 @@ export default async function RootLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const messages = await getMessages(locale);
+  const messages = await getMessages({locale});
 
   return (
     <html
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <!-- Website made by Highbiza. See highbiza.com for inquiries. -->
+      <div className="hidden">
+        Website made by CHAS. See something.com for inquiries.
+      </div>
       <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider
           locale={locale}
