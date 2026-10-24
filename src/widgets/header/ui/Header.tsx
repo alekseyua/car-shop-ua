@@ -23,15 +23,15 @@ const Header = () => {
       />
 
       <Container className="flex flex-col gap-1 px-[15px] pt-[5px]" noPadding>
-        <div className="relative hidden w-full justify-between sm:flex">
-          {/* <LanguageSwitcher /> */}
-        </div>
+        {/* <div className="relative hidden w-full justify-between sm:flex">
+          <LanguageSwitcher />
+        </div> */}
         <div className="flex w-full gap-5 items-center justify-between mb-2">
-          <div className="flex flex-row w-full items-center gap-3 sm:justify-start justify-between">
+          <div className="flex flex-row items-center gap-3 min-[960px]:justify-start justify-between">
             <Logo />
             <Contacts />
           </div>
-          <div className="w-full flex flex-col gap-2 sm:flex hidden">
+          <div className="w-full flex flex-col gap-2 min-[960px]:flex hidden">
             <TopNav />
             <div className="flex gap-3 w-full justify-end">
               <VinRequestButton />

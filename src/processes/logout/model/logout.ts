@@ -1,5 +1,5 @@
 import { useCartStore } from "@/src/entities/cart/model/cart.store";
-import { logoutUser } from "@/src/features/auth-by-email/api/auth.api";
+import { getMeSession, logoutUser } from "@/src/features/auth-by-email/api/auth.api";
 import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 
 export const handleLogout = async () => {
@@ -8,6 +8,7 @@ export const handleLogout = async () => {
   } finally {
     useAuthStore.getState().logout();
     useCartStore.getState().clearCart();
+    await getMeSession();
   }
 
   // localStorage.removeItem("auth-storage");

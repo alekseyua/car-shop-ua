@@ -1,11 +1,11 @@
-import { HOST } from "@/src/config";
+import { BACKEND_HOST } from "@/src/config";
 
 export async function getRefreshToken(
 //   refreshT: string | null,
 ): Promise<string | null> {
   try {
     // if (!refreshT) return null;
-    const response = await fetch(HOST + "/auth/refresh", {
+    const response = await fetch(BACKEND_HOST + "/auth/refresh", {
       method: "POST",
       credentials: "include", // 👈 важно (cookie refresh token)
       headers: {

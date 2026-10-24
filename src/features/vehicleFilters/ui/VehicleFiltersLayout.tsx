@@ -100,9 +100,9 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
         min-w-0
         flex-col
         gap-1
-        sm:flex-row
-        sm:items-center
-        sm:gap-2
+        min-[960px]:flex-row
+        min-[960px]:items-center
+        min-[960px]:gap-2
       "
       >
         {/* TOP ROW — MENU + VEHICLE */}
@@ -114,8 +114,8 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
           items-center
           gap-1
 
-          sm:flex-1
-          sm:gap-2
+          min-[960px]:flex-1
+          min-[960px]:gap-2
         "
         >
           {/* MENU accessories */}
@@ -138,8 +138,8 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
             rounded-md
             hover:bg-[#e9e9e9]
 
-            sm:h-[50px]
-            sm:w-[50px]
+            min-[960px]:h-[50px]
+            min-[960px]:w-[50px]
           "
           >
             {/* <div className="flex w-[14px] flex-col gap-[2px]">
@@ -175,8 +175,8 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
             hover:cursor-pointer
             hover:bg-gray-900/[0.04]
 
-            sm:h-[50px]
-            sm:px-3
+            min-[960px]:h-[50px]
+            min-[960px]:px-3
           "
           >
             {/* ICON */}
@@ -191,7 +191,7 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
               w-[15px]
               shrink-0
 
-              sm:mr-2
+              min-[960px]:mr-2
             "
             />
 
@@ -205,7 +205,7 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
                   text-left
                   text-xs
 
-                  sm:text-sm
+                  min-[960px]:text-sm
                 "
                 >
                   {activeModification.brand} {activeModification.name}
@@ -218,7 +218,7 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
                   text-left
                   text-xs
 
-                  sm:text-sm
+                  min-[960px]:text-sm
                 "
                 >
                   {t("addVehicle")} &gt;
@@ -228,19 +228,24 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
           </button>
 
           {/* mobile icon menu */}
-          <div className="flex sm:hidden gap-2">
-            <GarageButton colorIcon="black" />
-            <CartHeader colorIcon={"black"} />
+          <div className="flex min-[960px]:hidden gap-2 items-center justify-center">
+            <div className="flex shrink-0 items-center">
+              <GarageButton colorIcon="black" />
+            </div>
 
-            <button
-              type="button"
-              onClick={() => {
-                openModal({
-                  type: "mobile-contact-menu",
-                  visible: "right",
-                });
-              }}
-              className="
+            <div className="flex shrink-0 items-center">
+              <CartHeader colorIcon="black" />
+            </div>
+            <div className="flex shrink-0 items-center">
+              <button
+                type="button"
+                onClick={() => {
+                  openModal({
+                    type: "mobile-contact-menu",
+                    visible: "right",
+                  });
+                }}
+                className="
               flex
               h-[44px]
               w-[44px]
@@ -251,18 +256,19 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
               rounded-md
               hover:bg-[#e9e9e9]
 
-              sm:h-[50px]
-              sm:w-[50px]
+              min-[960px]:h-[50px]
+              min-[960px]:w-[50px]
             "
-            >
-              <div className="flex w-[14px] flex-col gap-[2px]">
-                <span className="h-[1.5px] bg-[#333]" />
-                <span className="h-[1.5px] bg-[#333]" />
-                <span className="h-[1.5px] bg-[#333]" />
-              </div>
+              >
+                <div className="flex w-[14px] flex-col gap-[2px]">
+                  <span className="h-[1.5px] bg-[#333]" />
+                  <span className="h-[1.5px] bg-[#333]" />
+                  <span className="h-[1.5px] bg-[#333]" />
+                </div>
 
-              <span className="mt-[2px] text-[9px] leading-[10px]">Menu</span>
-            </button>
+                <span className="mt-[2px] text-[9px] leading-[10px]">Menu</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -271,8 +277,8 @@ const VehicleFiltersLayout = ({ garageId }: IProps) => {
           className="
           w-full
 
-          sm:w-auto
-          sm:shrink-0
+          min-[960px]:w-auto
+          min-[960px]:shrink-0
         "
         >
           <SearchButton />

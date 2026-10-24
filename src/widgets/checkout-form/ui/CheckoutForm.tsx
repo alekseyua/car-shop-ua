@@ -44,6 +44,7 @@ export default function CheckoutForm() {
 
   const onSubmit = async (data: CheckoutFormValues) => {
     try {
+      console.log({deliveryMethod})
       const response: ApiResult<ResponseOrder> = await submit({
         ...data,
         deliveryMethod,
@@ -52,7 +53,7 @@ export default function CheckoutForm() {
       if (response.ok) {
         const { orderNumber } = response.data;
         if (orderNumber) {
-          router.push("/");
+          router.push("/profile");
           clearCart();
         }
       } else {

@@ -63,8 +63,6 @@ export const logoutUser = async () => {
     try {
         await api("/auth/logout", {
             method: "POST",
-            skipAuth: true,
-            credentials: "include", // 👈 важно (cookie refresh token)
         });
     } catch (error) {
         throw error;

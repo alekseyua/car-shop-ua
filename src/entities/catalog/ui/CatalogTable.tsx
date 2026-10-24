@@ -24,7 +24,7 @@ const CatalogTable = () => {
           className="
                         w-full 
                         bg-white 
-                        grid grid-cols-[repeat(auto-fill,minmax(170px,1fr))] gap-3
+                        grid grid-cols-[repeat(auto-fill,minmax(145px,1fr))] gap-3
                         justify-items-center
                         "
         >

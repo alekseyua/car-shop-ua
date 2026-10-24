@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useProfileStore } from "../model/profile.store";
 import Image from "next/image";
+import { CheckoutButton } from "@/src/features/checkout/ui/CheckoutButton";
 
 const OrderSection = () => {
   const { getListMyOrders, listMyOrders, isLoadingMyOrders, errorMyOrders } =
@@ -108,6 +109,12 @@ const OrderSection = () => {
                 ))}
               </div>
             )}
+            <div className="flex justify-end">
+
+              <CheckoutButton
+                orderId={order.id}
+              />
+            </div>
           </div>
         ))
       )}

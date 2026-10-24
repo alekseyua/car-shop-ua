@@ -1,7 +1,7 @@
 // ./src/shared / api /
 // ├── client.ts
 // src/shared/api/client.ts
-import { HOST } from "@/src/config";
+import { BACKEND_HOST } from "@/src/config";
 import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
 import { getRefreshToken } from "../auth/refrashManager";
 
@@ -12,18 +12,22 @@ type FetchOptions = RequestInit & {
 export type ApiResult<T> =
     | { ok: true; data: T }
     | { ok: false; error: "unauthorized" | "error" | string; status?: number };
-
-export async function api<T>(
-    endpoint: string,
-    options: FetchOptions = {},
-    _retry = false
-): Promise<ApiResult<T>> {
-    const token =
+    
+    export async function api<T>(
+        endpoint: string,
+        options: FetchOptions = {},
+        _retry = false
+    ): Promise<ApiResult<T>> {
+        const token =
         typeof window !== "undefined"
-            ? useAuthStore.getState().accessToken
-            : null;
-
-    const response = await fetch(HOST + endpoint, {
+        ? useAuthStore.getState().accessToken
+        : null;
+        
+        console.log(
+          endpoint, " .accessToken = ",
+          useAuthStore.getState().accessToken,
+        );
+    const response = await fetch(BACKEND_HOST + endpoint, {
         ...options,
         credentials: "include",
         headers: {
@@ -34,7 +38,17 @@ export async function api<T>(
             ...(options.headers || {}),
         },
     });
-    const data = await response.json();
+   const text = await response.text();
+
+   let data: any = null;
+
+   if (text) {
+     try {
+       data = JSON.parse(text);
+     } catch {
+       data = text;
+     }
+   }
 
     // =========================
     // 401 HANDLING

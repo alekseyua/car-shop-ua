@@ -26,7 +26,7 @@ const TopProductTable = () => {
     "
     >
       <div
-        className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(170px,1fr))] 
+        className="grid gap-4 grid-cols-[repeat(auto-fill,minmax(130px,1fr))] 
       bg-white w-full h-full 
       py-4 px-2
       md:py-[17px] md:px-5"

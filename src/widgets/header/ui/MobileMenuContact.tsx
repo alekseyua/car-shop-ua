@@ -5,7 +5,7 @@ import React from 'react'
 const MobileMenuContact = () => {
   return (
     <div>
-      <LanguageSwitcher />
+      {/* <LanguageSwitcher /> */}
       <TopNav />
     </div>
   );
