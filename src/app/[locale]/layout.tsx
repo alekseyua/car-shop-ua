@@ -42,10 +42,10 @@ export default async function RootLayout({
       lang={locale}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <body className="min-h-screen flex flex-col">
       <div className="hidden">
         Website made by CHAS. See something.com for inquiries.
       </div>
-      <body className="min-h-screen flex flex-col">
         <NextIntlClientProvider
           locale={locale}
           timeZone="Europe/Vienna"

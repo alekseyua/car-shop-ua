@@ -59,7 +59,7 @@ const TopProductTable = () => {
         )}
       </div>
     </div>
-  );
+  )
 };
 
 export default TopProductTable;

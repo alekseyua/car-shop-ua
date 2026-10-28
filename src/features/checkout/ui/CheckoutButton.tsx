@@ -1,16 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { useCheckout } from "../model/checkout.store";
 
 type Props = {
   orderId: number;
-};
-
-type CheckoutResponse = {
-  action: string;
-  data: string;
-  signature: string;
 };
 
 export function CheckoutButton({ orderId }: Props) {
@@ -20,11 +13,11 @@ export function CheckoutButton({ orderId }: Props) {
     <div className="mt-3">
       <button
         type="button"
-        onClick={()=>checkout(orderId)}
+        onClick={() => checkout(orderId)}
         disabled={isLoading}
-        className="rounded-lg bg-red-600 px-5 py-2 text-white disabled:opacity-50 hover:cursor-pointer"
+        className="rounded-lg bg-red-600 px-5 py-2 text-white transition-colors hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {isLoading ? "Переход к оплате..." : "Оплатить"}
+        {isLoading ? "Перехід до оплати..." : "Оплатити"}
       </button>
 
       {error && (

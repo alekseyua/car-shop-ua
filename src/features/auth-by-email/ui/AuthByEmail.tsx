@@ -4,7 +4,7 @@
 'use client';
 
 import { useState } from "react";
-import { loginUserbyEmail, registerUserByEmail } from "../api/auth.api";
+import { loginRegistrationByGoogle, loginUserbyEmail, registerUserByEmail } from "../api/auth.api";
 import { useRouter } from "@/src/i18n/navigation";
 
 const AuthByEmail = () => {
@@ -83,6 +83,10 @@ const AuthByEmail = () => {
     const handleChangeAuthMethod = (method: "email" | "phone") => {
         setError(null);
         setIsLogin(!isLogin);
+    };
+
+    const handleAuthGoogle = () => {
+        loginRegistrationByGoogle();
     };
 
     return (
@@ -189,6 +193,7 @@ const AuthByEmail = () => {
                     justify-center gap-3 hover:bg-gray-50 transition"
                     onClick={() => {
                         setError(null);
+                        handleAuthGoogle()
                     }}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 48 48">

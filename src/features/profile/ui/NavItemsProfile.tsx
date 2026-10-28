@@ -1,20 +1,33 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useProfileStore } from "../model/profile.store";
 import { handleLogout } from "@/src/processes/logout/model/logout";
 import { useRouter } from "@/src/i18n/navigation";
+import { useAuthStore } from "../../auth-by-email/model/auth.store";
 
 const listNav = [
-  { id: 0, title: "Order" },
-  { id: 1, title: "History order" },
-  { id: 2, title: "Edit profile" },
-  { id: 10, title: "Exit" },
+  { id: 0, title: "Мої замовлення" },
+  { id: 1, title: "Історія замовлень" },
+  { id: 2, title: "Редагувати профіль" },
+  { id: 10, title: "Вийти" },
 ];
 
-const NavItems = () => {
-  const { currentSection, setCurrentSection } = useProfileStore();
+const NavItemsProfile = () => {
+  const { currentSection, setCurrentSection, getListMyOrders } =
+    useProfileStore();
+  const isAuthInitialized = useAuthStore((state) => state.isAuthInitialized);
   const route = useRouter();
+  const accessToken = useAuthStore(s=>s.accessToken);
+  console.log({ accessToken });
+  useEffect(() => {
+    setCurrentSection(0);
+  }, [setCurrentSection]);
+
+  useEffect(() => {
+    if (!isAuthInitialized || currentSection !== 0) return;
+    void getListMyOrders();
+  }, [isAuthInitialized, currentSection, getListMyOrders]);
 
   return (
     <nav className="w-full border-r border-gray-200 pr-4">
@@ -33,13 +46,14 @@ const NavItems = () => {
               <button
                 type="button"
                 onClick={async () => {
+                  setCurrentSection(item.id);
                   if (isExit) {
                     await handleLogout();
                     route.push("/");
                     return;
                   }
 
-                  setCurrentSection(item.id);
+                  // setCurrentSection(item.id);
                 }}
                 className={`
             flex w-full items-center rounded-lg px-4 py-3
@@ -64,4 +78,4 @@ const NavItems = () => {
   );
 };
 
-export default NavItems;
+export default NavItemsProfile;

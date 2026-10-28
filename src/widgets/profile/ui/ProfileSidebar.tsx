@@ -1,4 +1,4 @@
-import NavItems from '@/src/features/profile/ui/NavItems'
+import NavItems from '@/src/features/profile/ui/NavItemsProfile'
 import React from 'react'
 
 const ProfileSidebar = () => {

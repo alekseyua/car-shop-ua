@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ["192.168.0.114"],
+  allowedDevOrigins: ["test-front"],
   output: "standalone",
   /* config options here */
   images: {

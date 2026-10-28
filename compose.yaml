@@ -4,10 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        NEXT_PUBLIC_BACKEND_HOST: https://back.autopro.pp.ua
+        NEXT_PUBLIC_API_URL: https://back.autopro.pp.ua
     container_name: nextjs-app
     environment:
-      NEXT_PUBLIC_BACKEND_HOST: https://back.autopro.pp.ua
+      NEXT_PUBLIC_API_URL: https://back.autopro.pp.ua
     restart: unless-stopped
     ports:
       - "4001:3000"

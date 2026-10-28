@@ -1,9 +1,12 @@
 import React from 'react'
 import TableCatalogAccessories from '../../../entities/catalogAccessories/ui/TableCatalogAccessories'
+import { Container } from '@/src/shared/ui/layout/Container/Container'
 
 const CatalogLayoutAccessories = () => {
   return (
-    <TableCatalogAccessories />
+    <Container className="flex flex-col h-full min-h-screen" noPadding>
+      <TableCatalogAccessories />
+    </Container>
   )
 }
 

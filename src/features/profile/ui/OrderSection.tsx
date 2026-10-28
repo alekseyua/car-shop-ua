@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useProfileStore } from "../model/profile.store";
 import Image from "next/image";
 import { CheckoutButton } from "@/src/features/checkout/ui/CheckoutButton";
+import { getOrderStatusColor, getOrderStatusLabel } from "@/src/shared/libs/helpers";
 
 const OrderSection = () => {
   const { getListMyOrders, listMyOrders, isLoadingMyOrders, errorMyOrders } =
     useProfileStore();
+
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
 
   const toggleOrder = (id: number) => {
@@ -19,36 +21,49 @@ const OrderSection = () => {
   return (
     <div className="space-y-4 text-gray-900">
       {isLoadingMyOrders ? (
-        <p>Загрузка заказов...</p>
+        <p className="text-gray-500">Завантаження замовлень...</p>
       ) : errorMyOrders ? (
-        <p>Ошибка при загрузке заказов: {errorMyOrders}</p>
+        <p className="text-red-600">
+          Не вдалося завантажити замовлення: {errorMyOrders}
+        </p>
+      ) : listMyOrders.length === 0 ? (
+        <div className="rounded-lg border border-gray-200 px-4 py-10 text-center">
+          <p className="text-lg font-semibold">У вас ще немає замовлень</p>
+          <p className="mt-2 text-sm text-gray-500">
+            Ваші замовлення з’являться тут після оформлення покупки.
+          </p>
+        </div>
       ) : (
         listMyOrders.map((order) => (
           <div
             key={order.id}
             className="rounded-lg border border-gray-200 p-4 shadow-sm"
           >
-            <div className="flex items-center justify-between">
-              <h3 className="font-semibold">Заказ № {order.orderNumber}</h3>
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="font-semibold">
+                Замовлення № {order.orderNumber}
+              </h3>
 
-              <span className="rounded bg-yellow-100 px-2 py-1 text-sm">
-                {order.status}
+              <span
+                className={`rounded px-2 py-1 text-sm ${getOrderStatusColor(order.status)}`}
+              >
+                {getOrderStatusLabel(order.status)}
               </span>
             </div>
 
             <div className="mt-3 space-y-1 text-sm">
               <p>
-                <strong>Дата:</strong>{" "}
+                <strong>Дата оформлення:</strong>{" "}
                 {new Date(order.createdAt).toLocaleString("uk-UA")}
               </p>
 
               <p>
-                <strong>Получатель:</strong> {order.deliveryLastname}{" "}
+                <strong>Отримувач:</strong> {order.deliveryLastname}{" "}
                 {order.deliveryFirstname}
               </p>
 
               <p>
-                <strong>Город:</strong> {order.deliveryCity}
+                <strong>Місто доставки:</strong> {order.deliveryCity}
               </p>
 
               <p>
@@ -56,11 +71,11 @@ const OrderSection = () => {
               </p>
 
               <p>
-                <strong>Сумма:</strong> {order.totalPrice} ₴
+                <strong>Загальна сума:</strong> {order.totalPrice} ₴
               </p>
 
               <p>
-                <strong>Товаров:</strong> {order.items.length}
+                <strong>Кількість товарів:</strong> {order.items.length}
               </p>
             </div>
 
@@ -69,7 +84,9 @@ const OrderSection = () => {
               onClick={() => toggleOrder(order.id)}
               className="mt-4 text-sm font-medium text-blue-600 hover:underline"
             >
-              {openedOrderId === order.id ? "Скрыть товары" : "Показать товары"}
+              {openedOrderId === order.id
+                ? "Приховати товари"
+                : "Переглянути товари"}
             </button>
 
             {openedOrderId === order.id && (
@@ -78,7 +95,7 @@ const OrderSection = () => {
                   <div key={item.id} className="flex items-center gap-3">
                     {item.imageUrl && (
                       <Image
-                        src={"https://img2.ad.ua/imgs/" + item.imageUrl}
+                        src={`https://img2.ad.ua/imgs/${item.imageUrl}`}
                         alt={item.title}
                         className="h-16 w-16 rounded object-cover"
                         width={64}
@@ -109,12 +126,12 @@ const OrderSection = () => {
                 ))}
               </div>
             )}
-            <div className="flex justify-end">
 
-              <CheckoutButton
-                orderId={order.id}
-              />
-            </div>
+            {order.status === "PENDING" && (
+              <div className="mt-4 flex justify-end">
+                <CheckoutButton orderId={order.id} />
+              </div>
+            )}
           </div>
         ))
       )}

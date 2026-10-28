@@ -28,7 +28,7 @@ const CatalogLayout = () => {
       className="bg-white w-full h-full min-h-[calc(100vh-151px)]
     "
     >
-      <TopProductLayout />;
+      <TopProductLayout />
     </div>
   );
 };

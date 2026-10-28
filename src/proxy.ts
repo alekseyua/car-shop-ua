@@ -2,9 +2,10 @@ import createMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
 
 const handleI18nRouting = createMiddleware({
-  locales: ["en", "ru", "uk"],
+  locales: ["uk", "en", "ru"],
   defaultLocale: "uk",
   localePrefix: "always",
+  localeDetection: false,
 });
 
 export default function proxy(request: NextRequest) {

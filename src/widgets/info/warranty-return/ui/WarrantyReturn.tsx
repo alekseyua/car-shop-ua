@@ -40,8 +40,8 @@ const WarrantyReturn = () => {
               <path d="m9 12 2 2 4-4" />
             </svg>
           </div>
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 sm:text-2xl">
+          <div className='mt-5'>
+            <h2 className="text-xl font-bold text-gray-900 sm:text-2xl ">
               Гарантія
             </h2>
             <p className="mt-1 text-sm text-gray-500">

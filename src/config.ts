@@ -1,6 +1,6 @@
 export const locales = ['uk', 'en', 'ru'] as const;
 // export const BACKEND_HOST = "http://169.254.253.19:3000" as const;
-const backendHost = process.env.NEXT_PUBLIC_BACKEND_HOST;
+const backendHost = process.env.NEXT_PUBLIC_API_URL;
 
 if (!backendHost) {
   throw new Error("BACKEND_HOST is not defined");

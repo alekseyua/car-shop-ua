@@ -1,6 +1,5 @@
 export interface AuthResponse {
     user: UserDTO;
-    refreshToken: string;
     accessToken: string;
 }
 

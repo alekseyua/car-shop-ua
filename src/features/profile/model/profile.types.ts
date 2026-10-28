@@ -1,31 +1,31 @@
-import { OrderItem } from "../../order/api/response.dto";
+import { OrderItem, OrderStatus } from "../../order/api/response.dto";
 
 export interface ResponseMyOrder {
-    id: number;
-    userId: number;
-    orderNumber: string;
+  id: number;
+  userId: number;
+  orderNumber: string;
 
-    status: "PENDING" | "PAID" | "SHIPPED" | "DELIVERED" | "CANCELLED";
+  status: OrderStatus;
 
-    totalPrice: string;
+  totalPrice: string;
 
-    deliveryPhone: string;
-    deliveryEmail: string;
-    deliveryLastname: string;
-    deliveryFirstname: string;
-    deliveryMiddlename: string;
+  deliveryPhone: string;
+  deliveryEmail: string;
+  deliveryLastname: string;
+  deliveryFirstname: string;
+  deliveryMiddlename: string;
 
-    deliveryCity: string;
-    deliveryPoint: string;
-    deliveryPointRef: string;
-    deliveryStreet: string;
-    deliveryHouse: string;
-    deliveryApartment: string;
-    deliveryComment: string;
-    deliveryVin: string;
+  deliveryCity: string;
+  deliveryPoint: string;
+  deliveryPointRef: string;
+  deliveryStreet: string;
+  deliveryHouse: string;
+  deliveryApartment: string;
+  deliveryComment: string;
+  deliveryVin: string;
 
-    items: OrderItem[];
+  items: OrderItem[];
 
-    createdAt: string;
-    updatedAt: string;
+  createdAt: string;
+  updatedAt: string;
 }

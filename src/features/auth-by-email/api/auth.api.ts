@@ -22,7 +22,6 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
         useAuthStore.getState().setAuth(
             data.user,
             data.accessToken,
-            data.refreshToken
         );
         
         await syncCartAfterLogin();
@@ -50,7 +49,7 @@ export const loginUserbyEmail = async (dto: LoginDTO) => {
         
         // console.log("loginUserbyEmail data:", data);
         
-        useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken, data.refreshToken);
+        useAuthStore.getState().setAuth(data.user as UserDTO, data.accessToken);
         await syncCartAfterLogin();
     }
     catch (error) {
@@ -88,4 +87,23 @@ export const getMeSession = async () => {
     // useAuthStore.getState().setUser(res);
     return res;
 
+}
+
+export const loginRegistrationByGoogle = async () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/google`;
+}
+
+export async function startGoogleLink(accessToken: string) {
+  const response = await api(`/auth/google/link`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(response.error ?? "Failed to start Google linking");
+  }
+
+  return response.data as { url: string };
 }
