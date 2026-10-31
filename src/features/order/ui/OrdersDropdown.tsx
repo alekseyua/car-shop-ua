@@ -211,7 +211,7 @@ const OrdersDropdown = () => {
                     </span>
 
                     <span className="font-semibold text-slate-900 text-xs">
-                      {order.totalPrice.toLocaleString("uk-UA")} ₴
+                      {Number(order.totalPrice).toLocaleString("uk-UA")} ₴
                     </span>
                   </div>
                 </div>
