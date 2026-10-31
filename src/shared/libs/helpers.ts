@@ -43,6 +43,7 @@ export function getOrderStatusLabel(status: OrderStatus): string {
 
   return labels[status] ?? status;
 }
+export const delaySleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export function getOrderStatusColor(status: OrderStatus): string {
   const colors: Record<OrderStatus, string> = {
@@ -55,4 +56,12 @@ export function getOrderStatusColor(status: OrderStatus): string {
   };
 
   return colors[status] ?? "bg-gray-100 text-gray-800";
+}
+
+export function formatPhone(phone: string) {
+  const digits = phone.replace(/\D/g, '');
+
+  if (digits.length !== 10) return phone;
+
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`;
 }

@@ -27,7 +27,12 @@ export const useAuthStore = create<AuthState>()(
           user: response.data,
         });
     } catch (error) {
-        
+        console.error("[AUTH] getMeAuth error:", error);
+
+        set({
+          user: null,
+          accessToken: null,
+        });
     } finally {
         useAuthStore.getState().setAuthInitialized(true);
     }

@@ -12,36 +12,33 @@ export default function GoogleAuthSuccess() {
   const locale = params.locale;
 
   const loginPromise = useRef<Promise<unknown> | null>(null);
+
   const [status, setStatus] = useState<Status>("loading");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Защита от повторного запуска эффекта в Strict Mode.
-   if (!loginPromise.current) {
-     loginPromise.current = completeGoogleLogin();
-   }
-
     let cancelled = false;
 
-   async function finishLogin() {
-     try {
-       await loginPromise.current;
+    if (!loginPromise.current) {
+      loginPromise.current = completeGoogleLogin();
+    }
 
-       if (cancelled) return;
+    loginPromise.current
+      .then(() => {
+        if (cancelled) return;
 
-       setStatus("success");
-       router.replace(`/${locale}`);
-     } catch (err) {
-       if (cancelled) return;
+        setStatus("success");
+        router.replace(`/${locale}`);
+      })
+      .catch((err: unknown) => {
+        if (cancelled) return;
 
-       setError(
-         err instanceof Error ? err.message : "Не удалось войти через Google",
-       );
-       setStatus("error");
-     }
-   }
+        setError(
+          err instanceof Error ? err.message : "Не удалось войти через Google",
+        );
 
-   void finishLogin();
+        setStatus("error");
+      });
 
     return () => {
       cancelled = true;

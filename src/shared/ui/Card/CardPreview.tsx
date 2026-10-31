@@ -7,7 +7,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/src/i18n/navigation";
 import { ProductAvailabilityList } from "@/src/entities/product/ui/ProductAvailabilityList";
 import { ResponseCatalogItem, ResponseTopProduct } from "@/src/entities/catalog/api/dto";
-import { ProductAccessories } from "@/src/entities/catalogAccessories/model/accessories.type";
+import { ProductAccessories } from "@/src/features/catalogAccessories/model/accessories.type";
 import { ProductItemDetail } from "@/src/entities/product-detail/model/detail.types";
 import { handleAddToCart } from "@/src/features/cart/model/action.addToCart";
 

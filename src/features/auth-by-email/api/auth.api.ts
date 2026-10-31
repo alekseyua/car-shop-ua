@@ -19,8 +19,23 @@ export const registerUserByEmail = async (dto: RegisterDTO) => {
         }
 
         const { data } = result;
+        const res = await api<UserDTO>("/users/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${data.accessToken}`,
+          },
+          skipAuth: true,
+        });
+
+        if (!res.ok) {
+          throw new Error(
+            res.error ?? "Не удалось получить данные пользователя",
+          );
+        }
+
+        const user = res.data;
         useAuthStore.getState().setAuth(
-            data.user,
+            user,
             data.accessToken,
         );
         

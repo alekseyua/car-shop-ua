@@ -5,7 +5,7 @@ import {
 } from "../api/accessories.api";
 import { CategoriesResponse, ProductAccessories } from "./accessories.type";
 import { PaginationDto } from "@/src/shared/api/dto";
-import { useCatalogStore } from "../../catalog/model/catalog.store";
+import { useCatalogStore } from "../../../entities/catalog/model/catalog.store";
 
 interface CatalogAccessoriesStore {
   accessoriesMenu: CategoriesResponse;

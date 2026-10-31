@@ -12,7 +12,7 @@ import Image from "next/image";
 import iconCross from "../../shared/assets/icons/iconCross.svg";
 import AddVehicle from "@/src/features/vehicleFilters/ui/AddVehicle";
 import ListGarage from "@/src/features/garage/ui/ListGarage";
-import MenuAccessories from "@/src/entities/catalogAccessories/ui/MenuAccessories";
+import MenuAccessories from "@/src/features/catalogAccessories/ui/MenuAccessories";
 import MobileMenuContact from "@/src/widgets/header/ui/MobileMenuContact";
 import CartModal from "@/src/features/cart/ui/CartModal";
 import CatalogSidebar from "@/src/entities/catalog/ui/CatalogSidebar";

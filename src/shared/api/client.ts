@@ -64,7 +64,17 @@ export async function api<T>(
       return { ok: false, error: "unauthorized", status: 401 };
     }
 
-    return api<T>(endpoint, options, true);
+    return api<T>(
+      endpoint,
+      {
+        ...options,
+        headers: {
+          ...options.headers,
+          Authorization: `Bearer ${newToken}`,
+        },
+      },
+      true,
+    );
   }
 
   if (!response.ok) {

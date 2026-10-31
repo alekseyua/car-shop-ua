@@ -4,7 +4,7 @@ import { getBrandsApi, getModificationsApi, getModelsApi, getYearsApi, getCatalo
 import { transformCatalog } from "../../../entities/catalog/model/libs";
 import { TransformCatalog } from "../../../entities/catalog/model/types";
 import { useCatalogStore } from "@/src/entities/catalog/model/catalog.store";
-import { useAccessoriesStore } from "@/src/entities/catalogAccessories/model/accessories.store";
+import { useAccessoriesStore } from "@/src/features/catalogAccessories/model/accessories.store";
 import { handleKroonOilCarCatalog } from "@/src/entities/catalog/model/action.catalog";
 
 interface VehicleFiltersState {

@@ -5,11 +5,22 @@ import Link from "next/link";
 import Image from "next/image";
 
 import iconMts from "../../assets/icons/IconMts.svg";
-import iconMail from "../../assets/icons/IconMail.svg";
+import iconLife from "../../assets/icons/iconLife.svg";
+import { MESSENGER_TELEGRAM, MESSENGER_VIBER, MESSENGER_WHATSAPP, PHONE_SERVICE_1, PHONE_SERVICE_2 } from "@/src/config";
+import { formatPhone } from "../../libs/helpers";
+import { FaViber, FaWhatsapp, FaTelegramPlane } from "react-icons/fa";
+import { useAuthStore } from "@/src/features/auth-by-email/model/auth.store";
+import { handleTelegramClick } from "@/src/features/profile/model/profile.actions";
+
 
 const Contacts = () => {
   const [isOpen, setIsOpen] = useState(false);
     const contactRef = useRef<HTMLDivElement>(null);
+const user = useAuthStore((state) => state.user);
+const telegramUrl = user?.id
+  ? `https://t.me/car_spare_bot?start=${user.id}`
+  : "https://t.me/car_spare_bot";
+
 
   useEffect(() => {
     if (!isOpen) return;
@@ -42,21 +53,21 @@ const Contacts = () => {
       >
         <div className="flex flex-col gap-1 min-w-0 truncate">
           <Link
-            href="tel:+380997678929"
+            href={"tel:+38" + PHONE_SERVICE_1}
             onClick={(e) => e.stopPropagation()}
             className="flex items-center gap-3 text-[14px] hover:opacity-70"
           >
-            <Image src={iconMts} alt="MTS" className="h-4 w-4 shrink-0" />
-            <span>(099) 767-89-29</span>
+            <Image src={iconLife} alt="MTS" className="h-4 w-4 shrink-0" />
+            <span>{formatPhone(PHONE_SERVICE_1)}</span>
           </Link>
 
           <Link
-            href="tel:+380675481217"
+            href={"tel:+38" + PHONE_SERVICE_2}
             onClick={(e) => e.stopPropagation()}
             className="flex items-center gap-3 text-[14px] hover:opacity-70"
           >
-            <Image src={iconMail} alt="phone" className="h-4 w-4 shrink-0" />
-            <span>(067) 548-12-17</span>
+            <Image src={iconMts} alt="phone" className="h-4 w-4 shrink-0" />
+            <span>{formatPhone(PHONE_SERVICE_2)}</span>
           </Link>
         </div>
 
@@ -115,22 +126,22 @@ const Contacts = () => {
             {/* Телефоны */}
             <div className="flex flex-col gap-3 border-b border-[#777] px-6 py-3">
               <Link
-                href="tel:+380990000000"
+                href={"tel:+38" + PHONE_SERVICE_1}
                 className="flex items-center gap-2 text-[14px] hover:opacity-70"
               >
-                <Image src={iconMts} alt="MTS" className="h-4 w-4" />
-                (099) 000-00-00
+                <Image src={iconLife} alt="life" className="h-4 w-4" />
+                {formatPhone(PHONE_SERVICE_1)}
               </Link>
 
               <Link
-                href="tel:+380670000000"
+                href={"tel:+38" + PHONE_SERVICE_2}
                 className="flex items-center gap-2 text-[14px] hover:opacity-70"
               >
-                <Image src={iconMail} alt="phone" className="h-4 w-4" />
-                (067) 000-00-00
+                <Image src={iconMts} alt="mts" className="h-4 w-4" />
+                {formatPhone(PHONE_SERVICE_2)}
               </Link>
 
-              <Link
+              {/* <Link
                 href="tel:+380630000000"
                 className="flex items-center gap-2 text-[14px] hover:opacity-70"
               >
@@ -138,7 +149,7 @@ const Contacts = () => {
                   ◉
                 </span>
                 (063) 000-00-00
-              </Link>
+              </Link> */}
 
               {/* <Link
                 href="tel:+380443558490"
@@ -153,28 +164,35 @@ const Contacts = () => {
 
             {/* Мессенджеры */}
             <div className="flex justify-around border-b border-[#777] px-4 py-5">
-              <Link
-                href="https://t.me/"
-                target="_blank"
-                className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#229ed9]"
-              >
-                <span className="text-sm">➤</span>
-              </Link>
+              {MESSENGER_TELEGRAM && (
+                <button
+                  onClick={handleTelegramClick}
+                  // href={telegramUrl}
+                  // target="_blank"
+                  className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#229ed9]"
+                >
+                  <FaTelegramPlane />
+                </button>
+              )}
 
-              <Link
-                href="viber://chat"
-                className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#7950a5]"
-              >
-                <span className="text-sm">☎</span>
-              </Link>
+              {MESSENGER_VIBER && (
+                <Link
+                  href={MESSENGER_VIBER}
+                  className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#7950a5]"
+                >
+                  <FaViber size={18} color="#dfdfdf" />
+                </Link>
+              )}
 
-              <Link
-                href="https://wa.me/380997678929"
-                target="_blank"
-                className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#20c968]"
-              >
-                <span className="text-sm">◔</span>
-              </Link>
+              {MESSENGER_WHATSAPP && (
+                <Link
+                  href={MESSENGER_WHATSAPP}
+                  target="_blank"
+                  className="flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#20c968]"
+                >
+                  <FaWhatsapp size={18} />
+                </Link>
+              )}
             </div>
 
             {/* Кнопки */}

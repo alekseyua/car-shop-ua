@@ -56,7 +56,7 @@ export default async function RootLayout({
           <Header />
           <div className="sticky top-0 z-50 w-full bg-[#f2f4f3]">
             <Container className="!p-0">
-              <div className="px-5 py-2">
+              <div className="sm:px-5 sm:py-2  px-1 py-2">
                 <VehicleFiltersLayout />
               </div>
             </Container>

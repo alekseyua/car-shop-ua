@@ -5,6 +5,7 @@ import { useProfileStore } from "../model/profile.store";
 import { handleLogout } from "@/src/processes/logout/model/logout";
 import { useRouter } from "@/src/i18n/navigation";
 import { useAuthStore } from "../../auth-by-email/model/auth.store";
+import { useOrderStore } from "../../order/model/useOrderStore";
 
 const listNav = [
   { id: 0, title: "Мої замовлення" },
@@ -14,8 +15,9 @@ const listNav = [
 ];
 
 const NavItemsProfile = () => {
-  const { currentSection, setCurrentSection, getListMyOrders } =
+  const { currentSection, setCurrentSection } =
     useProfileStore();
+  const getListMyOrders = useOrderStore((s) => s.getListMyOrders);
   const isAuthInitialized = useAuthStore((state) => state.isAuthInitialized);
   const route = useRouter();
   const accessToken = useAuthStore(s=>s.accessToken);

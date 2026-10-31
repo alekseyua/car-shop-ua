@@ -3,10 +3,11 @@ import { useProfileStore } from "../model/profile.store";
 import Image from "next/image";
 import { CheckoutButton } from "@/src/features/checkout/ui/CheckoutButton";
 import { getOrderStatusColor, getOrderStatusLabel } from "@/src/shared/libs/helpers";
+import { useOrderStore } from "../../order/model/useOrderStore";
 
 const OrderSection = () => {
   const { getListMyOrders, listMyOrders, isLoadingMyOrders, errorMyOrders } =
-    useProfileStore();
+    useOrderStore();
 
   const [openedOrderId, setOpenedOrderId] = useState<number | null>(null);
 

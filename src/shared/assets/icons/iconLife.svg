@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="800"
+     height="450"
+     viewBox="0 0 800 450">
+
+  <!-- Жёлтый фон -->
+  <rect width="800" height="450" fill="#FFCC00"/>
+
+  <!-- Логотип lifecell -->
+  <text
+    x="400"
+    y="245"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="Arial, Helvetica, sans-serif"
+    font-size="250"
+    font-weight="bold"
+    letter-spacing="-5"
+    fill="#003DA5">
+    lifecell
+  </text>
+
+</svg>

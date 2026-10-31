@@ -1,7 +1,7 @@
 'use client';
 
-import { useAccessoriesStore } from '@/src/entities/catalogAccessories/model/accessories.store';
-import { ProductAccessories } from '@/src/entities/catalogAccessories/model/accessories.type';
+import { useAccessoriesStore } from '@/src/features/catalogAccessories/model/accessories.store';
+import { ProductAccessories } from '@/src/features/catalogAccessories/model/accessories.type';
 import { getOldPrice } from '@/src/shared/libs/helpers';
 import { BreadcrumbItem, useBreadcrumbStore } from '@/src/shared/stores/breadcrumbs/breadcrumbs.store';
 import CardPreview from '@/src/shared/ui/Card/CardPreview';

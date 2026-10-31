@@ -1,5 +1,5 @@
-import { useAccessoriesStore } from '@/src/entities/catalogAccessories/model/accessories.store';
-import { CardAccessories } from '@/src/entities/catalogAccessories/ui/CardAccessories';
+import { useAccessoriesStore } from '@/src/features/catalogAccessories/model/accessories.store';
+import { CardAccessories } from '@/src/features/catalogAccessories/ui/CardAccessories';
 import useModal from '@/src/hooks/use-modal';
 import { useRouter } from '@/src/i18n/navigation';
 import { useTranslations } from 'next-intl';

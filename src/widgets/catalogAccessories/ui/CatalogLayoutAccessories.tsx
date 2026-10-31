@@ -1,5 +1,5 @@
 import React from 'react'
-import TableCatalogAccessories from '../../../entities/catalogAccessories/ui/TableCatalogAccessories'
+import TableCatalogAccessories from '../../../features/catalogAccessories/ui/TableCatalogAccessories'
 import { Container } from '@/src/shared/ui/layout/Container/Container'
 
 const CatalogLayoutAccessories = () => {

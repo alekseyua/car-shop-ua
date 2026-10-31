@@ -22,7 +22,7 @@ const Header = () => {
         priority
       />
 
-      <Container className="flex flex-col gap-1 px-[15px] pt-[5px]" noPadding>
+      <Container className="flex flex-col gap-1 sm:px-[15px] sm:pt-[5px] px-1 py-0" noPadding>
         {/* <div className="relative hidden w-full justify-between sm:flex">
           <LanguageSwitcher />
         </div> */}
@@ -41,7 +41,6 @@ const Header = () => {
             </div>
           </div>
         </div>
-        {/* <NavMenu /> */}
       </Container>
     </div>
   );

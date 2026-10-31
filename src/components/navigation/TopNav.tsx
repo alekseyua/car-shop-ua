@@ -17,7 +17,7 @@ const TopNav = () => {
   useEffect(() => {
     getDataUser();
   }, []);
-
+console.log({user})
   return (
     <div
       className="
@@ -48,13 +48,7 @@ const TopNav = () => {
       >
         {t("Info.Contacts.title")}
       </Link>
-      <Link
-        href="/profile"
-        className="hover:cursor-pointer hover:underline pl-4 "
-        onClick={closeModal}
-      >
-        Замовлення
-      </Link>
+      
       {user ? (
         <Link
           className="block"
