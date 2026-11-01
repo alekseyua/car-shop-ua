@@ -3,15 +3,16 @@
 // │   ├── AuthByEmail.tsx
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getMe, loginRegistrationByGoogle, loginUserbyEmail, registerUserByEmail } from "../api/auth.api";
-import { useRouter } from "@/src/i18n/navigation";
+import { useRouter, useSearchParams } from "@/src/i18n/navigation";
 
 const AuthByEmail = () => {
     const [isLogin, setIsLogin] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const router = useRouter();
+    const searchParams = useSearchParams();
 
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -20,6 +21,16 @@ const AuthByEmail = () => {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+
+    const errorSearchParams = searchParams.get("error");
+
+    const errorMessages: Record<string, string> = {
+      GOOGLE_EMAIL_ALREADY_EXISTS:
+        "Обліковий запис з цією електронною поштою вже існує. Увійдіть через email та пароль, потім прив'яжіть Google у налаштуваннях профілю.",
+
+      GOOGLE_AUTH_FAILED: "Не вдалося увійти через Google. Спробуйте ще раз.",
+    };
 
     const handleSubmit = async () => {
         setError(null);
@@ -88,6 +99,16 @@ const AuthByEmail = () => {
     const handleAuthGoogle = () => {
         loginRegistrationByGoogle();
     };
+
+    useEffect(() => {
+      if (!errorSearchParams) return;
+
+      if (errorMessages[errorSearchParams]) {
+        setError(errorMessages[errorSearchParams]);
+      }
+
+      router.replace("/login", { scroll: false });
+    }, [errorSearchParams]);
 
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
